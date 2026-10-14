@@ -1,0 +1,2329 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bruterake • Painel Pessoal & Sala de Troféus (Life RPG)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            oled: {
+              bg: '#090A0F',
+              card: '#12141D',
+              elevated: '#181B26',
+              border: 'rgba(255, 255, 255, 0.08)',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --bg-oled: #090A0F;
+      --card-oled: #12141D;
+      --elevated-oled: #181B26;
+    }
+
+    body {
+      background-color: var(--bg-oled);
+      color: #F3F4F6;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 5%, rgba(59, 130, 246, 0.08), transparent 35%),
+        radial-gradient(circle at 85% 15%, rgba(168, 85, 247, 0.07), transparent 35%),
+        radial-gradient(circle at 50% 90%, rgba(16, 185, 129, 0.05), transparent 40%);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #090A0F;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #1F2437;
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #374151;
+    }
+
+    /* Spotlight UI Card Effect */
+    .bento-card {
+      position: relative;
+      background-color: #12141D;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 1rem;
+      overflow: hidden;
+      transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .bento-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(
+        550px circle at var(--mouse-x, -500px) var(--mouse-y, -500px),
+        rgba(255, 255, 255, 0.065),
+        transparent 40%
+      );
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .bento-card:hover::before {
+      opacity: 1;
+    }
+
+    .bento-card:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      transform: translateY(-2px);
+      box-shadow: 0 14px 34px -10px rgba(0, 0, 0, 0.65);
+    }
+
+    /* Rarity Shaders & Borders */
+    .rarity-mythic {
+      border: 1px solid rgba(245, 158, 11, 0.42);
+      box-shadow: 0 0 28px -8px rgba(245, 158, 11, 0.22);
+    }
+    .rarity-mythic::after {
+      content: "";
+      position: absolute;
+      top: 0; left: -100%;
+      width: 60%; height: 2px;
+      background: linear-gradient(90deg, transparent, #FBBF24, #38BDF8, #C084FC, transparent);
+      animation: holographic-sweep 4.5s infinite linear;
+      z-index: 2;
+    }
+    .rarity-mythic:hover {
+      border-color: rgba(251, 191, 36, 0.75);
+      box-shadow: 0 0 32px -4px rgba(245, 158, 11, 0.32);
+    }
+
+    .rarity-legendary {
+      border: 1px solid rgba(168, 85, 247, 0.35);
+      box-shadow: 0 0 24px -10px rgba(168, 85, 247, 0.2);
+    }
+    .rarity-legendary:hover {
+      border-color: rgba(192, 132, 252, 0.65);
+    }
+
+    .rarity-hunting {
+      background: linear-gradient(180deg, rgba(18, 20, 29, 0.92) 0%, rgba(13, 18, 34, 0.95) 100%);
+      border: 1px solid rgba(59, 130, 246, 0.35);
+    }
+    .rarity-hunting:hover {
+      border-color: rgba(96, 165, 250, 0.7);
+    }
+
+    @keyframes holographic-sweep {
+      0% { left: -60%; }
+      100% { left: 140%; }
+    }
+
+    /* Vinyl Wall Record Slide Effect */
+    .vinyl-container:hover .vinyl-disc {
+      transform: translateX(38%) rotate(32deg);
+    }
+    .vinyl-disc {
+      transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+      background: radial-gradient(circle, #18181b 0%, #09090b 32%, #27272a 34%, #09090b 36%, #18181b 58%, #27272a 60%, #09090b 100%);
+    }
+
+    /* Polaroid Tilt */
+    .polaroid-card {
+      transform: rotate(-1.5deg);
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .polaroid-card:hover {
+      transform: rotate(0deg) scale(1.02);
+    }
+
+    /* UF Tile Fog of War */
+    .uf-tile-locked {
+      background: #0D0F17;
+      border: 1px dashed rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.25);
+    }
+    .uf-tile-unlocked {
+      background: linear-gradient(135deg, rgba(16, 185, 129, 0.18), rgba(6, 182, 212, 0.12));
+      border: 1px solid rgba(16, 185, 129, 0.55);
+      color: #ECFDF5;
+      box-shadow: 0 0 18px -4px rgba(16, 185, 129, 0.35);
+    }
+  </style>
+</head>
+<body class="min-h-screen selection:bg-blue-500/30 selection:text-blue-200 pb-20">
+
+  <!-- TOP STICKY COMMAND BAR -->
+  <header class="sticky top-0 z-30 backdrop-blur-xl bg-[#090A0F]/85 border-b border-white/[0.08]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-3">
+      <!-- Brand / Player Tag -->
+      <div class="flex items-center gap-3">
+        <div class="relative group cursor-pointer" onclick="toggleCharacterHud()">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-700 p-[1px] shadow-lg shadow-blue-500/20">
+            <div class="w-full h-full bg-[#12141D] rounded-[11px] flex items-center justify-center font-mono font-bold text-sm text-blue-400">
+              BR
+            </div>
+          </div>
+          <span class="absolute -bottom-1 -right-1 px-1.5 py-0.2 bg-emerald-500 text-[#090A0F] font-mono font-bold text-[10px] rounded-full">
+            L25
+          </span>
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="font-bold text-base sm:text-lg tracking-tight text-white">Painel Pessoal & Sala de Troféus</h1>
+            <span class="hidden md:inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[11px] font-mono bg-blue-500/10 text-blue-300 border border-blue-500/25">
+              <span class="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
+              LIFE RPG v2.6
+            </span>
+          </div>
+          <p class="text-xs text-gray-400 font-mono">Bruterake • Registro de Conquistas, Performance & Linha do Tempo</p>
+        </div>
+      </div>
+
+      <!-- Right Actions: Command Palette (Ctrl+K), HUD Toggle & Quick Add -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <button onclick="openCommandPalette()" class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-[#12141D] hover:bg-[#181B26] border border-white/10 text-xs text-gray-300 transition">
+          <i data-lucide="search" class="w-3.5 h-3.5 text-gray-400"></i>
+          <span class="hidden sm:inline">Buscar conquista, PR, estado...</span>
+          <kbd class="px-1.5 py-0.5 text-[10px] font-mono bg-white/5 text-gray-400 rounded border border-white/10">Ctrl K</kbd>
+        </button>
+
+        <button onclick="toggleCharacterHud()" id="hudToggleBtn" class="px-3 py-1.5 rounded-xl bg-[#12141D] hover:bg-[#181B26] border border-white/10 text-xs font-medium text-gray-300 flex items-center gap-1.5 transition" title="Mostrar/Ocultar Resumo RPG">
+          <i data-lucide="radar" class="w-3.5 h-3.5 text-purple-400"></i>
+          <span class="hidden md:inline">Status RPG</span>
+        </button>
+
+        <button onclick="openQuickAddModal()" class="px-3 py-1.5 rounded-xl bg-blue-600/20 hover:bg-blue-600/30 border border-blue-500/40 text-xs font-semibold text-blue-300 flex items-center gap-1.5 transition">
+          <i data-lucide="plus-circle" class="w-3.5 h-3.5"></i>
+          <span class="hidden sm:inline">Nova Conquista / JSON</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- MAIN CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
+
+    <!-- COLLAPSIBLE TOP BENTO CHARACTER HUD (PINNED TROPHIES + RADAR CHART) -->
+    <section id="characterHudSection" class="grid grid-cols-1 lg:grid-cols-12 gap-4 transition-all duration-300">
+      <!-- Left 8 Cols: Player Profile + 5 Pinned Trophies -->
+      <div class="lg:col-span-8 bento-card p-5 flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b border-white/[0.07]">
+            <div class="flex items-center gap-3.5">
+              <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-blue-600/30 to-emerald-500/30 border border-white/15 flex items-center justify-center">
+                <i data-lucide="trophy" class="w-6 h-6 text-amber-400"></i>
+              </div>
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="font-bold text-white text-lg">Pedro Silva (Bruterake)</span>
+                  <span class="px-2 py-0.5 text-[11px] font-mono rounded-md bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                    Farmacêutico Residente & Trophy Hunter
+                  </span>
+                </div>
+                <p class="text-xs text-gray-400 mt-0.5">
+                  Brasília / Planaltina-GO • UnB Farmácia • Main Quest Ativa: <span class="text-emerald-400 font-medium">Casamento 08/11/2026</span>
+                </p>
+              </div>
+            </div>
+
+            <!-- Total Legacy Score Counter -->
+            <div class="flex items-center gap-4 bg-[#090A0F]/80 px-4 py-2 rounded-xl border border-white/[0.07]">
+              <div>
+                <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400">Legacy Score Total</div>
+                <div id="totalLegacyScoreDisplay" class="text-xl font-mono font-bold text-amber-400">8.420 PTS</div>
+              </div>
+              <div class="h-7 w-[1px] bg-white/10"></div>
+              <div>
+                <div class="text-[10px] font-mono uppercase tracking-wider text-gray-400">Troféus Míticos</div>
+                <div class="text-xl font-mono font-bold text-blue-400">6 <span class="text-xs text-gray-500 font-normal">(&lt;1%)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 5 Pinned Trophies (Estante Principal) -->
+          <div class="mt-4">
+            <div class="flex items-center justify-between mb-2.5">
+              <span class="text-xs font-mono uppercase tracking-wider text-gray-400 flex items-center gap-1.5">
+                <i data-lucide="pin" class="w-3.5 h-3.5 text-amber-400"></i>
+                Estante Principal • 5 Maiores Conquistas Fixadas (Mundo Real & Virtual)
+              </span>
+              <span class="text-[11px] text-gray-500 font-mono">Clique para inspecionar</span>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-2.5" id="pinnedTrophiesContainer">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right 4 Cols: 6-Axis Character Status Radar SVG -->
+      <div class="lg:col-span-4 bento-card p-5 flex flex-col justify-between">
+        <div class="flex items-center justify-between">
+          <div>
+            <h2 class="text-sm font-bold text-white flex items-center gap-1.5">
+              <i data-lucide="hexagon" class="w-4 h-4 text-blue-400"></i>
+              Atributos do Personagem
+            </h2>
+            <p class="text-[11px] text-gray-400 font-mono">Média Global: <span class="text-emerald-400 font-semibold">81.8 / 100</span></p>
+          </div>
+          <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-white/5 text-gray-300 border border-white/10">
+            6 Eixos Ativos
+          </span>
+        </div>
+
+        <!-- SVG Radar Hexagon -->
+        <div class="my-auto flex items-center justify-center py-2">
+          <svg id="characterRadarSvg" viewBox="0 0 260 220" class="w-full max-w-[250px] h-auto overflow-visible"></svg>
+        </div>
+
+        <!-- Mini Attribute Legend -->
+        <div class="grid grid-cols-3 gap-1.5 pt-2 border-t border-white/[0.06] text-[11px] font-mono">
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">GAMING</span><span class="text-blue-400 font-bold">94</span>
+          </div>
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">INTELECTO</span><span class="text-purple-400 font-bold">88</span>
+          </div>
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">FORÇA</span><span class="text-emerald-400 font-bold">84</span>
+          </div>
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">CULTURA</span><span class="text-amber-400 font-bold">82</span>
+          </div>
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">ESTAMINA</span><span class="text-cyan-400 font-bold">78</span>
+          </div>
+          <div class="px-2 py-1 rounded bg-[#090A0F]/60 flex justify-between">
+            <span class="text-gray-400">MAPA</span><span class="text-rose-400 font-bold">65</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MAIN MODULE NAVIGATION BAR (PILL CONTAINER MATCHING PROTOTYPE) -->
+    <nav class="bento-card p-2 sm:p-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex flex-wrap items-center gap-1.5 bg-[#090A0F] p-1.5 rounded-2xl border border-white/[0.08] w-full xl:w-auto">
+        <button onclick="switchMainTab('gaming')" data-tab="gaming" class="main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 bg-[#172554] text-blue-200 border border-blue-500/40 shadow-sm">
+          <i data-lucide="gamepad-2" class="w-4 h-4"></i>
+          <span>Gaming Hub</span>
+        </button>
+        <button onclick="switchMainTab('fitness')" data-tab="fitness" class="main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition flex items-center gap-2 border border-transparent">
+          <i data-lucide="dumbbell" class="w-4 h-4"></i>
+          <span>Corrida & Academia</span>
+        </button>
+        <button onclick="switchMainTab('languages')" data-tab="languages" class="main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition flex items-center gap-2 border border-transparent">
+          <i data-lucide="languages" class="w-4 h-4"></i>
+          <span>Idiomas & Álbuns</span>
+        </button>
+        <button onclick="switchMainTab('timeline')" data-tab="timeline" class="main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition flex items-center gap-2 border border-transparent">
+          <i data-lucide="map" class="w-4 h-4"></i>
+          <span>Temporadas & Mapa</span>
+        </button>
+        <button onclick="switchMainTab('all')" data-tab="all" class="main-tab-btn px-3.5 py-2 rounded-xl text-xs sm:text-sm font-mono text-gray-400 hover:text-white transition flex items-center gap-1.5 border border-transparent">
+          <i data-lucide="layout-grid" class="w-4 h-4 text-emerald-400"></i>
+          <span>Bento Completo</span>
+        </button>
+      </div>
+
+      <!-- Live Sync Status Indicator -->
+      <div class="hidden lg:flex items-center gap-3 text-xs font-mono text-gray-400 px-2">
+        <span class="flex items-center gap-1.5">
+          <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+          Riot API: <strong class="text-gray-200">LOL-CHALLENGES-V1</strong>
+        </span>
+        <span>•</span>
+        <span>IGDB / Backloggd Ready</span>
+      </div>
+    </nav>
+
+    <!-- ==========================================
+         MODULE 1: GAMING HUB & HALL DE DESAFIOS
+         ========================================== -->
+    <section id="module-gaming" class="module-section space-y-4">
+      <!-- Gaming Sub-bar: Universe Filter Pills + Sort Selector -->
+      <div class="bento-card p-3.5 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex flex-wrap items-center gap-2" id="gameFilterPills">
+          <button onclick="setGameFilter('all')" data-game="all" class="game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-[#172554] text-blue-200 border border-blue-400/60 transition">
+            Todos os Jogos
+          </button>
+          <button onclick="setGameFilter('League of Legends')" data-game="League of Legends" class="game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 transition flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+            League of Legends
+          </button>
+          <button onclick="setGameFilter('Wild Rift')" data-game="Wild Rift" class="game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 transition flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+            Wild Rift
+          </button>
+          <button onclick="setGameFilter('Counter-Strike')" data-game="Counter-Strike" class="game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 transition flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-orange-400"></span>
+            Counter-Strike
+          </button>
+          <button onclick="setGameFilter('Backlog / Singleplayer')" data-game="Backlog / Singleplayer" class="game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 transition flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+            Singleplayer & Backlog
+          </button>
+        </div>
+
+        <div class="flex items-center gap-3 ml-auto">
+          <div class="hidden sm:flex items-center gap-2 px-3 py-1.5 rounded-xl bg-[#090A0F] border border-white/10 text-xs font-mono">
+            <span class="text-gray-400">Jogos Zerados (Ano):</span>
+            <span class="text-emerald-400 font-bold">34/48</span>
+          </div>
+
+          <label class="text-xs sm:text-sm text-gray-400 font-medium">Ordenar:</label>
+          <select id="gameSortSelect" onchange="renderGamingCards()" class="bg-[#090A0F] text-white text-xs sm:text-sm font-medium px-3.5 py-2 rounded-xl border border-white/15 focus:outline-none focus:border-blue-500 cursor-pointer">
+            <option value="score">Dificuldade (Score)</option>
+            <option value="rarity">Mais Raros (% Global)</option>
+            <option value="recent">Mais Recentes (Data)</option>
+            <option value="hunting">Em Caça (Active Bounties)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Gaming Achievements Grid (Exact dark OLED styling from screenshot + progressive disclosure) -->
+      <div id="gamingCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Populated via JS -->
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 2: PERFORMANCE CORPORAL (CORRIDA & ACADEMIA)
+         ========================================== -->
+    <section id="module-fitness" class="module-section hidden space-y-6">
+      <!-- Sub-module 2A: Corrida (5 Distances Side-by-Side) -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="timer" class="w-5 h-5 text-cyan-400"></i>
+              Desafios de Corrida & Recordes Pessoais (PRs)
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">All-Time PR fixado no topo + Melhor tempo da temporada atual • Clique no card para ver evolução de pace</p>
+          </div>
+          <span class="px-3 py-1 rounded-full text-xs font-mono bg-cyan-500/10 text-cyan-300 border border-cyan-500/25">
+            3/5 Distâncias Desbloqueadas
+          </span>
+        </div>
+
+        <div id="runningCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3.5">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Sub-module 2B: Academia (PRs por Exercício: 1RM | 4-6 Reps | 8-15 Reps) -->
+      <div class="space-y-3">
+        <div class="bento-card p-4 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="dumbbell" class="w-5 h-5 text-emerald-400"></i>
+              Academia • Pesos Máximos por Faixa de Repetição
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">Divisão Oficial: <span class="text-amber-300">1RM (Força Bruta)</span> • <span class="text-blue-300">4–6 Reps (Força Pura)</span> • <span class="text-emerald-300">8–15 Reps (Hipertrofia)</span></p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <!-- Body weight interactive input for Relative Strength -->
+            <div class="flex items-center gap-2 bg-[#090A0F] px-3 py-1.5 rounded-xl border border-white/10">
+              <span class="text-xs font-mono text-gray-400">Peso Corporal:</span>
+              <input id="bodyWeightInput" type="number" value="76" min="40" max="180" onchange="renderGymCards()" class="w-14 bg-transparent text-emerald-400 font-mono font-bold text-sm text-center border-b border-emerald-500/40 focus:outline-none" />
+              <span class="text-xs font-mono text-gray-500">kg</span>
+            </div>
+
+            <!-- Muscle Filter Pills -->
+            <div class="flex flex-wrap items-center gap-1.5" id="muscleFilterPills">
+              <button onclick="setMuscleFilter('all')" data-muscle="all" class="muscle-pill px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">Todos</button>
+              <button onclick="setMuscleFilter('Peito')" data-muscle="Peito" class="muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10">Peito</button>
+              <button onclick="setMuscleFilter('Costas')" data-muscle="Costas" class="muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10">Costas</button>
+              <button onclick="setMuscleFilter('Pernas')" data-muscle="Pernas" class="muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10">Pernas</button>
+              <button onclick="setMuscleFilter('Ombros')" data-muscle="Ombros" class="muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10">Ombros</button>
+              <button onclick="setMuscleFilter('Braços')" data-muscle="Braços" class="muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10">Braços</button>
+            </div>
+          </div>
+        </div>
+
+        <div id="gymCardsGrid" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Sub-module 2C: Calistenia, Consistência & Simetria Corporal -->
+      <div class="space-y-3">
+        <h3 class="text-sm font-mono uppercase tracking-wider text-gray-400 flex items-center gap-2">
+          <i data-lucide="flame" class="w-4 h-4 text-amber-400"></i>
+          Calistenia, Simetria Corporal & Consistência Anual
+        </h3>
+        <div id="calisthenicsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3.5">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 3: IDIOMAS ("MASTERY TREE") & TRINDADE CULTURAL ("VINYL WALL")
+         ========================================== -->
+    <section id="module-languages" class="module-section hidden space-y-6">
+      <!-- Sub-module 3A: Idiomas & Certificações Supremas (CPE C2, DELE C2, JLPT N1) -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="award" class="w-5 h-5 text-purple-400"></i>
+              Árvore de Proficiência em Idiomas (Hábito vs. Certificação Oficial)
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">Camada 1: Consistência/Duolingo • Camada 2: Exames Oficiais de Grau Máximo (CPE C2, DELE C2, JLPT N1)</p>
+          </div>
+          <span class="text-xs font-mono text-purple-300 bg-purple-500/10 border border-purple-500/25 px-3 py-1 rounded-full">
+            Clique no exame final para simular conquista do Certificado Mítico
+          </span>
+        </div>
+
+        <div id="languagesGrid" class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Sub-module 3B: Trindade Cultural (Vinyl Wall: Álbuns, Livros/Mangás & Filmes) -->
+      <div class="space-y-4">
+        <div class="bento-card p-4 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="disc-3" class="w-5 h-5 text-amber-400 animate-spin" style="animation-duration: 8s;"></i>
+              Vinyl Wall & Trindade Cultural (Álbuns, Livros & Filmes)
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">Passe o mouse sobre os álbuns para deslizar o vinil • Clique para ver resenha e faixa favorita</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2" id="cultureFilterButtons">
+            <button onclick="setCultureCategory('albums')" data-cat="albums" class="culture-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5">
+              <i data-lucide="disc" class="w-3.5 h-3.5"></i>
+              Álbuns (172/240 no Ano)
+            </button>
+            <button onclick="setCultureCategory('books')" data-cat="books" class="culture-pill px-3.5 py-1.5 rounded-xl text-xs font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 flex items-center gap-1.5">
+              <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+              Livros & Mangás (68/96)
+            </button>
+            <button onclick="setCultureCategory('movies')" data-cat="movies" class="culture-pill px-3.5 py-1.5 rounded-xl text-xs font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 flex items-center gap-1.5">
+              <i data-lucide="film" class="w-3.5 h-3.5"></i>
+              Filmes & Séries (39/48)
+            </button>
+          </div>
+        </div>
+
+        <div id="cultureWallGrid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ==========================================
+         MODULE 4: LINHA DO TEMPO ("TEMPORADAS DE ANIME") & MAPA ("FOG OF WAR")
+         ========================================== -->
+    <section id="module-timeline" class="module-section hidden space-y-6">
+      <!-- Sub-module 4A: Linha do Tempo em Temporadas / Arcos da Vida -->
+      <div class="space-y-3">
+        <div class="flex flex-wrap items-center justify-between gap-2">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="sparkles" class="w-5 h-5 text-amber-400"></i>
+              Linha do Tempo • Temporadas & Arcos da Vida
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">Contexto da época, Party da temporada (amigos) e Drops desbloqueados (formatura, carro, casamento)</p>
+          </div>
+        </div>
+
+        <div id="seasonsTimelineGrid" class="grid grid-cols-1 lg:grid-cols-2 gap-4">
+          <!-- Populated via JS -->
+        </div>
+      </div>
+
+      <!-- Sub-module 4B: Mapa de Exploração ("Fog of War" Brasil 27 UFs + Mundo + Polaroid Preview) -->
+      <div class="bento-card p-5 space-y-5">
+        <div class="flex flex-wrap items-center justify-between gap-4 border-b border-white/[0.07] pb-4">
+          <div>
+            <h2 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+              <i data-lucide="compass" class="w-5 h-5 text-emerald-400"></i>
+              Mapa de Exploração • "Fog of War" (Brasil & Mundo)
+            </h2>
+            <p class="text-xs text-gray-400 font-mono">Clique em qualquer Estado visitado para ver a Polaroid favorita • Use o botão ao lado para pintar novos estados</p>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-3">
+            <div class="px-3.5 py-1.5 rounded-xl bg-[#090A0F] border border-white/10 font-mono text-xs">
+              Brasil: <span id="brazilProgressCounter" class="text-emerald-400 font-bold">9/27 UFs (33.3%)</span>
+            </div>
+            <button id="togglePaintModeBtn" onclick="toggleMapPaintMode()" class="px-3.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-mono text-emerald-300 flex items-center gap-1.5 transition">
+              <i data-lucide="paint-bucket" class="w-3.5 h-3.5"></i>
+              <span id="paintModeLabel">Modo Pintar Mapa: OFF</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
+          <!-- Left 7 Cols: Interactive Brazil 27 UFs Tactical Grid sorted by Region + World Countries -->
+          <div class="lg:col-span-7 space-y-4">
+            <div class="flex items-center justify-between text-xs font-mono text-gray-400">
+              <span>UNIDADES FEDERATIVAS DO BRASIL (27 UFs)</span>
+              <span class="flex items-center gap-3">
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500/60 inline-block"></span> Desbloqueado</span>
+                <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-white/10 inline-block"></span> Fog of War</span>
+              </span>
+            </div>
+
+            <div id="brazilUfsGrid" class="grid grid-cols-3 sm:grid-cols-5 md:grid-cols-6 gap-2">
+              <!-- Populated via JS -->
+            </div>
+
+            <!-- World Continents / Countries Row -->
+            <div class="pt-3 border-t border-white/[0.07]">
+              <div class="text-xs font-mono text-gray-400 mb-2">EXPANSÃO INTERNACIONAL & PRÓXIMAS EXPEDIÇÕES</div>
+              <div id="worldCountriesRow" class="flex flex-wrap gap-2">
+                <!-- Populated via JS -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 5 Cols: Floating Polaroid Memory Card for Selected UF -->
+          <div class="lg:col-span-5 flex justify-center">
+            <div id="statePolaroidContainer" class="w-full max-w-sm">
+              <!-- Populated via JS -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================
+       SLIDE-OVER PROGRESSIVE DISCLOSURE DRAWER
+       ========================================== -->
+  <div id="detailDrawerBackdrop" onclick="closeDetailDrawer()" class="fixed inset-0 bg-black/75 backdrop-blur-sm z-40 hidden opacity-0 transition-opacity duration-300"></div>
+  <aside id="detailDrawer" class="fixed top-0 right-0 h-full w-full max-w-lg bg-[#12141D] border-l border-white/15 z-50 transform translate-x-full transition-transform duration-300 ease-out flex flex-col justify-between overflow-y-auto">
+    <div id="detailDrawerContent" class="p-6 space-y-6">
+      <!-- Dynamic Content injected by JS -->
+    </div>
+    <div class="p-4 border-t border-white/10 bg-[#090A0F]/90 sticky bottom-0 flex items-center justify-between">
+      <span class="text-xs font-mono text-gray-500">ESC para fechar</span>
+      <button onclick="closeDetailDrawer()" class="px-4 py-2 rounded-xl bg-white/10 hover:bg-white/15 text-xs font-semibold text-white transition">
+        Fechar Inspeção
+      </button>
+    </div>
+  </aside>
+
+  <!-- ==========================================
+       COMMAND PALETTE MODAL (CTRL + K)
+       ========================================== -->
+  <div id="commandPaletteModal" class="fixed inset-0 z-50 hidden items-start justify-center pt-20 px-4">
+    <div onclick="closeCommandPalette()" class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-xl bg-[#12141D] border border-white/15 rounded-2xl shadow-2xl overflow-hidden z-10">
+      <div class="flex items-center px-4 py-3.5 border-b border-white/10 gap-3">
+        <i data-lucide="terminal" class="w-5 h-5 text-blue-400"></i>
+        <input id="commandSearchInput" type="text" oninput="renderCommandResults()" placeholder="Digite um desafio (Odisseia, Veigar), exercício (Supino, Terra), idioma ou estado..." class="w-full bg-transparent text-sm text-white placeholder-gray-500 focus:outline-none font-mono" />
+        <kbd onclick="closeCommandPalette()" class="px-2 py-0.5 text-[10px] font-mono bg-white/5 text-gray-400 rounded border border-white/10 cursor-pointer">ESC</kbd>
+      </div>
+      <div id="commandResultsList" class="max-h-80 overflow-y-auto p-2 divide-y divide-white/[0.05]">
+        <!-- Populated via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       QUICK ADD / EXPORT JSON MODAL FOR GITHUB
+       ========================================== -->
+  <div id="quickAddModal" class="fixed inset-0 z-50 hidden items-center justify-center p-4">
+    <div onclick="closeQuickAddModal()" class="fixed inset-0 bg-black/80 backdrop-blur-md"></div>
+    <div class="relative w-full max-w-lg bg-[#12141D] border border-white/15 rounded-2xl shadow-2xl p-6 z-10 space-y-4">
+      <div class="flex items-center justify-between border-b border-white/10 pb-3">
+        <h3 class="font-bold text-white flex items-center gap-2">
+          <i data-lucide="plus-square" class="w-5 h-5 text-blue-400"></i>
+          Adicionar Nova Conquista & Exportar para GitHub
+        </h3>
+        <button onclick="closeQuickAddModal()" class="text-gray-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <form onsubmit="handleAddAchievement(event)" class="space-y-3 text-xs">
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono">Título da Conquista</label>
+            <input id="newAchTitle" required type="text" placeholder="Ex: Soul Level 1 Dark Souls" class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white focus:outline-none focus:border-blue-500" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono">Universo / Jogo</label>
+            <select id="newAchGame" class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white focus:outline-none focus:border-blue-500">
+              <option value="League of Legends">League of Legends</option>
+              <option value="Wild Rift">Wild Rift</option>
+              <option value="Counter-Strike">Counter-Strike</option>
+              <option value="Backlog / Singleplayer">Backlog / Singleplayer</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-3 gap-3">
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono">Legacy Score (1-1000)</label>
+            <input id="newAchScore" required type="number" min="1" max="1000" value="920" class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono">Raridade (%)</label>
+            <input id="newAchRarity" required type="number" step="0.01" min="0.01" max="100" value="0.8" class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white font-mono" />
+          </div>
+          <div>
+            <label class="block text-gray-400 mb-1 font-mono">Status</label>
+            <select id="newAchStatus" class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white">
+              <option value="unlocked">DESBLOQUEADO</option>
+              <option value="hunting">EM CAÇA</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-gray-400 mb-1 font-mono">Descrição Breve do Feito</label>
+          <textarea id="newAchDesc" required rows="2" placeholder="Descreva a dificuldade e o contexto da conquista..." class="w-full px-3 py-2 rounded-xl bg-[#090A0F] border border-white/15 text-white focus:outline-none focus:border-blue-500"></textarea>
+        </div>
+
+        <div class="flex items-center justify-between pt-2">
+          <button type="button" onclick="copyDatabaseJson()" class="px-3.5 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/15 text-gray-300 font-mono flex items-center gap-1.5">
+            <i data-lucide="copy" class="w-3.5 h-3.5"></i>
+            Copiar JSON Completo
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-xl bg-blue-600 hover:bg-blue-500 text-white font-semibold flex items-center gap-1.5">
+            <i data-lucide="check" class="w-4 h-4"></i>
+            Salvar no Painel
+          </button>
+        </div>
+      </form>
+      <div id="quickAddFeedback" class="hidden text-xs font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/30 rounded-xl p-2.5 text-center"></div>
+    </div>
+  </div>
+
+  <!-- ==========================================
+       APPLICATION DATA & INTERACTIVE LOGIC
+       ========================================== -->
+  <script>
+    // 1. CENTRALIZED STATE & LIFE RPG DATABASE
+    const appData = {
+      activeTab: 'gaming',
+      activeGameFilter: 'all',
+      activeMuscleFilter: 'all',
+      activeCultureCategory: 'albums',
+      mapPaintMode: false,
+      selectedStateCode: 'DF',
+
+      // 5 Pinned Trophies (Top Shelf)
+      pinnedTrophies: [
+        {
+          id: 'pin-1',
+          title: 'Odisseia: Extração (Massacre)',
+          category: 'League of Legends',
+          metric: '0.3% Global • 960 PTS',
+          badge: 'MÍTICO',
+          color: 'amber',
+          linkedType: 'gaming',
+          linkedId: 'lol-odyssey'
+        },
+        {
+          id: 'pin-2',
+          title: 'Farmacêutico UnB & 1º Lugar Residência',
+          category: 'Carreira & Academia',
+          metric: 'CRF/DF • Vigilância',
+          badge: 'CONQUISTA REAL',
+          color: 'emerald',
+          linkedType: 'season',
+          linkedId: 'season-2'
+        },
+        {
+          id: 'pin-3',
+          title: '15 km em 1:22:10',
+          category: 'Performance • Corrida',
+          metric: 'Pace 5:28/km',
+          badge: 'ALL-TIME PR',
+          color: 'cyan',
+          linkedType: 'running',
+          linkedId: 'run-15k'
+        },
+        {
+          id: 'pin-4',
+          title: 'Levantamento Terra: 150 kg',
+          category: 'Academia • 1RM Bruto',
+          metric: '1.97x Peso Corporal',
+          badge: 'FORÇA BRUTA',
+          color: 'purple',
+          linkedType: 'gym',
+          linkedId: 'gym-deadlift'
+        },
+        {
+          id: 'pin-5',
+          title: 'Main Quest: Casamento c/ Mikaely',
+          category: 'Arco Principal • 2026',
+          metric: '08/11/2026 • Lua de Mel RJ',
+          badge: 'MAIN QUEST',
+          color: 'rose',
+          linkedType: 'season',
+          linkedId: 'season-2'
+        }
+      ],
+
+      // Gaming Hub Achievements
+      gamingAchievements: [
+        {
+          id: 'wr-challenger',
+          title: 'Tier Challenger (Desafiante)',
+          game: 'Wild Rift',
+          description: 'Alcançar o topo absoluto da fila ranqueada do servidor.',
+          score: 1000,
+          rarity: 0.02,
+          status: 'hunting',
+          statusLabel: 'EM CAÇA',
+          progress: 78,
+          progressText: 'Grão-Mestre Alta Pontuação → Rumo ao Challenger',
+          date: '2026-10',
+          details: 'Meta suprema de ranqueada. Exige consistência diária de macrogame, controle de objetivos e taxa de vitória superior a 58% contra o topo da fila.',
+          apiEndpoint: 'LOL-CHALLENGES-V1 / RANKED-SOLO'
+        },
+        {
+          id: 'lol-arena-god',
+          title: 'Arena God (Deus da Arena)',
+          game: 'League of Legends',
+          description: 'Conquistar o 1º lugar no modo Arena com 60 campeões diferentes.',
+          score: 990,
+          rarity: 0.1,
+          status: 'hunting',
+          statusLabel: 'EM CAÇA (38/60)',
+          progress: 63,
+          progressText: '38 / 60 Campeões com Top 1 conquistado',
+          date: '2026-09',
+          details: 'Um dos títulos mais cobiçados e difíceis da história recente do League of Legends. Testa adaptabilidade extrema de builds e sinergias em todas as classes de campeões.',
+          apiEndpoint: 'LOL-CHALLENGES-V1 #602001'
+        },
+        {
+          id: 'lol-odyssey',
+          title: 'Odisseia: Extração (Massacre)',
+          game: 'League of Legends',
+          description: 'Vencer o modo mais difícil da Odisseia com equipe fechada e restrição de aprimoramentos.',
+          score: 960,
+          rarity: 0.3,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2018-10',
+          details: 'Evento histórico PvE de 2018. Concluído na dificuldade máxima (Massacre) respeitando a restrição de no máximo 2 ou 3 aprimoramentos para derrotar o Kayn Odisseia.',
+          apiEndpoint: 'LEGACY-EVENT-2018'
+        },
+        {
+          id: 'lol-veigar-doom',
+          title: 'Bots da Maldição do Veigar',
+          game: 'League of Legends',
+          description: 'Sobreviver à dificuldade máxima do caos contra o chefão Veigar e seus bots apelões.',
+          score: 880,
+          rarity: 1.2,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2024-09',
+          details: 'Modo insano de sobrevivência contra IAs tunadas com habilidades gigantescas, maldições de mapa e defesa do Nexus sob pressão constante.',
+          apiEndpoint: 'LOL-CHALLENGES-V1 #402109'
+        },
+        {
+          id: 'wukong-secret',
+          title: 'Black Myth: Wukong — Todos os Chefes Secretos',
+          game: 'Backlog / Singleplayer',
+          description: 'Derrotar Erlang Shen na Montanha Mei e desbloquear o final verdadeiro.',
+          score: 860,
+          rarity: 4.1,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2025-11',
+          details: 'Combate técnico contra Erlang, a Divindade Sagrada, seguido pela batalha colossal contra os Quatro Reis Celestiais e a Casca Quebrada do Grande Sábio.',
+          apiEndpoint: 'IGDB / STEAM-ACHIEVEMENT'
+        },
+        {
+          id: 'cs-clutch-ace',
+          title: 'Clutch 1v5 Ace (Mirage)',
+          game: 'Counter-Strike',
+          description: 'Round vencido sozinho contra 5 oponentes armados no competitivo.',
+          score: 840,
+          rarity: 1.8,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2025-04',
+          details: 'Retake cirúrgico no Bomb A da Mirage utilizando isolamento de ângulos 1x1, utilitárias perfeitas e desarme no último segundo.',
+          apiEndpoint: 'CS2-PREMIER-CLIP'
+        },
+        {
+          id: 'wr-master',
+          title: 'Mestre do Wild Rift',
+          game: 'Wild Rift',
+          description: 'Marco de alto nível competitivo mobile.',
+          score: 810,
+          rarity: 2.5,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2025-06',
+          details: 'Escalada consistente na fila ranqueada mobile com foco em controle de rota, tempo de rotação para Arauto/Dragão e execução mecânica limpa.',
+          apiEndpoint: 'WILD-RIFT-RANKED'
+        },
+        {
+          id: 'disco-elysium-hc',
+          title: 'Disco Elysium — Detetive Hardcore',
+          game: 'Backlog / Singleplayer',
+          description: 'Solucionar o caso de Revachol no modo Hardcore sem recarregar testes falhos.',
+          score: 790,
+          rarity: 3.8,
+          status: 'unlocked',
+          statusLabel: 'DESBLOQUEADO',
+          date: '2026-02',
+          details: 'Uma das experiências narrativas mais densas já criadas, concluída aceitando todas as consequências dos dados e diálogos filosóficos.',
+          apiEndpoint: 'IGDB #26472'
+        }
+      ],
+
+      // Running Distances (5k, 10k, 15k, 21k, 42k)
+      runningPRs: [
+        {
+          id: 'run-5k',
+          distance: '5 km',
+          subtitle: 'Explosão & VO2 Máx',
+          allTimePR: '24:15',
+          pace: '4:51 /km',
+          seasonBest: '24:50',
+          status: 'unlocked',
+          date: '2026-05',
+          hrAvg: '176 bpm',
+          history: [
+            { label: 'Fev/2025', time: '27:10' },
+            { label: 'Ago/2025', time: '25:40' },
+            { label: 'Jan/2026', time: '24:50' },
+            { label: 'Mai/2026 (PR)', time: '24:15' }
+          ],
+          notes: 'Ritmo forte abaixo de 5:00/km sustentado com negative split no quilômetro final.'
+        },
+        {
+          id: 'run-10k',
+          distance: '10 km',
+          subtitle: 'Limiar de Lactato',
+          allTimePR: '52:30',
+          pace: '5:15 /km',
+          seasonBest: '53:40',
+          status: 'unlocked',
+          date: '2026-07',
+          hrAvg: '171 bpm',
+          history: [
+            { label: 'Abr/2025', time: '57:20' },
+            { label: 'Out/2025', time: '54:45' },
+            { label: 'Jul/2026 (PR)', time: '52:30' }
+          ],
+          notes: 'Prova clássica de 10 km em Brasília com controle de respiração e cadência constante em 174 spm.'
+        },
+        {
+          id: 'run-15k',
+          distance: '15 km',
+          subtitle: 'Resistência Aeróbica',
+          allTimePR: '1:22:10',
+          pace: '5:28 /km',
+          seasonBest: '1:23:05',
+          status: 'unlocked',
+          date: '2026-08',
+          hrAvg: '168 bpm',
+          history: [
+            { label: 'Nov/2025', time: '1:28:00' },
+            { label: 'Abr/2026', time: '1:24:30' },
+            { label: 'Ago/2026 (PR)', time: '1:22:10' }
+          ],
+          notes: 'Ponte decisiva rumo à Meia Maratona. Hidratação a cada 5 km e excelente recuperação pós-treino.'
+        },
+        {
+          id: 'run-21k',
+          distance: '21.1 km',
+          subtitle: 'Meia Maratona (Em Caça)',
+          allTimePR: 'Meta < 1:55:00',
+          pace: 'Alvo 5:27 /km',
+          seasonBest: 'Longo: 17.5 km',
+          status: 'hunting',
+          progress: 83,
+          date: 'Alvo 2026/2027',
+          hrAvg: '--',
+          history: [
+            { label: 'Base 15 km', time: 'Concluído' },
+            { label: 'Longo 17.5 km', time: 'Concluído' },
+            { label: '21.1 km Oficial', time: 'Em Caça' }
+          ],
+          notes: 'Próximo grande marco de endurance. Volume semanal sendo ajustado junto com os treinos na BlueFit.'
+        },
+        {
+          id: 'run-42k',
+          distance: '42.2 km',
+          subtitle: 'Maratona (Boss Final)',
+          allTimePR: 'Meta < 4:00:00',
+          pace: 'Alvo 5:41 /km',
+          seasonBest: 'Bloqueado',
+          status: 'locked',
+          progress: 35,
+          date: 'Meta Futura',
+          hrAvg: '--',
+          history: [
+            { label: 'Pré-requisito', time: 'Concluir 21 km' }
+          ],
+          notes: 'O Boss Final do endurance corporal. Reservado para após a consolidação da Meia Maratona.'
+        }
+      ],
+
+      // Gym PRs (1RM | 4-6 Reps Strength | 8-15 Reps Hypertrophy)
+      gymExercises: [
+        {
+          id: 'gym-bench',
+          name: 'Supino Reto (Barra Olímpica)',
+          muscle: 'Peito',
+          equipment: 'Peso Livre',
+          oneRM: 100,
+          strength4to6: 90,
+          hypertrophy8to15: 78,
+          unit: 'kg',
+          date: '2026-08',
+          notes: 'Pausa controlada no peito, escápulas retraídas e pés firmes no solo.'
+        },
+        {
+          id: 'gym-squat',
+          name: 'Agachamento Livre (Back Squat)',
+          muscle: 'Pernas',
+          equipment: 'Barra Livre',
+          oneRM: 130,
+          strength4to6: 116,
+          hypertrophy8to15: 96,
+          unit: 'kg',
+          date: '2026-09',
+          notes: 'Amplitude profunda (quebra da paralela) com foco em estabilidade de core e simetria bilateral.'
+        },
+        {
+          id: 'gym-deadlift',
+          name: 'Levantamento Terra (Deadlift)',
+          muscle: 'Costas',
+          equipment: 'Barra Olímpica',
+          oneRM: 150,
+          strength4to6: 134,
+          hypertrophy8to15: 110,
+          unit: 'kg',
+          date: '2026-09',
+          notes: 'Pegada mista/strap em cargas máximas, coluna neutra e trava completa no topo.'
+        },
+        {
+          id: 'gym-legpress',
+          name: 'Leg Press 45°',
+          muscle: 'Pernas',
+          equipment: 'Máquina',
+          oneRM: 280,
+          strength4to6: 250,
+          hypertrophy8to15: 210,
+          unit: 'kg',
+          date: '2026-07',
+          notes: 'Execução sem retirar o quadril do banco e sem hiperestender os joelhos.'
+        },
+        {
+          id: 'gym-ohp',
+          name: 'Desenvolvimento c/ Halteres',
+          muscle: 'Ombros',
+          equipment: 'Halteres (Peso por lado)',
+          oneRM: 34,
+          strength4to6: 30,
+          hypertrophy8to15: 24,
+          unit: 'kg/lado',
+          date: '2026-08',
+          notes: 'Banco a 75 graus para proteção articular do ombro e amplitude máxima.'
+        },
+        {
+          id: 'gym-row',
+          name: 'Remada Curvada Pronada',
+          muscle: 'Costas',
+          equipment: 'Barra Livre',
+          oneRM: 92,
+          strength4to6: 82,
+          hypertrophy8to15: 70,
+          unit: 'kg',
+          date: '2026-06',
+          notes: 'Tronco inclinado e puxada explosiva na linha umbilical.'
+        },
+        {
+          id: 'gym-curl',
+          name: 'Rosca Direta na Barra W',
+          muscle: 'Braços',
+          equipment: 'Barra W',
+          oneRM: 46,
+          strength4to6: 40,
+          hypertrophy8to15: 34,
+          unit: 'kg',
+          date: '2026-08',
+          notes: 'Cotovelos fixos ao lado do tronco sem roubo lombar.'
+        },
+        {
+          id: 'gym-bulgarian',
+          name: 'Agachamento Búlgaro Unilateral',
+          muscle: 'Pernas',
+          equipment: 'Halteres',
+          oneRM: 32,
+          strength4to6: 28,
+          hypertrophy8to15: 22,
+          unit: 'kg/lado',
+          date: '2026-09',
+          notes: 'Exercício chave para correção de simetria de volume e força da perna esquerda.'
+        }
+      ],
+
+      // Calistenia & Consistência
+      calisthenicsSkills: [
+        {
+          title: 'Meta Anual BlueFit',
+          metric: '128 / 150 Treinos',
+          progress: 85,
+          badge: 'CONSISTÊNCIA',
+          desc: 'Frequência sólida de 3 a 4 sessões semanais ao longo de 2026.'
+        },
+        {
+          title: 'Simetria Perna Esquerda',
+          metric: '96% Equilíbrio E/D',
+          progress: 96,
+          badge: 'SIMETRIA',
+          desc: 'Trabalho unilateral em Búlgaro e Cadeira Extensora igualando força e circunferência.'
+        },
+        {
+          title: '15 Barras Fixas Estritas',
+          metric: '12 / 15 Pull-ups',
+          progress: 80,
+          badge: 'EM CAÇA',
+          desc: 'Queixo acima da barra e extensão total dos braços na descida.'
+        },
+        {
+          title: 'Composição Corporal & NEAT',
+          metric: '16.2% BF • 8.2k Passos',
+          progress: 92,
+          badge: 'META ATINGIDA',
+          desc: 'Dentro da janela estética alvo (15%–18% BF) com rotina ativa.'
+        }
+      ],
+
+      // Languages Mastery Tree
+      languages: [
+        {
+          id: 'lang-en',
+          name: 'Inglês',
+          flag: '🇬🇧',
+          currentLevel: 'C1 Avançado',
+          streak: '420 dias Duolingo + Imersão Diária',
+          habitDetail: 'Leitura fluida de artigos científicos (PubMed/Farmácia), jogos e mídia sem legendas.',
+          scale: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+          completedIndex: 4, // Up to C1
+          bossExam: 'Cambridge C2 Proficiency (CPE)',
+          altExams: 'IELTS 8.5–9.0 • TOEFL iBT 114–120',
+          bossDesc: 'O certificado de nível mais alto oferecido pela Cambridge, atestando domínio pleno do idioma (nível C2 do Quadro Europeu).',
+          bossUnlocked: false
+        },
+        {
+          id: 'lang-es',
+          name: 'Espanhol',
+          flag: '🇪🇸',
+          currentLevel: 'B2 Independente',
+          streak: '215 dias Duolingo + Prática Auditiva',
+          habitDetail: 'Compreensão avançada de cinema latino/espanhol, literatura e conversação em viagens.',
+          scale: ['A1', 'A2', 'B1', 'B2', 'C1', 'C2'],
+          completedIndex: 3, // Up to B2
+          bossExam: 'DELE C2 (Instituto Cervantes)',
+          altExams: 'Ministério da Educação da Espanha',
+          bossDesc: 'Diploma de Español como Lengua Extranjera (Nível C2) — o título oficial definitivo que certifica o grau máximo de competência no idioma.',
+          bossUnlocked: false
+        },
+        {
+          id: 'lang-jp',
+          name: 'Japonês',
+          flag: '🇯🇵',
+          currentLevel: 'N4 Em Progresso',
+          streak: '190 Kanjis Dominados / 2.000',
+          habitDetail: 'Domínio de Hiragana/Katakana, gramática base e imersão constante em animes e mangás.',
+          scale: ['N5', 'N4', 'N3', 'N2', 'N1'],
+          completedIndex: 0, // N5 completed, N4 active
+          bossExam: 'JLPT N1 (Fundação Japão)',
+          altExams: 'Nihongo Noryoku Shiken • 2.000 Kanjis',
+          bossDesc: 'Aplicado no Brasil pela Fundação Japão, o nível N1 é o grau máximo, exigindo domínio avançado de leitura, gramática, vocabulário e compreensão auditiva.',
+          bossUnlocked: false
+        }
+      ],
+
+      // Cultural Wall (Albums, Books, Movies)
+      cultureItems: {
+        albums: [
+          { title: 'Blonde', artist: 'Frank Ocean', year: '2016', rating: '5.0★', favTrack: 'Self Control / Nights', color: 'from-emerald-600 to-teal-900', notes: 'Obra-prima absoluta de R&B contemporâneo e produção minimalista.' },
+          { title: 'Love Deluxe', artist: 'Sade', year: '1992', rating: '5.0★', favTrack: 'No Ordinary Love', color: 'from-indigo-700 to-slate-900', notes: 'Sofisticação atemporal, linhas de baixo perfeitas e ambiência noturna.' },
+          { title: 'IGOR', artist: 'Tyler, The Creator', year: '2019', rating: '5.0★', favTrack: 'EARFQUAKE / GONE, GONE', color: 'from-pink-500 to-rose-900', notes: 'Narrativa coesa do início ao fim com sintetizadores analógicos impecáveis.' },
+          { title: 'Luz', artist: 'Djavan', year: '1982', rating: '5.0★', favTrack: 'Samurai (feat. Stevie Wonder)', color: 'from-amber-500 to-orange-900', notes: 'Harmonia brasileira no estado da arte gravada em Los Angeles.' },
+          { title: 'Nó na Orelha', artist: 'Criolo', year: '2011', rating: '5.0★', favTrack: 'Não Existe Amor em SP', color: 'from-stone-600 to-neutral-900', notes: 'Fusão histórica de rap, samba, reggae e afrobeat.' },
+          { title: '333', artist: 'Matuê', year: '2024', rating: '4.8★', favTrack: 'Crack com Mussilon / 333', color: 'from-blue-600 to-indigo-950', notes: 'Produção psicodélica e virada criativa no trap nacional.' },
+          { title: 'Elo', artist: 'Jorge Vercillo', year: '2002', rating: '4.9★', favTrack: 'Fênix / Que Nem Maré', color: 'from-yellow-600 to-amber-950', notes: 'Melodias sofisticadas da MPB que marcam época.' },
+          { title: 'Cartola (1976)', artist: 'Cartola', year: '1976', rating: '5.0★', favTrack: 'As Rosas Não Falam', color: 'from-red-700 to-stone-900', notes: 'Patrimônio lírico e emocional da música brasileira.' }
+        ],
+        books: [
+          { title: 'Crime e Castigo', artist: 'Fiódor Dostoiévski', year: 'Romance Russo', rating: '5.0★', favTrack: 'Mergulho psicológico em Raskólnikov', color: 'from-red-900 to-slate-950', notes: 'Um dos maiores estudos sobre culpa, moralidade e redenção da literatura mundial.' },
+          { title: 'A Odisseia', artist: 'Homero', year: 'Épico Grego', rating: '5.0★', favTrack: 'O retorno de Odisseu a Ítaca', color: 'from-amber-700 to-stone-950', notes: 'A fundação das narrativas de jornada, astúcia e perseverança.' },
+          { title: 'Duna', artist: 'Frank Herbert', year: 'Sci-Fi', rating: '5.0★', favTrack: 'Ecologia e política em Arrakis', color: 'from-orange-600 to-amber-950', notes: 'Construção de mundo inigualável misturando filosofia, religião e estratégia.' },
+          { title: 'Dom Casmurro', artist: 'Machado de Assis', year: 'Clássico BR', rating: '5.0★', favTrack: 'O narrador não-confiável definitivo', color: 'from-emerald-800 to-slate-950', notes: 'Ironia fina e domínio absoluto da língua portuguesa.' },
+          { title: 'Diários de uma Apotecária', artist: 'Natsu Hyuuga', year: 'Mangá / Light Novel', rating: '5.0★', favTrack: 'Maomao & Toxicologia/Farmácia', color: 'from-teal-600 to-emerald-950', notes: 'Conexão direta com a rotina farmacêutica: investigação de venenos, fármacos e bioquímica imperial.' },
+          { title: 'O Nome da Rosa', artist: 'Umberto Eco', year: 'Mistério Histórico', rating: '4.9★', favTrack: 'O labirinto da biblioteca medieval', color: 'from-purple-900 to-slate-950', notes: 'Semiótica, investigação dedutiva e história medieval.' }
+        ],
+        movies: [
+          { title: 'Oldboy', artist: 'Park Chan-wook', year: '2003', rating: '5.0★', favTrack: 'Plano-sequência do corredor', color: 'from-rose-900 to-black', notes: 'Thriller sul-coreano visceral com uma das maiores reviravoltas do cinema.' },
+          { title: 'Akira', artist: 'Katsuhiro Otomo', year: '1988', rating: '5.0★', favTrack: 'Neo-Tokyo & Cyberpunk', color: 'from-red-600 to-zinc-950', notes: 'Animação feita à mão com nível de detalhe e trilha sonora revolucionários.' },
+          { title: 'O Mal Que Nos Habita', artist: 'Demián Rugna', year: '2023', rating: '4.7★', favTrack: 'Terror folclórico argentino', color: 'from-amber-900 to-black', notes: 'Terror contemporâneo implacável que quebra todas as regras convencionais.' },
+          { title: 'Noites Brutais (Barbarian)', artist: 'Zach Cregger', year: '2022', rating: '4.5★', favTrack: 'Quebra de expectativa no 2º ato', color: 'from-sky-900 to-black', notes: 'Suspense de direção afiada e atmosfera claustrofóbica.' }
+        ]
+      },
+
+      // Seasons / Arcs of Life
+      seasons: [
+        {
+          id: 'season-1',
+          seasonNumber: 'TEMPORADA 01',
+          title: 'Arco da Graduação na UnB & Laboratórios',
+          period: '2020 — 2025',
+          location: 'Universidade de Brasília (UnB) • DF',
+          context: 'Imersão na graduação em Farmácia na UnB, síntese e análise instrumental (HPLC, RMN, IV), estágios em Farmácia Hospitalar (HRS), Atenção Primária (UBS Itapoã) e P&D.',
+          party: ['Mikaely', 'Luiz Gabriel', 'Messias', 'Caíque', 'Felipe'],
+          drops: [
+            { title: 'Ingresso em Farmácia — UnB', date: '2020', badge: 'INÍCIO DO ARCO' },
+            { title: 'Certificação em Aplicação de Injetáveis (CRF/DF)', date: '2024', badge: 'SKILL CLÍNICA' },
+            { title: 'Estágios: UBS Itapoã, Hospital de Sobradinho & P&D', date: '2024–2025', badge: 'CAMPO REAL' },
+            { title: 'Defesa do TCC (Análise Físico-Química) & Diploma UnB', date: '2025', badge: 'BOSS CLEAR' }
+          ]
+        },
+        {
+          id: 'season-2',
+          seasonNumber: 'TEMPORADA 02 (ATUAL)',
+          title: 'Arco da Residência, Frota & Casamento',
+          period: '2026 — Presente',
+          location: 'Asa Norte (SCRN 716) & Planaltina-GO',
+          context: 'Aprovação na Residência Multiprofissional em Vigilância em Saúde (SES-GO / Planaltina), vida a dois na Asa Norte com os gatos Kiki e Maki, carro 0km na garagem e contagem regressiva para o casamento.',
+          party: ['Mikaely (Noiva)', 'Isa', 'Ju', 'Milena', 'Matheus', 'Henrique', 'Thiagão'],
+          drops: [
+            { title: 'Aprovação na Residência em Vigilância em Saúde (RIDE)', date: 'Fev 2026', badge: 'CONQUISTA ÉPICA' },
+            { title: 'Conquista do Fiat Pulse Drive 1.3 Automático 0km', date: '2026', badge: 'MONTARIA LENDÁRIA' },
+            { title: 'Refúgio no Chalé Coral & Férias em Goiânia', date: 'Out 2026', badge: 'CHECKPOINT' },
+            { title: 'Main Quest: Casamento Civil/Religioso & Lua de Mel no RJ', date: '08 Nov 2026', badge: 'EVENTO MÍTICO' }
+          ]
+        }
+      ],
+
+      // Brazil 27 UFs Exploration Map
+      brazilStates: [
+        { code: 'DF', name: 'Distrito Federal', region: 'Centro-Oeste', visited: true, year: 'Base Principal', place: 'Asa Norte, UnB & Lago Paranoá', memory: 'Onde tudo acontece: graduação na UnB, lar na Asa Norte com a Mikaely, Kiki e Maki, e pores do sol inesquecíveis.', gradient: 'from-blue-600 via-indigo-700 to-slate-900' },
+        { code: 'GO', name: 'Goiás', region: 'Centro-Oeste', visited: true, year: '2025–2026', place: 'Planaltina-GO, Formosa (Chalé Coral) & Goiânia', memory: 'Palco da Residência em Vigilância em Saúde, refúgios de fim de semana na mata e férias gastronômicas em Goiânia.', gradient: 'from-emerald-600 via-teal-700 to-slate-900' },
+        { code: 'RJ', name: 'Rio de Janeiro', region: 'Sudeste', visited: true, year: 'Nov 2026', place: 'Cabo Frio, Búzios & Arraial do Cabo', memory: 'Roteiro oficial da Lua de Mel na Região dos Lagos: águas cristalinas, pôr do sol em Búzios e celebração do casamento.', gradient: 'from-cyan-500 via-blue-600 to-indigo-950' },
+        { code: 'SP', name: 'São Paulo', region: 'Sudeste', visited: true, year: 'Visitado', place: 'São Paulo Capital', memory: 'Imersão cultural, gastronomia, eventos e conexão urbana na maior metrópole do país.', gradient: 'from-purple-600 via-slate-800 to-black' },
+        { code: 'MG', name: 'Minas Gerais', region: 'Sudeste', visited: true, year: 'Visitado', place: 'Serras & Cidades Históricas', memory: 'Culinária mineira imbatível, café especial e estradas cercadas por montanhas.', gradient: 'from-amber-600 via-orange-800 to-slate-900' },
+        { code: 'BA', name: 'Bahia', region: 'Nordeste', visited: true, year: 'Visitado', place: 'Litoral Baiano & Chapada', memory: 'Energia única, praias quentes e cultura vibrante.', gradient: 'from-orange-500 via-rose-700 to-slate-900' },
+        { code: 'PR', name: 'Paraná', region: 'Sul', visited: true, year: 'Visitado', place: 'Curitiba & Foz do Iguaçu', memory: 'Parques impecáveis, clima ameno e a força colossal das Cataratas.', gradient: 'from-teal-600 via-emerald-800 to-slate-950' },
+        { code: 'SC', name: 'Santa Catarina', region: 'Sul', visited: true, year: 'Visitado', place: 'Florianópolis & Litoral', memory: 'Praias cercadas por Mata Atlântica e trilhas costeiras.', gradient: 'from-sky-500 via-cyan-800 to-slate-950' },
+        { code: 'TO', name: 'Tocantins', region: 'Norte', visited: true, year: 'Visitado', place: 'Palmas & Jalapão', memory: 'Fervedouros de água transparente e dunas douradas no coração do cerrado.', gradient: 'from-yellow-500 via-amber-700 to-stone-900' },
+        // Unvisited UFs (Fog of War)
+        { code: 'AC', name: 'Acre', region: 'Norte', visited: false },
+        { code: 'AL', name: 'Alagoas', region: 'Nordeste', visited: false },
+        { code: 'AP', name: 'Amapá', region: 'Norte', visited: false },
+        { code: 'AM', name: 'Amazonas', region: 'Norte', visited: false },
+        { code: 'CE', name: 'Ceará', region: 'Nordeste', visited: false },
+        { code: 'ES', name: 'Espírito Santo', region: 'Sudeste', visited: false },
+        { code: 'MA', name: 'Maranhão', region: 'Nordeste', visited: false },
+        { code: 'MT', name: 'Mato Grosso', region: 'Centro-Oeste', visited: false },
+        { code: 'MS', name: 'Mato Grosso do Sul', region: 'Centro-Oeste', visited: false },
+        { code: 'PA', name: 'Pará', region: 'Norte', visited: false },
+        { code: 'PB', name: 'Paraíba', region: 'Nordeste', visited: false },
+        { code: 'PE', name: 'Pernambuco', region: 'Nordeste', visited: false },
+        { code: 'PI', name: 'Piauí', region: 'Nordeste', visited: false },
+        { code: 'RN', name: 'Rio Grande do Norte', region: 'Nordeste', visited: false },
+        { code: 'RS', name: 'Rio Grande do Sul', region: 'Sul', visited: false },
+        { code: 'RO', name: 'Rondônia', region: 'Norte', visited: false },
+        { code: 'RR', name: 'Roraima', region: 'Norte', visited: false },
+        { code: 'SE', name: 'Sergipe', region: 'Nordeste', visited: false }
+      ],
+
+      worldCountries: [
+        { name: 'Brasil (País Base)', status: 'unlocked', flag: '🇧🇷' },
+        { name: 'Argentina / Patagônia', status: 'hunting', flag: '🇦🇷' },
+        { name: 'Espanha (Rota DELE)', status: 'hunting', flag: '🇪🇸' },
+        { name: 'Japão (Expedição JLPT)', status: 'hunting', flag: '🇯🇵' },
+        { name: 'Reino Unido', status: 'hunting', flag: '🇬🇧' },
+        { name: 'Itália', status: 'hunting', flag: '🇮🇹' }
+      ]
+    };
+
+    // Load saved achievements from localStorage if available
+    try {
+      const savedAch = localStorage.getItem('bruterake_life_rpg_achievements');
+      if (savedAch) {
+        appData.gamingAchievements = JSON.parse(savedAch);
+      }
+      const savedStates = localStorage.getItem('bruterake_life_rpg_states');
+      if (savedStates) {
+        appData.brazilStates = JSON.parse(savedStates);
+      }
+    } catch (e) {
+      console.warn('LocalStorage indisponível no modo restrito.');
+    }
+
+    // 2. SPOTLIGHT UI MOUSE TRACKER
+    document.addEventListener('mousemove', (e) => {
+      const cards = document.querySelectorAll('.bento-card');
+      cards.forEach(card => {
+        const rect = card.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        card.style.setProperty('--mouse-x', `${x}px`);
+        card.style.setProperty('--mouse-y', `${y}px`);
+      });
+    });
+
+    // 3. RENDER TOP PINNED TROPHIES & RADAR CHART
+    function renderPinnedTrophies() {
+      const container = document.getElementById('pinnedTrophiesContainer');
+      const colorMap = {
+        amber: 'border-amber-500/35 bg-amber-500/[0.06] text-amber-300',
+        emerald: 'border-emerald-500/35 bg-emerald-500/[0.06] text-emerald-300',
+        cyan: 'border-cyan-500/35 bg-cyan-500/[0.06] text-cyan-300',
+        purple: 'border-purple-500/35 bg-purple-500/[0.06] text-purple-300',
+        rose: 'border-rose-500/35 bg-rose-500/[0.06] text-rose-300'
+      };
+
+      container.innerHTML = appData.pinnedTrophies.map(t => `
+        <div onclick="inspectPinnedTrophy('${t.id}')" class="p-3 rounded-xl bg-[#090A0F]/90 border border-white/[0.08] hover:border-white/25 cursor-pointer transition group flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-1 mb-1.5">
+              <span class="px-1.5 py-0.5 rounded text-[9px] font-mono font-bold border ${colorMap[t.color]}">
+                ${t.badge}
+              </span>
+              <i data-lucide="arrow-up-right" class="w-3.5 h-3.5 text-gray-500 group-hover:text-white transition"></i>
+            </div>
+            <h3 class="text-xs font-bold text-white group-hover:text-blue-300 transition line-clamp-2">${t.title}</h3>
+          </div>
+          <div class="mt-2 pt-2 border-t border-white/[0.05] flex items-center justify-between text-[10px] font-mono">
+            <span class="text-gray-400 truncate">${t.category}</span>
+            <span class="text-gray-200 font-semibold">${t.metric.split('•')[0]}</span>
+          </div>
+        </div>
+      `).join('');
+
+      // Update Total Legacy Score
+      const unlockedSum = appData.gamingAchievements
+        .filter(a => a.status === 'unlocked')
+        .reduce((acc, item) => acc + Number(item.score), 3420); // Base real-life + gaming points
+      document.getElementById('totalLegacyScoreDisplay').textContent = `${unlockedSum.toLocaleString('pt-BR')} PTS`;
+    }
+
+    function renderRadarChart() {
+      const svg = document.getElementById('characterRadarSvg');
+      const stats = [
+        { label: 'GAMING', value: 94 },
+        { label: 'INTELECTO', value: 88 },
+        { label: 'FORÇA', value: 84 },
+        { label: 'ESTAMINA', value: 78 },
+        { label: 'MAPA', value: 65 },
+        { label: 'CULTURA', value: 82 }
+      ];
+
+      const cx = 130, cy = 110, maxR = 76;
+      const levels = [0.25, 0.5, 0.75, 1.0];
+
+      const getPoint = (index, ratio) => {
+        const angle = (Math.PI * 2 * index) / stats.length - Math.PI / 2;
+        return {
+          x: cx + Math.cos(angle) * maxR * ratio,
+          y: cy + Math.sin(angle) * maxR * ratio
+        };
+      };
+
+      let gridPolygons = levels.map(lvl => {
+        const pts = stats.map((_, i) => {
+          const p = getPoint(i, lvl);
+          return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+        }).join(' ');
+        return `<polygon points="${pts}" fill="none" stroke="rgba(255,255,255,0.09)" stroke-width="1" />`;
+      }).join('');
+
+      let axisLines = stats.map((s, i) => {
+        const p = getPoint(i, 1.0);
+        const lp = getPoint(i, 1.24);
+        return `
+          <line x1="${cx}" y1="${cy}" x2="${p.x.toFixed(1)}" y2="${p.y.toFixed(1)}" stroke="rgba(255,255,255,0.08)" stroke-width="1" />
+          <text x="${lp.x.toFixed(1)}" y="${lp.y.toFixed(1)}" fill="#9CA3AF" font-size="9" font-family="JetBrains Mono" font-weight="600" text-anchor="middle" dominant-baseline="middle">${s.label}</text>
+        `;
+      }).join('');
+
+      const dataPts = stats.map((s, i) => {
+        const p = getPoint(i, s.value / 100);
+        return `${p.x.toFixed(1)},${p.y.toFixed(1)}`;
+      }).join(' ');
+
+      const dataDots = stats.map((s, i) => {
+        const p = getPoint(i, s.value / 100);
+        return `<circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="3.5" fill="#60A5FA" stroke="#090A0F" stroke-width="1.5" />`;
+      }).join('');
+
+      svg.innerHTML = `
+        <defs>
+          <linearGradient id="radarFill" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="rgba(59, 130, 246, 0.45)" />
+            <stop offset="100%" stop-color="rgba(16, 185, 129, 0.35)" />
+          </linearGradient>
+        </defs>
+        ${gridPolygons}
+        ${axisLines}
+        <polygon points="${dataPts}" fill="url(#radarFill)" stroke="#38BDF8" stroke-width="2" />
+        ${dataDots}
+      `;
+    }
+
+    // 4. RENDER MODULE 1: GAMING HUB (EXACT MATCH + UPGRADE OF SCREENSHOT)
+    function setGameFilter(game) {
+      appData.activeGameFilter = game;
+      document.querySelectorAll('.game-pill').forEach(btn => {
+        if (btn.dataset.game === game) {
+          btn.className = 'game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-semibold bg-[#172554] text-blue-200 border border-blue-400/60 transition flex items-center gap-1.5';
+        } else {
+          btn.className = 'game-pill px-4 py-1.5 rounded-full text-xs sm:text-sm font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 transition flex items-center gap-1.5';
+        }
+      });
+      renderGamingCards();
+    }
+
+    function renderGamingCards() {
+      const grid = document.getElementById('gamingCardsGrid');
+      const sortBy = document.getElementById('gameSortSelect').value;
+
+      let filtered = appData.gamingAchievements.filter(item => {
+        if (appData.activeGameFilter === 'all') return true;
+        return item.game === appData.activeGameFilter;
+      });
+
+      filtered.sort((a, b) => {
+        if (sortBy === 'score') return b.score - a.score;
+        if (sortBy === 'rarity') return a.rarity - b.rarity;
+        if (sortBy === 'recent') return b.date.localeCompare(a.date);
+        if (sortBy === 'hunting') {
+          if (a.status === 'hunting' && b.status !== 'hunting') return -1;
+          if (a.status !== 'hunting' && b.status === 'hunting') return 1;
+          return b.score - a.score;
+        }
+        return 0;
+      });
+
+      grid.innerHTML = filtered.map(item => {
+        const isHunting = item.status === 'hunting';
+        const isMythic = item.score >= 950 || item.rarity <= 0.5;
+        const rarityClass = isHunting
+          ? 'rarity-hunting'
+          : isMythic
+          ? 'rarity-mythic'
+          : item.score >= 850
+          ? 'rarity-legendary'
+          : '';
+
+        const badgeClass = isHunting
+          ? 'bg-[#172554] text-blue-300 border-blue-400/60'
+          : 'bg-[#052e16] text-emerald-400 border-emerald-500/60';
+
+        return `
+          <article onclick="openGamingDrawer('${item.id}')" class="bento-card ${rarityClass} p-5 cursor-pointer flex flex-col justify-between group">
+            <div>
+              <!-- Top Badge & Game Name Row (Matching Prototype Screenshot) -->
+              <div class="flex items-center justify-between gap-2 mb-3.5">
+                <span class="px-3 py-0.5 rounded-full text-xs font-mono font-medium border ${badgeClass}">
+                  ${item.statusLabel}
+                </span>
+                <span class="text-xs sm:text-sm font-mono text-gray-400 flex items-center gap-1.5">
+                  ${isMythic && !isHunting ? '<span class="text-amber-400">★ MÍTICO</span> • ' : ''}
+                  ${item.game}
+                </span>
+              </div>
+
+              <!-- Title & Description -->
+              <h3 class="text-lg sm:text-xl font-bold text-white group-hover:text-blue-200 transition mb-2">
+                ${item.title}
+              </h3>
+              <p class="text-sm text-gray-400 leading-relaxed">
+                ${item.description}
+              </p>
+
+              <!-- Progress Bar if Hunting -->
+              ${isHunting ? `
+                <div class="mt-4 space-y-1.5">
+                  <div class="flex justify-between text-[11px] font-mono">
+                    <span class="text-blue-300">${item.progressText}</span>
+                    <span class="text-blue-400 font-bold">${item.progress}%</span>
+                  </div>
+                  <div class="w-full h-1.5 bg-black/50 rounded-full overflow-hidden border border-white/5">
+                    <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 rounded-full" style="width: ${item.progress}%"></div>
+                  </div>
+                </div>
+              ` : ''}
+            </div>
+
+            <!-- Bottom Divider with Score & Rarity -->
+            <div class="mt-5 pt-3.5 border-t border-white/[0.08] flex items-center justify-between text-xs sm:text-sm font-mono text-gray-400">
+              <span>Score: <strong class="text-gray-200">${item.score}/1000</strong></span>
+              <span>Raridade: <strong class="${item.rarity <= 0.5 ? 'text-amber-400' : 'text-gray-200'}">${item.rarity}%</strong></span>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      lucide.createIcons();
+    }
+
+    // 5. RENDER MODULE 2: RUNNING, GYM & CALISTHENICS
+    function renderRunningCards() {
+      const grid = document.getElementById('runningCardsGrid');
+      grid.innerHTML = appData.runningPRs.map(run => {
+        const isUnlocked = run.status === 'unlocked';
+        const isHunting = run.status === 'hunting';
+        const badgeHtml = isUnlocked
+          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-emerald-500/15 text-emerald-400 border border-emerald-500/40">RECORD ATIVO</span>'
+          : isHunting
+          ? '<span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-blue-500/15 text-blue-300 border border-blue-500/40">EM CAÇA</span>'
+          : '<span class="px-2 py-0.5 rounded-full text-[10px] font-mono bg-white/5 text-gray-400 border border-white/10">BOSS FINAL</span>';
+
+        return `
+          <div onclick="openRunningDrawer('${run.id}')" class="bento-card p-4 cursor-pointer flex flex-col justify-between group ${isHunting ? 'rarity-hunting' : ''}">
+            <div>
+              <div class="flex items-center justify-between gap-1 mb-2">
+                <span class="text-base font-extrabold text-white font-mono">${run.distance}</span>
+                ${badgeHtml}
+              </div>
+              <p class="text-[11px] text-gray-400 mb-3">${run.subtitle}</p>
+              <div class="py-2.5 px-3 rounded-xl bg-[#090A0F]/90 border border-white/[0.06] mb-2">
+                <div class="text-[10px] font-mono uppercase text-gray-500">All-Time PR</div>
+                <div class="text-xl font-mono font-bold ${isUnlocked ? 'text-cyan-400' : 'text-gray-300'}">${run.allTimePR}</div>
+                <div class="text-[11px] font-mono text-gray-400 mt-0.5">Pace: ${run.pace}</div>
+              </div>
+            </div>
+            <div class="pt-2 border-t border-white/[0.06] flex items-center justify-between text-[11px] font-mono text-gray-400">
+              <span>Ano: <strong class="text-gray-200">${run.seasonBest}</strong></span>
+              <i data-lucide="chevron-right" class="w-4 h-4 text-gray-500 group-hover:text-white transition"></i>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function setMuscleFilter(muscle) {
+      appData.activeMuscleFilter = muscle;
+      document.querySelectorAll('.muscle-pill').forEach(btn => {
+        if (btn.dataset.muscle === muscle) {
+          btn.className = 'muscle-pill px-3 py-1 rounded-lg text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+        } else {
+          btn.className = 'muscle-pill px-3 py-1 rounded-lg text-xs font-medium bg-[#181B26] text-gray-400 hover:text-white border border-white/10';
+        }
+      });
+      renderGymCards();
+    }
+
+    function renderGymCards() {
+      const grid = document.getElementById('gymCardsGrid');
+      const bw = parseFloat(document.getElementById('bodyWeightInput').value) || 76;
+
+      const filtered = appData.gymExercises.filter(ex => {
+        if (appData.activeMuscleFilter === 'all') return true;
+        return ex.muscle === appData.activeMuscleFilter;
+      });
+
+      grid.innerHTML = filtered.map(ex => {
+        const effectiveOneRm = ex.unit.includes('lado') ? ex.oneRM * 2 : ex.oneRM;
+        const ratio = (effectiveOneRm / bw).toFixed(2);
+
+        return `
+          <div onclick="openGymDrawer('${ex.id}')" class="bento-card p-4 cursor-pointer group">
+            <div class="flex items-center justify-between gap-2 mb-3">
+              <div>
+                <div class="flex items-center gap-2">
+                  <h3 class="text-sm sm:text-base font-bold text-white group-hover:text-emerald-300 transition">${ex.name}</h3>
+                </div>
+                <p class="text-xs text-gray-400 font-mono">${ex.muscle} • ${ex.equipment} • Força Relativa: <span class="text-emerald-400 font-semibold">${ratio}x BW</span></p>
+              </div>
+              <span class="px-2.5 py-1 rounded-lg text-[11px] font-mono bg-white/5 text-gray-300 border border-white/10">
+                ${ex.date}
+              </span>
+            </div>
+
+            <!-- 3 Tier PR Badges Side-by-Side (1RM | 4-6 Reps | 8-15 Reps) -->
+            <div class="grid grid-cols-3 gap-2.5">
+              <div class="p-2.5 rounded-xl bg-[#090A0F] border border-amber-500/25">
+                <div class="text-[10px] font-mono text-amber-400 uppercase font-semibold">1RM (Bruta)</div>
+                <div class="text-base sm:text-lg font-mono font-bold text-white mt-0.5">${ex.oneRM} <span class="text-xs font-normal text-gray-400">${ex.unit}</span></div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-[#090A0F] border border-blue-500/25">
+                <div class="text-[10px] font-mono text-blue-400 uppercase font-semibold">4–6 Reps (Força)</div>
+                <div class="text-base sm:text-lg font-mono font-bold text-white mt-0.5">${ex.strength4to6} <span class="text-xs font-normal text-gray-400">${ex.unit}</span></div>
+              </div>
+              <div class="p-2.5 rounded-xl bg-[#090A0F] border border-emerald-500/25">
+                <div class="text-[10px] font-mono text-emerald-400 uppercase font-semibold">8–15 (Hipertrofia)</div>
+                <div class="text-base sm:text-lg font-mono font-bold text-white mt-0.5">${ex.hypertrophy8to15} <span class="text-xs font-normal text-gray-400">${ex.unit}</span></div>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderCalisthenics() {
+      const grid = document.getElementById('calisthenicsGrid');
+      grid.innerHTML = appData.calisthenicsSkills.map(sk => `
+        <div class="bento-card p-4 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">${sk.badge}</span>
+              <span class="text-xs font-mono font-bold text-emerald-400">${sk.progress}%</span>
+            </div>
+            <h4 class="text-sm font-bold text-white">${sk.title}</h4>
+            <p class="text-xs font-mono text-blue-300 mt-0.5">${sk.metric}</p>
+            <p class="text-xs text-gray-400 mt-2 leading-relaxed">${sk.desc}</p>
+          </div>
+          <div class="mt-3 w-full h-1.5 bg-[#090A0F] rounded-full overflow-hidden border border-white/5">
+            <div class="h-full bg-gradient-to-r from-emerald-500 to-cyan-400 rounded-full" style="width: ${sk.progress}%"></div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // 6. RENDER MODULE 3: LANGUAGES MASTERY TREE & CULTURAL VINYL WALL
+    function renderLanguages() {
+      const grid = document.getElementById('languagesGrid');
+      grid.innerHTML = appData.languages.map(lang => {
+        const isMythic = lang.bossUnlocked;
+        return `
+          <div class="bento-card ${isMythic ? 'rarity-mythic' : ''} p-5 flex flex-col justify-between">
+            <div>
+              <!-- Header -->
+              <div class="flex items-center justify-between gap-2 pb-3.5 border-b border-white/[0.08]">
+                <div class="flex items-center gap-2.5">
+                  <span class="text-2xl">${lang.flag}</span>
+                  <div>
+                    <h3 class="text-base font-bold text-white">${lang.name}</h3>
+                    <span class="text-xs font-mono text-purple-300">${lang.currentLevel}</span>
+                  </div>
+                </div>
+                <span class="px-2.5 py-1 rounded-full text-[11px] font-mono ${isMythic ? 'bg-amber-500/20 text-amber-300 border border-amber-400/50' : 'bg-white/5 text-gray-300 border border-white/10'}">
+                  ${isMythic ? '★ CERTIFICADO C2/N1' : 'EM PROGRESSO'}
+                </span>
+              </div>
+
+              <!-- Layer 1: Habit & Duolingo -->
+              <div class="my-3.5 p-3 rounded-xl bg-[#090A0F]/90 border border-white/[0.06]">
+                <div class="text-[10px] font-mono uppercase text-emerald-400 font-semibold flex items-center gap-1">
+                  <span>Camada 1 • Hábito & Imersão Ativa</span>
+                </div>
+                <div class="text-xs font-mono font-bold text-white mt-1">${lang.streak}</div>
+                <p class="text-xs text-gray-400 mt-1">${lang.habitDetail}</p>
+              </div>
+
+              <!-- Layer 2: Official CEFR / JLPT Scale -->
+              <div class="space-y-2">
+                <div class="text-[10px] font-mono uppercase text-gray-400">Camada 2 • Escala Oficial de Proficiência</div>
+                <div class="grid grid-cols-${lang.scale.length} gap-1.5">
+                  ${lang.scale.map((step, idx) => {
+                    const done = idx <= lang.completedIndex || isMythic;
+                    const isBossStep = idx === lang.scale.length - 1;
+                    return `
+                      <div class="py-1.5 rounded-lg text-center font-mono text-xs font-bold border ${
+                        done
+                          ? isBossStep
+                            ? 'bg-amber-500/25 border-amber-400 text-amber-200'
+                            : 'bg-emerald-500/20 border-emerald-500/50 text-emerald-300'
+                          : 'bg-[#090A0F] border-white/10 text-gray-500'
+                      }">
+                        ${step} ${done ? '✓' : ''}
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              </div>
+
+              <!-- Boss Certificate Slot -->
+              <div class="mt-4 p-3.5 rounded-xl border ${isMythic ? 'bg-amber-500/10 border-amber-400/50' : 'bg-[#090A0F]/70 border-white/10'}">
+                <div class="flex items-center justify-between gap-2">
+                  <span class="text-[10px] font-mono uppercase ${isMythic ? 'text-amber-300' : 'text-blue-300'} font-semibold">Boss Final • Exame Oficial</span>
+                  <button onclick="toggleLanguageBoss('${lang.id}')" class="text-[10px] font-mono underline text-gray-400 hover:text-white">
+                    ${isMythic ? 'Reverter Simulação' : 'Simular Aprovação'}
+                  </button>
+                </div>
+                <div class="text-sm font-bold text-white mt-1">${lang.bossExam}</div>
+                <div class="text-[11px] font-mono text-gray-400">${lang.altExams}</div>
+                <p class="text-xs text-gray-400 mt-1.5 leading-relaxed">${lang.bossDesc}</p>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function toggleLanguageBoss(langId) {
+      const lang = appData.languages.find(l => l.id === langId);
+      if (lang) {
+        lang.bossUnlocked = !lang.bossUnlocked;
+        renderLanguages();
+      }
+    }
+
+    function setCultureCategory(cat) {
+      appData.activeCultureCategory = cat;
+      document.querySelectorAll('.culture-pill').forEach(btn => {
+        if (btn.dataset.cat === cat) {
+          btn.className = 'culture-pill px-3.5 py-1.5 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 flex items-center gap-1.5';
+        } else {
+          btn.className = 'culture-pill px-3.5 py-1.5 rounded-xl text-xs font-medium bg-[#181B26] text-gray-300 hover:text-white border border-white/10 flex items-center gap-1.5';
+        }
+      });
+      renderCultureWall();
+    }
+
+    function renderCultureWall() {
+      const grid = document.getElementById('cultureWallGrid');
+      const items = appData.cultureItems[appData.activeCultureCategory] || [];
+      const isAlbum = appData.activeCultureCategory === 'albums';
+
+      grid.innerHTML = items.map((item, idx) => `
+        <div onclick="openCultureDrawer('${appData.activeCultureCategory}', ${idx})" class="bento-card p-4 cursor-pointer vinyl-container group">
+          <div class="relative flex items-center mb-3.5 pr-8">
+            <!-- Album/Book Sleeve -->
+            <div class="relative z-10 w-24 h-24 rounded-xl bg-gradient-to-br ${item.color} border border-white/20 shadow-lg flex flex-col justify-between p-2.5">
+              <span class="text-[9px] font-mono uppercase tracking-wider text-white/75">${item.year}</span>
+              <span class="text-xs font-bold text-white leading-tight line-clamp-2">${item.title}</span>
+            </div>
+
+            <!-- Sliding Vinyl Disc -->
+            ${isAlbum ? `
+              <div class="vinyl-disc absolute left-10 w-20 h-20 rounded-full border border-white/15 flex items-center justify-center shadow-xl">
+                <div class="w-6 h-6 rounded-full bg-gradient-to-tr ${item.color} border-2 border-black"></div>
+              </div>
+            ` : ''}
+          </div>
+
+          <div class="flex items-center justify-between gap-2">
+            <h4 class="text-sm font-bold text-white group-hover:text-amber-300 transition truncate">${item.title}</h4>
+            <span class="text-xs font-mono font-bold text-amber-400 shrink-0">${item.rating}</span>
+          </div>
+          <p class="text-xs text-gray-400 font-mono truncate">${item.artist}</p>
+          <p class="text-[11px] text-gray-500 mt-2 truncate">Destaque: <span class="text-gray-300">${item.favTrack}</span></p>
+        </div>
+      `).join('');
+    }
+
+    // 7. RENDER MODULE 4: ANIME SEASONS TIMELINE & BRAZIL FOG OF WAR MAP
+    function renderSeasonsTimeline() {
+      const grid = document.getElementById('seasonsTimelineGrid');
+      grid.innerHTML = appData.seasons.map(season => `
+        <div class="bento-card p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between gap-2 mb-2">
+              <span class="px-2.5 py-0.5 rounded-full text-[11px] font-mono font-bold bg-amber-500/15 text-amber-300 border border-amber-500/30">
+                ${season.seasonNumber}
+              </span>
+              <span class="text-xs font-mono text-gray-400">${season.period}</span>
+            </div>
+
+            <h3 class="text-lg font-bold text-white">${season.title}</h3>
+            <p class="text-xs font-mono text-blue-300 mt-0.5">${season.location}</p>
+            <p class="text-xs text-gray-300 mt-2.5 leading-relaxed">${season.context}</p>
+
+            <!-- Party da Temporada (Friends Avatars) -->
+            <div class="mt-4 pt-3 border-t border-white/[0.07]">
+              <div class="text-[10px] font-mono uppercase text-gray-400 mb-2">Party da Temporada (Companheiros de Arco)</div>
+              <div class="flex flex-wrap gap-1.5">
+                ${season.party.map(member => `
+                  <span class="px-2.5 py-1 rounded-full text-xs font-mono bg-[#090A0F] text-gray-200 border border-white/10 flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                    ${member}
+                  </span>
+                `).join('')}
+              </div>
+            </div>
+
+            <!-- Drops / Milestones -->
+            <div class="mt-4 pt-3 border-t border-white/[0.07] space-y-2">
+              <div class="text-[10px] font-mono uppercase text-gray-400">Drops & Conquistas Desbloqueadas no Arco</div>
+              ${season.drops.map(drop => `
+                <div class="p-2.5 rounded-xl bg-[#090A0F]/80 border border-white/[0.06] flex items-center justify-between gap-2">
+                  <div>
+                    <div class="text-xs font-semibold text-white">${drop.title}</div>
+                    <div class="text-[10px] font-mono text-gray-400">${drop.date}</div>
+                  </div>
+                  <span class="px-2 py-0.5 rounded text-[10px] font-mono bg-blue-500/15 text-blue-300 border border-blue-500/30 shrink-0">
+                    ${drop.badge}
+                  </span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function toggleMapPaintMode() {
+      appData.mapPaintMode = !appData.mapPaintMode;
+      const btn = document.getElementById('togglePaintModeBtn');
+      const label = document.getElementById('paintModeLabel');
+      if (appData.mapPaintMode) {
+        btn.className = 'px-3.5 py-1.5 rounded-xl bg-amber-500/25 border border-amber-400 text-xs font-mono text-amber-200 flex items-center gap-1.5 transition';
+        label.textContent = 'Modo Pintar Mapa: ATIVO (Clique nas UFs)';
+      } else {
+        btn.className = 'px-3.5 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-500/40 text-xs font-mono text-emerald-300 flex items-center gap-1.5 transition';
+        label.textContent = 'Modo Pintar Mapa: OFF';
+      }
+    }
+
+    function handleStateClick(code) {
+      const st = appData.brazilStates.find(s => s.code === code);
+      if (!st) return;
+
+      if (appData.mapPaintMode) {
+        st.visited = !st.visited;
+        if (st.visited && !st.place) {
+          st.year = '2026';
+          st.place = `Expedição em ${st.name}`;
+          st.memory = `Estado desbloqueado no mapa! Clique para personalizar sua foto favorita e memória de viagem em ${st.name}.`;
+          st.gradient = 'from-emerald-600 via-cyan-800 to-slate-900';
+        }
+        try {
+          localStorage.setItem('bruterake_life_rpg_states', JSON.stringify(appData.brazilStates));
+        } catch (e) {}
+      }
+
+      appData.selectedStateCode = code;
+      renderExplorationMap();
+    }
+
+    function renderExplorationMap() {
+      const grid = document.getElementById('brazilUfsGrid');
+      const visitedCount = appData.brazilStates.filter(s => s.visited).length;
+      const pct = ((visitedCount / 27) * 100).toFixed(1);
+      document.getElementById('brazilProgressCounter').textContent = `${visitedCount}/27 UFs (${pct}%)`;
+
+      grid.innerHTML = appData.brazilStates.map(st => {
+        const isSelected = st.code === appData.selectedStateCode;
+        const baseCls = st.visited ? 'uf-tile-unlocked' : 'uf-tile-locked';
+        const ringCls = isSelected ? 'ring-2 ring-amber-400' : '';
+        return `
+          <button onclick="handleStateClick('${st.code}')" class="${baseCls} ${ringCls} p-2.5 rounded-xl text-left transition hover:scale-[1.03] flex flex-col justify-between">
+            <div class="flex items-center justify-between w-full">
+              <span class="font-mono font-bold text-sm">${st.code}</span>
+              <span class="text-[10px] font-mono">${st.visited ? '✓' : '🔒'}</span>
+            </div>
+            <span class="text-[10px] truncate w-full mt-1 opacity-80">${st.name}</span>
+          </button>
+        `;
+      }).join('');
+
+      // World Countries
+      const worldRow = document.getElementById('worldCountriesRow');
+      worldRow.innerHTML = appData.worldCountries.map(c => `
+        <div class="px-3 py-1.5 rounded-xl text-xs font-mono border ${
+          c.status === 'unlocked'
+            ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-300'
+            : 'bg-[#090A0F] border-white/10 text-gray-400'
+        } flex items-center gap-1.5">
+          <span>${c.flag}</span>
+          <span>${c.name}</span>
+        </div>
+      `).join('');
+
+      // Render Floating Polaroid Card for Selected State
+      const sel = appData.brazilStates.find(s => s.code === appData.selectedStateCode) || appData.brazilStates[0];
+      const polaroid = document.getElementById('statePolaroidContainer');
+
+      if (sel.visited) {
+        polaroid.innerHTML = `
+          <div class="polaroid-card bg-[#F8FAFC] text-slate-900 p-4 rounded-2xl shadow-2xl border border-white/20">
+            <div class="h-44 rounded-xl bg-gradient-to-br ${sel.gradient || 'from-blue-600 to-slate-900'} p-4 flex flex-col justify-between text-white relative overflow-hidden">
+              <div class="flex items-center justify-between z-10">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-black/40 backdrop-blur-md">
+                  UF: ${sel.code} • ${sel.year || 'Visitado'}
+                </span>
+                <span class="text-xs font-mono bg-emerald-500/30 border border-emerald-300/40 px-2 py-0.5 rounded-full">
+                  DESBLOQUEADO
+                </span>
+              </div>
+              <div class="z-10">
+                <div class="text-xs font-mono uppercase tracking-wider text-white/80">${sel.region}</div>
+                <div class="text-xl font-extrabold">${sel.name}</div>
+                <div class="text-xs text-white/90">${sel.place || ''}</div>
+              </div>
+            </div>
+            <div class="pt-3.5 px-1">
+              <div class="font-mono text-[11px] uppercase tracking-wider text-slate-500">Memória & Polaroid Favorita</div>
+              <p class="text-xs text-slate-700 mt-1 leading-relaxed font-medium">
+                "${sel.memory}"
+              </p>
+            </div>
+          </div>
+        `;
+      } else {
+        polaroid.innerHTML = `
+          <div class="bento-card p-6 text-center space-y-3 border-dashed">
+            <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 mx-auto flex items-center justify-center font-mono font-bold text-gray-400">
+              ${sel.code}
+            </div>
+            <h4 class="text-base font-bold text-white">${sel.name} (${sel.region})</h4>
+            <p class="text-xs text-gray-400">Este estado ainda está sob a <strong>Névoa de Guerra (Fog of War)</strong>. Ative o botão "Modo Pintar Mapa" acima ou clique abaixo para desbloquear!</p>
+            <button onclick="unlockStateDirectly('${sel.code}')" class="px-4 py-2 rounded-xl bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-500/40 text-xs font-mono font-semibold text-emerald-300 transition">
+              + Desbloquear ${sel.name} Agora
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function unlockStateDirectly(code) {
+      const st = appData.brazilStates.find(s => s.code === code);
+      if (st) {
+        st.visited = true;
+        st.year = '2026';
+        st.place = `Expedição ${st.name}`;
+        st.memory = `Estado pintado e desbloqueado no mapa de conquistas!`;
+        st.gradient = 'from-emerald-600 via-teal-700 to-slate-900';
+        renderExplorationMap();
+      }
+    }
+
+    // 8. TAB NAVIGATION & HUD TOGGLE
+    function switchMainTab(tabName) {
+      appData.activeTab = tabName;
+
+      // Update Tab Button Styles
+      document.querySelectorAll('.main-tab-btn').forEach(btn => {
+        if (btn.dataset.tab === tabName) {
+          btn.className = 'main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-semibold transition flex items-center gap-2 bg-[#172554] text-blue-200 border border-blue-500/40 shadow-sm';
+        } else {
+          btn.className = 'main-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-medium text-gray-400 hover:text-white transition flex items-center gap-2 border border-transparent';
+        }
+      });
+
+      // Show/Hide Sections
+      const sections = {
+        gaming: document.getElementById('module-gaming'),
+        fitness: document.getElementById('module-fitness'),
+        languages: document.getElementById('module-languages'),
+        timeline: document.getElementById('module-timeline')
+      };
+
+      Object.keys(sections).forEach(key => {
+        if (tabName === 'all' || key === tabName) {
+          sections[key].classList.remove('hidden');
+        } else {
+          sections[key].classList.add('hidden');
+        }
+      });
+
+      lucide.createIcons();
+    }
+
+    function toggleCharacterHud() {
+      const hud = document.getElementById('characterHudSection');
+      hud.classList.toggle('hidden');
+    }
+
+    // 9. SLIDE-OVER DRAWER INSPECTOR (PROGRESSIVE DISCLOSURE)
+    function showDrawer(htmlContent) {
+      const backdrop = document.getElementById('detailDrawerBackdrop');
+      const drawer = document.getElementById('detailDrawer');
+      const content = document.getElementById('detailDrawerContent');
+
+      content.innerHTML = htmlContent;
+      backdrop.classList.remove('hidden');
+      setTimeout(() => {
+        backdrop.classList.remove('opacity-0');
+        drawer.classList.remove('translate-x-full');
+      }, 10);
+      lucide.createIcons();
+    }
+
+    function closeDetailDrawer() {
+      const backdrop = document.getElementById('detailDrawerBackdrop');
+      const drawer = document.getElementById('detailDrawer');
+      backdrop.classList.add('opacity-0');
+      drawer.classList.add('translate-x-full');
+      setTimeout(() => {
+        backdrop.classList.add('hidden');
+      }, 280);
+    }
+
+    function openGamingDrawer(id) {
+      const item = appData.gamingAchievements.find(a => a.id === id);
+      if (!item) return;
+
+      showDrawer(`
+        <div class="space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-blue-500/15 text-blue-300 border border-blue-500/30">
+              ${item.game}
+            </span>
+            <span class="text-xs font-mono text-gray-400">${item.apiEndpoint || 'CUSTOM-RECORD'}</span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-bold text-white">${item.title}</h2>
+            <p class="text-sm text-gray-300 mt-2 leading-relaxed">${item.description}</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 p-4 rounded-2xl bg-[#090A0F] border border-white/10 font-mono">
+            <div>
+              <div class="text-[10px] text-gray-400 uppercase">Legacy Score</div>
+              <div class="text-lg font-bold text-amber-400">${item.score}/1000</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-gray-400 uppercase">Raridade Global</div>
+              <div class="text-lg font-bold text-cyan-400">${item.rarity}%</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-gray-400 uppercase">Data / Status</div>
+              <div class="text-sm font-bold text-emerald-400 mt-1">${item.date}</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#090A0F]/70 border border-white/[0.07] space-y-2">
+            <div class="text-xs font-mono uppercase text-gray-400">Análise de Dificuldade & Bastidores</div>
+            <p class="text-xs text-gray-300 leading-relaxed">${item.details}</p>
+          </div>
+        </div>
+      `);
+    }
+
+    function openRunningDrawer(id) {
+      const run = appData.runningPRs.find(r => r.id === id);
+      if (!run) return;
+
+      showDrawer(`
+        <div class="space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+              Performance Corporal • Corrida
+            </span>
+            <span class="text-xs font-mono text-gray-400">${run.date}</span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-bold text-white">Desafio ${run.distance} — ${run.subtitle}</h2>
+            <p class="text-xs text-gray-400 font-mono mt-1">FC Média Registrada: ${run.hrAvg}</p>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3 p-4 rounded-2xl bg-[#090A0F] border border-white/10 font-mono">
+            <div>
+              <div class="text-[10px] text-gray-400 uppercase">All-Time PR</div>
+              <div class="text-2xl font-bold text-cyan-400">${run.allTimePR}</div>
+              <div class="text-xs text-gray-400">Pace: ${run.pace}</div>
+            </div>
+            <div>
+              <div class="text-[10px] text-gray-400 uppercase">Melhor do Ano (2026)</div>
+              <div class="text-xl font-bold text-white mt-1">${run.seasonBest}</div>
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <div class="text-xs font-mono uppercase text-gray-400">Histórico de Evolução na Distância</div>
+            <div class="space-y-2">
+              ${run.history.map(h => `
+                <div class="p-3 rounded-xl bg-[#090A0F] border border-white/[0.06] flex justify-between font-mono text-xs">
+                  <span class="text-gray-400">${h.label}</span>
+                  <span class="text-emerald-400 font-bold">${h.time}</span>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#090A0F]/70 border border-white/[0.07]">
+            <div class="text-xs font-mono uppercase text-gray-400 mb-1">Notas de Prova / Treino</div>
+            <p class="text-xs text-gray-300 leading-relaxed">${run.notes}</p>
+          </div>
+        </div>
+      `);
+    }
+
+    function openGymDrawer(id) {
+      const ex = appData.gymExercises.find(e => e.id === id);
+      if (!ex) return;
+      const bw = parseFloat(document.getElementById('bodyWeightInput').value) || 76;
+      const effectiveOneRm = ex.unit.includes('lado') ? ex.oneRM * 2 : ex.oneRM;
+      const ratio = (effectiveOneRm / bw).toFixed(2);
+
+      showDrawer(`
+        <div class="space-y-5">
+          <div class="flex items-center justify-between">
+            <span class="px-3 py-1 rounded-full text-xs font-mono font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+              ${ex.muscle} • ${ex.equipment}
+            </span>
+            <span class="text-xs font-mono text-gray-400">PR: ${ex.date}</span>
+          </div>
+
+          <div>
+            <h2 class="text-2xl font-bold text-white">${ex.name}</h2>
+            <p class="text-xs font-mono text-emerald-400 mt-1">Força Relativa Calculada: ${ratio}x Peso Corporal (${bw} kg)</p>
+          </div>
+
+          <div class="space-y-2.5 font-mono">
+            <div class="p-3.5 rounded-xl bg-[#090A0F] border border-amber-500/30 flex justify-between items-center">
+              <div>
+                <div class="text-xs text-amber-400 font-bold">1RM (Força Bruta Máxima)</div>
+                <div class="text-[11px] text-gray-400">1 Repetição Máxima Estrita</div>
+              </div>
+              <div class="text-xl font-bold text-white">${ex.oneRM} ${ex.unit}</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-[#090A0F] border border-blue-500/30 flex justify-between items-center">
+              <div>
+                <div class="text-xs text-blue-400 font-bold">Faixa de Força Pura (4 a 6 Reps)</div>
+                <div class="text-[11px] text-gray-400">Carga máxima para série de força</div>
+              </div>
+              <div class="text-xl font-bold text-white">${ex.strength4to6} ${ex.unit}</div>
+            </div>
+
+            <div class="p-3.5 rounded-xl bg-[#090A0F] border border-emerald-500/30 flex justify-between items-center">
+              <div>
+                <div class="text-xs text-emerald-400 font-bold">Faixa de Hipertrofia (8 a 15 Reps)</div>
+                <div class="text-[11px] text-gray-400">Série de trabalho de hipertrofia</div>
+              </div>
+              <div class="text-xl font-bold text-white">${ex.hypertrophy8to15} ${ex.unit}</div>
+            </div>
+          </div>
+
+          <div class="p-4 rounded-2xl bg-[#090A0F]/70 border border-white/[0.07]">
+            <div class="text-xs font-mono uppercase text-gray-400 mb-1">Padrão biomecânico & Execução</div>
+            <p class="text-xs text-gray-300 leading-relaxed">${ex.notes}</p>
+          </div>
+        </div>
+      `);
+    }
+
+    function openCultureDrawer(cat, idx) {
+      const item = appData.cultureItems[cat][idx];
+      if (!item) return;
+
+      showDrawer(`
+        <div class="space-y-5">
+          <div class="h-36 rounded-2xl bg-gradient-to-br ${item.color} p-5 flex flex-col justify-between border border-white/15">
+            <span class="text-xs font-mono uppercase tracking-wider text-white/80">${item.year}</span>
+            <div>
+              <h2 class="text-2xl font-extrabold text-white">${item.title}</h2>
+              <p class="text-sm font-mono text-white/90">${item.artist}</p>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-between p-4 rounded-xl bg-[#090A0F] border border-white/10 font-mono">
+            <span class="text-xs text-gray-400">Avaliação Pessoal</span>
+            <span class="text-lg font-bold text-amber-400">${item.rating}</span>
+          </div>
+
+          <div class="p-4 rounded-xl bg-[#090A0F]/80 border border-white/[0.07] space-y-2">
+            <div class="text-xs font-mono uppercase text-gray-400">Faixa / Ponto Alto Favorito</div>
+            <div class="text-sm font-bold text-white">${item.favTrack}</div>
+            <p class="text-xs text-gray-300 leading-relaxed pt-2 border-t border-white/[0.06]">${item.notes}</p>
+          </div>
+        </div>
+      `);
+    }
+
+    function inspectPinnedTrophy(pinId) {
+      const pin = appData.pinnedTrophies.find(p => p.id === pinId);
+      if (!pin) return;
+      if (pin.linkedType === 'gaming') openGamingDrawer(pin.linkedId);
+      else if (pin.linkedType === 'running') openRunningDrawer(pin.linkedId);
+      else if (pin.linkedType === 'gym') openGymDrawer(pin.linkedId);
+      else {
+        switchMainTab('timeline');
+      }
+    }
+
+    // 10. COMMAND PALETTE (CTRL + K)
+    function openCommandPalette() {
+      const modal = document.getElementById('commandPaletteModal');
+      const input = document.getElementById('commandSearchInput');
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      input.value = '';
+      renderCommandResults();
+      setTimeout(() => input.focus(), 30);
+    }
+
+    function closeCommandPalette() {
+      const modal = document.getElementById('commandPaletteModal');
+      modal.classList.add('hidden');
+      modal.classList.remove('flex');
+    }
+
+    function renderCommandResults() {
+      const query = document.getElementById('commandSearchInput').value.toLowerCase().trim();
+      const list = document.getElementById('commandResultsList');
+
+      const allItems = [
+        ...appData.gamingAchievements.map(a => ({
+          title: a.title,
+          sub: `Gaming • ${a.game} • Score ${a.score}`,
+          action: () => { switchMainTab('gaming'); openGamingDrawer(a.id); closeCommandPalette(); }
+        })),
+        ...appData.runningPRs.map(r => ({
+          title: `Corrida ${r.distance} (${r.allTimePR})`,
+          sub: `Performance • Pace ${r.pace}`,
+          action: () => { switchMainTab('fitness'); openRunningDrawer(r.id); closeCommandPalette(); }
+        })),
+        ...appData.gymExercises.map(g => ({
+          title: `${g.name} — 1RM: ${g.oneRM}${g.unit}`,
+          sub: `Academia • ${g.muscle}`,
+          action: () => { switchMainTab('fitness'); openGymDrawer(g.id); closeCommandPalette(); }
+        })),
+        ...appData.languages.map(l => ({
+          title: `Idioma: ${l.name} (${l.bossExam})`,
+          sub: `Intelecto • ${l.currentLevel}`,
+          action: () => { switchMainTab('languages'); closeCommandPalette(); }
+        })),
+        ...appData.brazilStates.filter(s => s.visited).map(s => ({
+          title: `Mapa: ${s.name} (${s.code})`,
+          sub: `Exploração • ${s.place}`,
+          action: () => { switchMainTab('timeline'); handleStateClick(s.code); closeCommandPalette(); }
+        }))
+      ];
+
+      const matches = allItems.filter(it =>
+        it.title.toLowerCase().includes(query) || it.sub.toLowerCase().includes(query)
+      ).slice(0, 10);
+
+      window._cmdMatches = matches;
+
+      if (matches.length === 0) {
+        list.innerHTML = `<div class="p-4 text-center text-xs font-mono text-gray-500">Nenhum registro encontrado para "${query}".</div>`;
+        return;
+      }
+
+      list.innerHTML = matches.map((m, i) => `
+        <button onclick="window._cmdMatches[${i}].action()" class="w-full px-3.5 py-2.5 text-left hover:bg-white/5 flex items-center justify-between rounded-xl transition">
+          <div>
+            <div class="text-xs font-bold text-white">${m.title}</div>
+            <div class="text-[11px] font-mono text-gray-400">${m.sub}</div>
+          </div>
+          <span class="text-[10px] font-mono text-blue-400">Abrir ↵</span>
+        </button>
+      `).join('');
+    }
+
+    // Keyboard shortcuts (Ctrl+K / Escape)
+    document.addEventListener('keydown', (e) => {
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        openCommandPalette();
+      }
+      if (e.key === 'Escape') {
+        closeCommandPalette();
+        closeDetailDrawer();
+        closeQuickAddModal();
+      }
+    });
+
+    // 11. QUICK ADD ACHIEVEMENT & COPY JSON FOR GITHUB
+    function openQuickAddModal() {
+      const m = document.getElementById('quickAddModal');
+      m.classList.remove('hidden');
+      m.classList.add('flex');
+    }
+
+    function closeQuickAddModal() {
+      const m = document.getElementById('quickAddModal');
+      m.classList.add('hidden');
+      m.classList.remove('flex');
+      document.getElementById('quickAddFeedback').classList.add('hidden');
+    }
+
+    function handleAddAchievement(e) {
+      e.preventDefault();
+      const title = document.getElementById('newAchTitle').value.trim();
+      const game = document.getElementById('newAchGame').value;
+      const score = Number(document.getElementById('newAchScore').value);
+      const rarity = Number(document.getElementById('newAchRarity').value);
+      const status = document.getElementById('newAchStatus').value;
+      const description = document.getElementById('newAchDesc').value.trim();
+
+      const newObj = {
+        id: 'custom-' + Date.now(),
+        title,
+        game,
+        description,
+        score,
+        rarity,
+        status,
+        statusLabel: status === 'hunting' ? 'EM CAÇA' : 'DESBLOQUEADO',
+        progress: status === 'hunting' ? 50 : 100,
+        progressText: status === 'hunting' ? 'Meta adicionada no painel' : 'Concluído',
+        date: new Date().toISOString().slice(0, 7),
+        details: description,
+        apiEndpoint: 'GITHUB-CUSTOM-ENTRY'
+      };
+
+      appData.gamingAchievements.unshift(newObj);
+      try {
+        localStorage.setItem('bruterake_life_rpg_achievements', JSON.stringify(appData.gamingAchievements));
+      } catch (err) {}
+
+      renderGamingCards();
+      renderPinnedTrophies();
+
+      const fb = document.getElementById('quickAddFeedback');
+      fb.textContent = `Conquista "${title}" adicionada com sucesso ao Gaming Hub!`;
+      fb.classList.remove('hidden');
+      e.target.reset();
+    }
+
+    function copyDatabaseJson() {
+      const jsonStr = JSON.stringify(appData.gamingAchievements, null, 2);
+      const textarea = document.createElement('textarea');
+      textarea.value = jsonStr;
+      document.body.appendChild(textarea);
+      textarea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textarea);
+
+      const fb = document.getElementById('quickAddFeedback');
+      fb.textContent = 'JSON copiado para a área de transferência! Pronto para colar no seu repositório do GitHub.';
+      fb.classList.remove('hidden');
+    }
+
+    // INITIALIZE DASHBOARD ON LOAD
+    window.onload = function () {
+      renderPinnedTrophies();
+      renderRadarChart();
+      renderGamingCards();
+      renderRunningCards();
+      renderGymCards();
+      renderCalisthenics();
+      renderLanguages();
+      renderCultureWall();
+      renderSeasonsTimeline();
+      renderExplorationMap();
+      lucide.createIcons();
+    };
+  </script>
+</body>
+</html>
