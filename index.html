@@ -13,7 +13,7 @@
       color: #0F172A;
     }
 
-    /* Card limpo com imagem e fade suave para o branco */
+    /* Card limpo com imagem e  suave para o branco */
     .theme-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
@@ -28,7 +28,7 @@
       border-color: #CBD5E1;
     }
 
-    /* Container da imagem do card com o efeito Fade */
+    /* Container da imagem do card com o efeito  */
     .card-fade-header {
       position: relative;
       height: 150px;
@@ -37,7 +37,7 @@
       background-position: center;
       background-color: #F1F5F9;
     }
-    .card-fade-header::after {
+    .card--header::after {
       content: "";
       position: absolute;
       inset: 0;
@@ -724,7 +724,7 @@
       grid.innerHTML = list.map(item => `
         <div class="theme-card flex flex-col justify-between" onclick="inspectGameCard('${item.id}')">
           <div>
-            <div class="card-fade-header" style="background-image: url('${item.img}')">
+            <div class="card--header" style="background-image: url('${item.img}')">
               <div class="absolute top-3 left-3 z-10">
                 <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200 shadow-sm">
                   ${item.game}
@@ -853,7 +853,7 @@
       const grid = document.getElementById(gridId);
       grid.innerHTML = appData[arrayKey].map(item => `
         <div class="theme-card flex flex-col justify-between" onclick="inspectEnduranceCard('${arrayKey}', '${item.id}')">
-          <div class="card-fade-header" style="background-image: url('${item.img}'); height: 120px;">
+          <div class="card--header" style="background-image: url('${item.img}'); height: 120px;">
             <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-sm">
               ${item.dist}
             </span>
@@ -945,7 +945,7 @@
       grid.innerHTML = list.map(item => `
         <div class="theme-card flex flex-col justify-between" onclick="inspectBodySkill('${item.id}')">
           <div>
-            <div class="card-fade-header" style="background-image: url('${item.img}'); height: 135px;">
+            <div class="card--header" style="background-image: url('${item.img}'); height: 135px;">
               <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
                 ${item.category}
               </span>
@@ -1047,7 +1047,7 @@
       const grid = document.getElementById('gym-grid');
       grid.innerHTML = list.map(item => `
         <div class="theme-card" onclick="inspectGymCard('${item.id}')">
-          <div class="card-fade-header" style="background-image: url('${item.img}'); height: 120px;">
+          <div class="card--header" style="background-image: url('${item.img}'); height: 120px;">
             <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-slate-700 border border-slate-200">
               ${item.group}
             </span>
@@ -1139,7 +1139,7 @@
       grid.innerHTML = appData.languages.map(l => `
         <div class="theme-card flex flex-col justify-between" onclick="inspectLanguageCard('${l.id}')">
           <div>
-            <div class="card-fade-header" style="background-image: url('${l.img}'); height: 135px;">
+            <div class="card--header" style="background-image: url('${l.img}'); height: 135px;">
               <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-900 border border-slate-200">
                 ${l.lang}
               </span>
@@ -1233,7 +1233,7 @@
       const grid = document.getElementById('albums-grid');
       grid.innerHTML = appData.albums.map(a => `
         <div class="theme-card" onclick="inspectAlbumCard('${a.id}')">
-          <div class="card-fade-header" style="background-image: url('${a.img}'); height: 160px;">
+          <div class="card--header" style="background-image: url('${a.img}'); height: 160px;">
             <span class="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/95 text-slate-900 shadow-sm">
               ★ ${a.rating}
             </span>
@@ -1303,7 +1303,7 @@
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             ${season.events.map(ev => `
               <div class="theme-card" onclick="inspectTimelineEvent('${season.id}', '${ev.id}')">
-                <div class="card-fade-header" style="background-image: url('${ev.img}'); height: 155px;">
+                <div class="card--header" style="background-image: url('${ev.img}'); height: 155px;">
                   <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
                     ${ev.date}
                   </span>
@@ -1482,7 +1482,7 @@
       const filtered = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
       document.getElementById('map-places-grid').innerHTML = filtered.map(place => `
         <div class="theme-card" onclick="inspectMapPlace('${place.id}')">
-          <div class="card-fade-header" style="background-image: url('${place.img}'); height: 150px;">
+          <div class="card--header" style="background-image: url('${place.img}'); height: 150px;">
             <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200">
               ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
             </span>
