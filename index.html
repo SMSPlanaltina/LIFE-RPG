@@ -71,116 +71,226 @@
 </head>
 <body class="min-h-screen pb-20">
 
-  <!-- CABEÇALHO E NAVEGAÇÃO DAS 7 ABAS SEPARADAS -->
-  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4">
-      <div class="flex items-center justify-between">
-        <h1 class="text-xl font-bold tracking-tight text-slate-900">Arquivo Pessoal de Conquistas</h1>
+  <!-- CABEÇALHO COM ÍCONES NAS ABAS -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-lg shadow-sm">
+          🏆
+        </div>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight text-slate-900">Sala de Conquistas</h1>
+          <p class="text-xs text-slate-500">Registro Pessoal de Desafios, Recordes & Marcos</p>
+        </div>
       </div>
 
-      <!-- Menu das 7 Abas -->
-      <nav class="flex items-center gap-2 overflow-x-auto pb-1">
-        <button class="tab-btn active" onclick="switchTab('jogos', this)">Jogos</button>
-        <button class="tab-btn" onclick="switchTab('corrida', this)">Corrida</button>
-        <button class="tab-btn" onclick="switchTab('academia', this)">Academia</button>
-        <button class="tab-btn" onclick="switchTab('idiomas', this)">Idiomas</button>
-        <button class="tab-btn" onclick="switchTab('albuns', this)">Álbuns</button>
-        <button class="tab-btn" onclick="switchTab('timeline', this)">Linha do Tempo</button>
-        <button class="tab-btn" onclick="switchTab('mapa', this)">Mapa</button>
+      <!-- Menu das 6 Abas com Ícones -->
+      <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80">
+        <button class="tab-btn active flex items-center gap-2" onclick="switchTab('jogos', this)">
+          <span>🎮</span><span>Jogos</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('exercicio', this)">
+          <span>🏋️</span><span>Exercício</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('idiomas', this)">
+          <span>🌍</span><span>Idiomas</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('albuns', this)">
+          <span>💿</span><span>Álbuns</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('timeline', this)">
+          <span>⏳</span><span>Linha do Tempo</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('mapa', this)">
+          <span>🗺️</span><span>Mapa</span>
+        </button>
       </nav>
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main class="max-w-6xl mx-auto px-4 pt-8">
+  <!-- CONTEÚDO PRINCIPAL (TODAS AS SECTIONS FECHADAS CORRETAMENTE) -->
+  <main class="max-w-6xl mx-auto px-4 pt-8 space-y-8">
 
-    <!-- ABA 1: JOGOS (Substitui o marcador ABA-JOGOS) -->
+    <!-- ABA 1: JOGOS -->
     <section id="tab-jogos" class="tab-panel active space-y-6">
       <!-- Topo: Contador Geral de Jogos + Botão de Nova Conquista -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-6">
-          <div>
-            <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total de Jogos Jogados / Zerados</span>
-            <div class="flex items-baseline gap-3 mt-1">
-              <span id="total-games-counter" class="text-3xl font-bold text-slate-900">142</span>
-              <button onclick="editTotalGames()" class="text-xs font-medium text-slate-500 hover:text-slate-900 underline">Editar número</button>
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-2xl">🕹️</div>
+            <div>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total de Jogos Jogados / Zerados</span>
+              <div class="flex items-baseline gap-3 mt-0.5">
+                <span id="total-games-counter" class="text-3xl font-bold text-slate-900">142</span>
+                <button onclick="editTotalGames()" class="text-xs font-medium text-slate-500 hover:text-slate-900 underline">Editar</button>
+              </div>
             </div>
           </div>
           <div class="h-10 w-px bg-slate-200 hidden sm:block"></div>
           <div class="hidden sm:block">
-            <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Integração / Lista</span>
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Catálogo Externo</span>
             <div class="mt-1">
-              <a href="https://backloggd.com/" target="_blank" class="text-sm font-medium text-slate-700 hover:text-slate-900 underline">Abrir perfil no Backloggd ↗</a>
+              <a href="https://backloggd.com/u/Bruterake/" target="_blank" class="text-sm font-semibold text-slate-700 hover:text-slate-900 inline-flex items-center gap-1 underline">
+                <span>Backloggd</span><span>↗</span>
+              </a>
             </div>
           </div>
         </div>
 
-        <button onclick="openNewGameAchievementModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
-          + Adicionar Conquista / Desafio
+        <button onclick="openNewGameAchievementModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition shadow-sm">
+          + Adicionar Conquista
         </button>
       </div>
 
-      <!-- Barra de Botões de Jogos (com Ícones) + Ordenação (Dificuldade nos bastidores ou Tempo) -->
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1">
-          <!-- Renderizado via JS com ícones dos jogos -->
-        </div>
+      <!-- Barra Estilizada de Filtros (Idêntica ao seu Print 2) -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto"></div>
 
         <div class="flex items-center gap-2">
-          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 font-medium">
-            <option value="all">Todos (Concluídos + Na Mira)</option>
-            <option value="unlocked">Já Conquistados</option>
-            <option value="hunting">Na Mira (Quero Pegar)</option>
+          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium hover:border-slate-300 focus:outline-none">
+            <option value="all">Status: Todos</option>
+            <option value="unlocked">✓ Concluído</option>
+            <option value="hunting">🎯 Quero Conseguir</option>
           </select>
 
-          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 font-medium">
-            <option value="difficulty">Ordem: Mais Difíceis</option>
-            <option value="recent">Ordem: Mais Recentes</option>
-            <option value="rarity">Ordem: Menor % de Jogadores</option>
+          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium hover:border-slate-300 focus:outline-none">
+            <option value="difficulty">Ordenar: Mais Difíceis</option>
+            <option value="recent">Ordenar: Mais Recentes</option>
+            <option value="rarity">Ordenar: Menor % de Jogadores</option>
           </select>
         </div>
       </div>
 
-      <!-- Grade de Cards de Conquistas de Jogos -->
+      <!-- Grade de Cards de Jogos -->
       <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 2: CORRIDA (Substitui o marcador ABA-CORRIDA) -->
-    <section id="tab-corrida" class="tab-panel space-y-6">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-lg font-bold text-slate-900">Desafios de Corrida</h2>
-          <p class="text-sm text-slate-500">Clique em qualquer distância para atualizar seu melhor tempo histórico, tempo atual ou trocar a foto.</p>
+    <!-- ABA 2: EXERCÍCIO (Corrida + Natação + Ciclismo + Desafios Corporais Únicos + Academia) -->
+    <section id="tab-exercicio" class="tab-panel space-y-10">
+
+      <!-- BLOCO 1: Modalidades de Tempo & Distância (Corrida, Natação e Ciclismo) -->
+      <div class="space-y-6">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">⏱️</span>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Recordes de Tempo & Resistência</h2>
+              <p class="text-xs text-slate-500">Corrida, Natação e Ciclismo separados por distância. Clique em qualquer card para editar seu tempo ou foto.</p>
+            </div>
+          </div>
+          <!-- Seletor rápido de modalidade ou ver todas as 3 linhas juntas -->
+          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
+            <button onclick="filterEndurance('all')" id="endurance-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white">Todas as Linhas</button>
+            <button onclick="filterEndurance('corrida')" id="endurance-btn-corrida" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🏃 Corrida</button>
+            <button onclick="filterEndurance('natacao')" id="endurance-btn-natacao" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🏊 Natação</button>
+            <button onclick="filterEndurance('ciclismo')" id="endurance-btn-ciclismo" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🚴 Ciclismo</button>
+          </div>
+        </div>
+
+        <!-- Linha 1: Corrida -->
+        <div id="row-corrida" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+              <span>🏃 Linha de Corrida</span>
+              <span class="text-xs font-normal text-slate-400">(5k • 10k • 15k • 21k • Maratona 42k)</span>
+            </h3>
+          </div>
+          <div id="running-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
+        </div>
+
+        <!-- Linha 2: Natação -->
+        <div id="row-natacao" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+              <span>🏊 Linha de Natação</span>
+              <span class="text-xs font-normal text-slate-400">(100m • 400m • 1.000m • 1.500m • Travessia 3km)</span>
+            </h3>
+          </div>
+          <div id="swimming-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
+        </div>
+
+        <!-- Linha 3: Ciclismo -->
+        <div id="row-ciclismo" class="space-y-3">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
+              <span>🚴 Linha de Ciclismo</span>
+              <span class="text-xs font-normal text-slate-400">(10 km • 25 km • 50 km • 100 km Gran Fondo • 160 km)</span>
+            </h3>
+          </div>
+          <div id="cycling-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
       </div>
-      <div id="running-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
-    </section>
 
-    <!-- ABA 3: ACADEMIA (Substitui o marcador ABA-ACADEMIA) -->
-    <section id="tab-academia" class="tab-panel space-y-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="gym-Category-pills">
-          <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-medium">Todos</button>
-          <button onclick="filterGym('Peito')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Peito</button>
-          <button onclick="filterGym('Costas')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Costas</button>
-          <button onclick="filterGym('Pernas')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Pernas</button>
-          <button onclick="filterGym('Ombros')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Ombros</button>
-          <button onclick="filterGym('Braços')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Braços</button>
+      <!-- BLOCO 2: Conquistas Corporais Únicas / Calistenia & Feitos Físicos (Human Flag, Muscle-Up, etc.) -->
+      <div class="space-y-4 pt-4 border-t border-slate-200">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🤸</span>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Conquistas Corporais Únicas & Calistenia</h2>
+              <p class="text-xs text-slate-500">Feitos físicos estáticos, movimentos difíceis (Human Flag, Muscle-Up, Pistol Squat) e desafios de resistência.</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="body-skill-status" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
+              <option value="all">Status: Todos</option>
+              <option value="unlocked">✓ Concluído</option>
+              <option value="hunting">🎯 Quero Conseguir</option>
+            </select>
+            <select id="body-skill-sort" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
+              <option value="difficulty">Ordenar: Mais Difíceis</option>
+              <option value="recent">Ordenar: Mais Recentes</option>
+            </select>
+            <button onclick="addNewBodySkill()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+              + Novo Desafio Corporal
+            </button>
+          </div>
         </div>
-        <button onclick="addNewGymExercise()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl transition">
-          + Novo Exercício / Equipamento
-        </button>
+
+        <div id="body-skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </div>
 
-      <div id="gym-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      <!-- BLOCO 3: Cargas Máximas na Academia (1RM | Força 4-6 | Hipertrofia 8-15) -->
+      <div class="space-y-4 pt-4 border-t border-slate-200">
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🏋️</span>
+            <div>
+              <h2 class="text-base font-bold text-slate-900">Pesos Máximos na Academia (PRs por Equipamento)</h2>
+              <p class="text-xs text-slate-500">Dividido em 1 Repetição Máxima (1RM), Faixa de Força (4 a 6) e Faixa de Hipertrofia (8 a 15).</p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <div class="flex items-center gap-1.5 overflow-x-auto" id="gym-Category-pills">
+              <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium">Todos</button>
+              <button onclick="filterGym('Peito')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Peito</button>
+              <button onclick="filterGym('Costas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Costas</button>
+              <button onclick="filterGym('Pernas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Pernas</button>
+              <button onclick="filterGym('Ombros')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Ombros</button>
+              <button onclick="filterGym('Braços')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Braços</button>
+            </div>
+            <button onclick="addNewGymExercise()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+              + Novo Exercício
+            </button>
+          </div>
+        </div>
+
+        <div id="gym-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+      </div>
+
     </section>
-    
-    <!-- ABA 4: IDIOMAS (Substitui o marcador ABA-IDIOMAS) -->
+
+    <!-- ABA 3: IDIOMAS -->
     <section id="tab-idiomas" class="tab-panel space-y-6">
-      <div class="flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-bold text-slate-900">Proficiência & Certificações de Idiomas</h2>
-          <p class="text-sm text-slate-500">Metas de domínio máximo (C2 / N1) e acompanhamento de consistência no Duolingo.</p>
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🌍</span>
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Proficiência & Certificações de Idiomas</h2>
+            <p class="text-xs text-slate-500">Certificados máximos (Cambridge CPE C2, DELE C2, JLPT N1) e consistência no Duolingo.</p>
+          </div>
         </div>
         <button onclick="addNewLanguage()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl transition">
           + Adicionar Idioma
@@ -189,14 +299,17 @@
       <div id="languages-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 5: ÁLBUNS (Substitui o marcador ABA-ALBUNS) -->
+    <!-- ABA 4: ÁLBUNS -->
     <section id="tab-albuns" class="tab-panel space-y-6">
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Coleção de Álbuns Ouvidos</span>
-          <div class="flex items-baseline gap-2 mt-1">
-            <span id="albums-count" class="text-2xl font-bold text-slate-900">0</span>
-            <span class="text-sm text-slate-500">álbuns registrados</span>
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">💿</span>
+          <div>
+            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Coleção Musical</span>
+            <div class="flex items-baseline gap-2 mt-0.5">
+              <span id="albums-count" class="text-2xl font-bold text-slate-900">0</span>
+              <span class="text-sm text-slate-500">álbuns registrados</span>
+            </div>
           </div>
         </div>
         <button onclick="addNewAlbum()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
@@ -206,50 +319,48 @@
       <div id="albums-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </section>
 
-    <!-- ABA 6: LINHA DO TEMPO (Temporadas & Contexto da Época) -->
-    <section id="tab-timeline" class="tab-panel space-y-8">
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
-        <div>
-          <h2 class="text-lg font-bold text-slate-900">Linha do Tempo em Temporadas</h2>
-          <p class="text-sm text-slate-500">Dividida por fases da vida, contexto da época, amigos do ciclo e fotos dos acontecimentos.</p>
+    <!-- ABA 5: LINHA DO TEMPO -->
+    <section id="tab-timeline" class="tab-panel space-y-6">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">⏳</span>
+          <div>
+            <h2 class="text-lg font-bold text-slate-900">Linha do Tempo em Temporadas</h2>
+            <p class="text-xs text-slate-500">Fases da vida, contexto da época, amigos do ciclo e fotos reais de cada conquista.</p>
+          </div>
         </div>
         <button onclick="addNewSeason()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
-          + Nova Temporada / Fase
+          + Nova Temporada
         </button>
       </div>
-
-      <!-- Container das Temporadas -->
-      <div id="seasons-container" class="space-y-8"></div>
+      <div id="seasons-container" class="space-y-6"></div>
     </section>
 
-    <!-- ABA 7: MAPA (Brasil & Mundo com Progresso e Foto Favorita) -->
+    <!-- ABA 6: MAPA -->
     <section id="tab-mapa" class="tab-panel space-y-6">
-      <!-- Barra de Progresso Geral (Brasil e Mundo) -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <!-- Card Progresso Brasil -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5">
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Progresso no Brasil (27 UFs)</span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🇧🇷 Estados Visitados no Brasil (27 UFs)</span>
             <span id="br-progress-text" class="text-sm font-bold text-slate-900">0 / 27 (0%)</span>
           </div>
           <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
             <div id="br-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 0%"></div>
           </div>
-          <p class="text-xs text-slate-500 mt-3">Clique nas siglas abaixo para pintar/desmarcar um estado visitado.</p>
+          <p class="text-xs text-slate-500 mt-3">Clique nas siglas para marcar/desmarcar um estado visitado:</p>
           <div id="br-uf-buttons" class="flex flex-wrap gap-1.5 mt-3"></div>
         </div>
 
-        <!-- Card Progresso Mundo -->
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between">
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Países do Mundo Visitados</span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🌎 Países do Mundo Visitados</span>
               <span id="world-progress-text" class="text-sm font-bold text-slate-900">1 / 195 (0.5%)</span>
             </div>
             <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
               <div id="world-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 1%"></div>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Adicione países visitados para registrar a porcentagem global e guardar sua foto favorita de cada país.</p>
+            <p class="text-xs text-slate-500 mt-3">Registre cada país visitado e coloque sua foto favorita da viagem.</p>
           </div>
           <button onclick="addNewCountry()" class="mt-4 w-full bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium py-2.5 rounded-xl transition">
             + Adicionar País Visitado
@@ -257,17 +368,15 @@
         </div>
       </div>
 
-      <!-- Filtro de visualização dos Cards de Fotos do Mapa -->
-      <div class="flex items-center justify-between pt-2">
-        <h3 class="text-base font-bold text-slate-900">Galeria de Lugares Visitados (Clique para colocar sua foto favorita)</h3>
+      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <h3 class="text-sm font-bold text-slate-900">📸 Galeria de Lugares Visitados (Clique no card para trocar a foto)</h3>
         <div class="flex items-center gap-2">
           <button onclick="setMapGalleryFilter('todos')" id="map-tab-todos" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white">Todos</button>
-          <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Estados do Brasil</button>
+          <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Estados (BR)</button>
           <button onclick="setMapGalleryFilter('mundo')" id="map-tab-mundo" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Países</button>
         </div>
       </div>
 
-      <!-- Grade de Cards com Foto Favorita de cada Estado/País -->
       <div id="map-places-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
     </section>
 
@@ -342,14 +451,14 @@
       reader.readAsDataURL(file);
     }
 
-    // ================= DADOS INICIAIS (SALVOS NO NAVEGADOR PARA VOCÊ EDITAR LIVREMENTE) =================
+    // ================= DADOS INICIAIS (NOVA CHAVE v4 PARA ATUALIZAR AS IMAGENS IMEDIATAMENTE) =================
     const defaultData = {
       totalGamesPlayed: 142,
       gameCatalog: [
-        { id: 'all', name: 'Todos os Jogos', icon: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=120&q=80' },
-        { id: 'League of Legends', name: 'League of Legends', icon: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=120&q=80' },
-        { id: 'Wild Rift', name: 'Wild Rift', icon: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=120&q=80' },
-        { id: 'Counter-Strike', name: 'Counter-Strike', icon: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=120&q=80' }
+        { id: 'all', name: 'Todos', icon: '🎮' },
+        { id: 'League of Legends', name: 'League of Legends', imgIcon: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/profileicon/29.png' },
+        { id: 'Wild Rift', name: 'Wild Rift', imgIcon: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/profileicon/4568.png' },
+        { id: 'Counter-Strike', name: 'Counter-Strike', imgIcon: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=120&q=80' }
       ],
       gameAchievements: [
         {
@@ -358,10 +467,10 @@
           game: 'League of Legends',
           status: 'hunting',
           rarity: 0.02,
-          hiddenRank: 1000, // Usado apenas nos bastidores para ordenar por dificuldade
+          hiddenRank: 1000,
           date: '2026-10',
-          desc: 'Alcançar o topo da fila ranqueada do servidor.',
-          img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80'
+          desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.',
+          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg'
         },
         {
           id: 'g2',
@@ -372,7 +481,7 @@
           hiddenRank: 980,
           date: '2026-09',
           desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.',
-          img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80'
+          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Sett_0.jpg'
         },
         {
           id: 'g3',
@@ -383,7 +492,7 @@
           hiddenRank: 950,
           date: '2018-10',
           desc: 'Completar o nível máximo de dificuldade do evento Odisseia com restrição de aprimoramentos.',
-          img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80'
+          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Kayn_1.jpg'
         },
         {
           id: 'g4',
@@ -393,27 +502,87 @@
           rarity: 1.2,
           hiddenRank: 890,
           date: '2024-09',
-          desc: 'Sobreviver e vencer a dificuldade máxima contra os Bots da Maldição e o Veigar gigante.',
-          img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&q=80'
+          desc: 'Sobreviver e vencer a dificuldade máxima contra os Bots da Maldição e o Veigar chefão.',
+          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Veigar_8.jpg'
         },
         {
           id: 'g5',
-          title: 'Rank Alto no Wild Rift',
+          title: 'Rank Mestre / Challenger no Wild Rift',
           game: 'Wild Rift',
           status: 'unlocked',
           rarity: 2.0,
           hiddenRank: 820,
           date: '2025-06',
-          desc: 'Conquista competitiva nas filas ranqueadas do League of Legends: Wild Rift.',
-          img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80'
+          desc: 'Conquista de alto nível competitivo nas filas ranqueadas do League of Legends: Wild Rift.',
+          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg'
         }
       ],
       running: [
-        { id: 'r1', dist: '5 km', bestTime: '24:15', currentTime: '24:50', notes: 'Melhor marca pessoal nos 5 km.', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
-        { id: 'r2', dist: '10 km', bestTime: '52:30', currentTime: '53:40', notes: 'Ritmo consistente abaixo de 5:20/km.', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
-        { id: 'r3', dist: '15 km', bestTime: '1:22:10', currentTime: '--:--', notes: 'Prova de média-longa distância.', img: 'https://images.unsplash.com/photo-1502904550040-7534597429ae?w=600&q=80' },
-        { id: 'r4', dist: '21 km (Meia)', bestTime: 'Na Mira', currentTime: '--:--', notes: 'Meta de meia maratona.', img: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&q=80' },
-        { id: 'r5', dist: '42 km (Maratona)', bestTime: 'Na Mira', currentTime: '--:--', notes: 'Desafio máximo de resistência.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' }
+        { id: 'r1', sport: 'Corrida', dist: '5 km', bestTime: '24:15', currentTime: '24:50', status: 'unlocked', notes: 'Melhor marca pessoal nos 5 km.', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
+        { id: 'r2', sport: 'Corrida', dist: '10 km', bestTime: '52:30', currentTime: '53:40', status: 'unlocked', notes: 'Ritmo consistente abaixo de 5:20/km.', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
+        { id: 'r3', sport: 'Corrida', dist: '15 km', bestTime: '1:22:10', currentTime: '--:--', status: 'unlocked', notes: 'Prova de média-longa distância.', img: 'https://images.unsplash.com/photo-1502904550040-7534597429ae?w=600&q=80' },
+        { id: 'r4', sport: 'Corrida', dist: '21 km (Meia)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio de meia maratona.', img: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&q=80' },
+        { id: 'r5', sport: 'Corrida', dist: '42 km (Maratona)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio máximo de resistência.', img: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&q=80' }
+      ],
+      swimming: [
+        { id: 'sw1', sport: 'Natação', dist: '100 m', bestTime: '1:35', currentTime: '1:40', status: 'unlocked', notes: 'Tiro de velocidade na piscina.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
+        { id: 'sw2', sport: 'Natação', dist: '400 m', bestTime: '7:20', currentTime: '--:--', status: 'unlocked', notes: 'Médio fundo na piscina.', img: 'https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=600&q=80' },
+        { id: 'sw3', sport: 'Natação', dist: '1.000 m', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: '1 km contínuo nadando.', img: 'https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&q=80' },
+        { id: 'sw4', sport: 'Natação', dist: '1.500 m', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Distância olímpica de fundo.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
+        { id: 'sw5', sport: 'Natação', dist: '3 km (Águas Abertas)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Travessia em mar ou lago.', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80' }
+      ],
+      cycling: [
+        { id: 'cy1', sport: 'Ciclismo', dist: '10 km', bestTime: '21:00', currentTime: '22:10', status: 'unlocked', notes: 'Percurso rápido urbano.', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' },
+        { id: 'cy2', sport: 'Ciclismo', dist: '25 km', bestTime: '54:00', currentTime: '--:--', status: 'unlocked', notes: 'Pedal de ritmo médio.', img: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=600&q=80' },
+        { id: 'cy3', sport: 'Ciclismo', dist: '50 km', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Meio século de pedal.', img: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?w=600&q=80' },
+        { id: 'cy4', sport: 'Ciclismo', dist: '100 km (Gran Fondo)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio clássico de 100 km.', img: 'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=600&q=80' },
+        { id: 'cy5', sport: 'Ciclismo', dist: '160 km (Century)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio de longa distância (100 milhas).', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' }
+      ],
+      bodySkills: [
+        {
+          id: 'bs1',
+          title: 'Human Flag (Bandeira Humana)',
+          category: 'Calistenia / Isometria',
+          status: 'hunting',
+          hiddenRank: 990,
+          date: 'Meta',
+          metric: 'Segurar 5 segundos estrito',
+          desc: 'Sustentar o corpo totalmente na horizontal segurando em uma barra vertical.',
+          img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=700&q=80'
+        },
+        {
+          id: 'bs2',
+          title: 'Muscle-Up na Barra Fixa',
+          category: 'Calistenia / Força Explosiva',
+          status: 'hunting',
+          hiddenRank: 920,
+          date: 'Meta',
+          metric: '3 repetições limpas',
+          desc: 'Subir a barra fixa passando o tronco inteiro para cima da linha da barra em um movimento fluido.',
+          img: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=700&q=80'
+        },
+        {
+          id: 'bs3',
+          title: 'Pistol Squat (Agachamento Unilateral)',
+          category: 'Mobilidade & Força nas Pernas',
+          status: 'unlocked',
+          hiddenRank: 840,
+          date: '2026-04',
+          metric: '5 reps cada perna (Foco Perna Esquerda)',
+          desc: 'Agachamento completo até o chão equilibrando em apenas uma perna com a outra estendida à frente.',
+          img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=700&q=80'
+        },
+        {
+          id: 'bs4',
+          title: '20 Barras Fixas Estritas (Pull-ups)',
+          category: 'Resistência de Costas/Braços',
+          status: 'hunting',
+          hiddenRank: 860,
+          date: 'Meta',
+          metric: 'Atual: 12 / 20 reps',
+          desc: 'Completar 20 repetições completas passando o queixo e estendendo tudo sem roubar com o quadril.',
+          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=80'
+        }
       ],
       gym: [
         { id: 'gym1', name: 'Supino Reto', group: 'Peito', oneRM: '100 kg', force4to6: '90 kg', hyper8to15: '78 kg', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
@@ -428,10 +597,10 @@
           id: 'lang1',
           lang: 'Inglês',
           certTitle: 'C2 Proficiency (Cambridge CPE)',
-          altCerts: 'IELTS (banda 8.5 a 9.0) | TOEFL iBT (114 a 120 pts)',
+          altCerts: 'IELTS (8.5 a 9.0) | TOEFL iBT (114 a 120 pts)',
           currentLevel: 'B2 / C1',
           duolingoStreak: 'Ativo',
-          status: 'Em Progresso para C2',
+          status: 'hunting',
           desc: 'Certificado de nível mais alto oferecido pela Cambridge, atestando domínio pleno do idioma (nível C2 do Quadro Europeu).',
           img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80'
         },
@@ -442,7 +611,7 @@
           altCerts: 'Ministério da Educação da Espanha',
           currentLevel: 'B2',
           duolingoStreak: 'Ativo',
-          status: 'Em Progresso para C2',
+          status: 'hunting',
           desc: 'Título oficial definitivo outorgado pelo Ministério da Educação da Espanha que certifica o grau máximo de competência no idioma.',
           img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80'
         },
@@ -453,7 +622,7 @@
           altCerts: 'Fundação Japão (Domínio de ~2.000 Kanjis)',
           currentLevel: 'N5 / N4',
           duolingoStreak: 'Ativo',
-          status: 'Meta N1',
+          status: 'hunting',
           desc: 'Exame dividido em cinco níveis (do N5 ao N1). O N1 é o grau máximo, exigindo domínio avançado de leitura, gramática, vocabulário e audição.',
           img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80'
         }
@@ -462,12 +631,49 @@
         { id: 'alb1', title: 'Diamond Life', artist: 'Sade', year: '1984', favTrack: 'Smooth Operator', rating: '5/5', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80' },
         { id: 'alb2', title: 'Luz', artist: 'Djavan', year: '1982', favTrack: 'Samurai', rating: '5/5', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&q=80' },
         { id: 'alb3', title: '333', artist: 'Matuê', year: '2024', favTrack: '333', rating: '5/5', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80' }
+      ],
+      seasons: [
+        {
+          id: 's2',
+          title: 'Temporada 2 — Nova Fase, Carro & Casamento',
+          period: '2026 - Presente',
+          context: 'Nova rotina profissional, conquista do carro zero e preparativos para o casamento.',
+          friends: 'Mikaely, Isa, Ju, Milena, Matheus e amigos próximos',
+          events: [
+            { id: 'ev1', title: 'Casamento', date: '08/11/2026', desc: 'Marco oficial do casamento e início da vida de casados.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80' },
+            { id: 'ev2', title: 'Carro 0km (Fiat Pulse)', date: 'Março 2026', desc: 'Conquista do carro novo para a rotina e viagens.', img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80' }
+          ]
+        },
+        {
+          id: 's1',
+          title: 'Temporada 1 — Anos de Graduação',
+          period: '2020 - 2025',
+          context: 'Anos de faculdade na UnB, estágios, entrega do TCC e amizades da época.',
+          friends: 'Mikaely, Turma da UnB, Amigos de longa data',
+          events: [
+            { id: 'ev3', title: 'Formatura na UnB', date: 'Dezembro 2025', desc: 'Apresentação do TCC e conclusão da faculdade.', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80' }
+          ]
+        }
+      ],
+      mapPlaces: [
+        { id: 'uf_DF', type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
+        { id: 'uf_GO', type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Viagens e rotina no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
+        { id: 'uf_RJ', type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
+        { id: 'country_BR', type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
       ]
     };
 
-    let appData = JSON.parse(localStorage.getItem('personalAchievementsData_v2')) || defaultData;
+    let appData = JSON.parse(localStorage.getItem('salaConquistasData_v4')) || defaultData;
     function saveData() {
-      localStorage.setItem('personalAchievementsData_v2', JSON.stringify(appData));
+      localStorage.setItem('salaConquistasData_v4', JSON.stringify(appData));
+    }
+
+    // Helper para gerar o Badge "✓ Concluído" ou "🎯 Quero Conseguir"
+    function renderStatusBadge(status) {
+      if (status === 'unlocked') {
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"><span>✓</span><span>Concluído</span></span>`;
+      }
+      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm"><span>🎯</span><span>Quero Conseguir</span></span>`;
     }
 
     // ================= 1. LÓGICA DE JOGOS =================
@@ -479,9 +685,12 @@
 
       container.innerHTML = appData.gameCatalog.map(g => {
         const active = selectedGameFilter === g.id;
+        const iconHtml = g.imgIcon
+          ? `<img src="${g.imgIcon}" class="w-5 h-5 rounded-md object-cover" alt="${g.name}" />`
+          : `<span>${g.icon || '🎮'}</span>`;
         return `
-          <button onclick="selectGameFilter('${g.id}')" class="flex items-center gap-2.5 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
-            <img src="${g.icon}" class="w-5 h-5 rounded-md object-cover" alt="${g.name}" />
+          <button onclick="selectGameFilter('${g.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            ${iconHtml}
             <span>${g.name}</span>
           </button>
         `;
@@ -504,7 +713,6 @@
         return matchGame && matchStatus;
       });
 
-      // Ordenação usando hiddenRank nos bastidores (sem poluir o card com número de score)
       list.sort((a, b) => {
         if (sortBy === 'difficulty') return b.hiddenRank - a.hiddenRank;
         if (sortBy === 'rarity') return a.rarity - b.rarity;
@@ -518,14 +726,12 @@
           <div>
             <div class="card-fade-header" style="background-image: url('${item.img}')">
               <div class="absolute top-3 left-3 z-10">
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${item.status === 'unlocked' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
-                  ${item.status === 'unlocked' ? 'Concluído' : 'Na Mira'}
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200 shadow-sm">
+                  ${item.game}
                 </span>
               </div>
               <div class="absolute top-3 right-3 z-10">
-                <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 text-slate-700 border border-slate-200">
-                  ${item.game}
-                </span>
+                ${renderStatusBadge(item.status)}
               </div>
             </div>
 
@@ -558,8 +764,8 @@
             <div>
               <label class="text-xs text-slate-500">Status</label>
               <select id="edit-g-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">
-                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>Concluído</option>
-                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>Na Mira (Quero pegar)</option>
+                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
+                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
               </select>
             </div>
             <div>
@@ -567,10 +773,15 @@
               <input id="edit-g-rarity" type="number" step="0.01" value="${item.rarity}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
           </div>
+          <div class="mt-3">
+            <label class="text-xs text-slate-500">Ou cole o Link Direto de uma Imagem (URL)</label>
+            <input id="edit-g-imgurl" type="text" value="${item.img}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs" />
+          </div>
           <button onclick="saveGameEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Alterações</button>
         `,
         onImageChange: (newUrl) => {
           item.img = newUrl;
+          document.getElementById('edit-g-imgurl').value = newUrl;
           saveData();
           renderGames();
         }
@@ -581,6 +792,8 @@
       const item = appData.gameAchievements.find(x => x.id === id);
       item.status = document.getElementById('edit-g-status').value;
       item.rarity = parseFloat(document.getElementById('edit-g-rarity').value) || item.rarity;
+      const customUrl = document.getElementById('edit-g-imgurl').value.trim();
+      if (customUrl) item.img = customUrl;
       saveData();
       renderGames();
       closeModal();
@@ -596,28 +809,26 @@
     }
 
     function openNewGameAchievementModal() {
-      const title = prompt('Nome do desafio ou conquista (ex: Pentakill no Clash, Global no CS):');
+      const title = prompt('Nome do desafio ou conquista:');
       if (!title) return;
       const game = prompt('Nome do Jogo (ex: League of Legends, Wild Rift, Counter-Strike):', 'League of Legends');
       const desc = prompt('Breve descrição do que significa esse feito:') || '';
       const rarity = parseFloat(prompt('Porcentagem aproximada de pessoas que conseguiram (ex: 0.5):', '1.0')) || 1.0;
-      const hiddenRank = parseInt(prompt('Peso de dificuldade nos bastidores de 1 a 1000 (apenas para ordenar a lista):', '850'), 10) || 850;
-      const isUnlocked = confirm('Você já concluiu esse desafio? (OK = Concluído | Cancelar = Ainda está Na Mira)');
+      const hiddenRank = parseInt(prompt('Peso de dificuldade nos bastidores de 1 a 1000 (para ordenar):', '850'), 10) || 850;
+      const isUnlocked = confirm('Já concluiu esse desafio? (OK = ✓ Concluído | Cancelar = 🎯 Quero Conseguir)');
 
       if (!appData.gameCatalog.some(g => g.id === game)) {
-        appData.gameCatalog.push({ id: game, name: game, icon: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=120&q=80' });
+        appData.gameCatalog.push({ id: game, name: game, icon: '🎮' });
       }
 
       appData.gameAchievements.push({
         id: 'g_' + Date.now(),
-        title,
-        game,
+        title, game,
         status: isUnlocked ? 'unlocked' : 'hunting',
-        rarity,
-        hiddenRank,
+        rarity, hiddenRank,
         date: new Date().toISOString().slice(0, 7),
         desc,
-        img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80'
+        img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Veigar_8.jpg'
       });
 
       saveData();
@@ -625,82 +836,208 @@
       renderGames();
     }
 
-    // ================= 2. LÓGICA DE CORRIDA =================
-    function renderRunning() {
-      const grid = document.getElementById('running-grid');
-      grid.innerHTML = appData.running.map(r => `
-        <div class="theme-card flex flex-col justify-between" onclick="inspectRunningCard('${r.id}')">
-          <div class="card-fade-header" style="background-image: url('${r.img}'); height: 125px;">
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-900 border border-slate-200">
-              ${r.dist}
+    // ================= 2. LÓGICA DA ABA EXERCÍCIO (CORRIDA, NATAÇÃO, CICLISMO, CALISTENIA E ACADEMIA) =================
+    function filterEndurance(mode) {
+      ['all', 'corrida', 'natacao', 'ciclismo'].forEach(m => {
+        const btn = document.getElementById('endurance-btn-' + m);
+        btn.className = (m === mode)
+          ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white'
+          : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white';
+      });
+      document.getElementById('row-corrida').style.display = (mode === 'all' || mode === 'corrida') ? 'block' : 'none';
+      document.getElementById('row-natacao').style.display = (mode === 'all' || mode === 'natacao') ? 'block' : 'none';
+      document.getElementById('row-ciclismo').style.display = (mode === 'all' || mode === 'ciclismo') ? 'block' : 'none';
+    }
+
+    function renderEnduranceRow(arrayKey, gridId) {
+      const grid = document.getElementById(gridId);
+      grid.innerHTML = appData[arrayKey].map(item => `
+        <div class="theme-card flex flex-col justify-between" onclick="inspectEnduranceCard('${arrayKey}', '${item.id}')">
+          <div class="card-fade-header" style="background-image: url('${item.img}'); height: 120px;">
+            <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-sm">
+              ${item.dist}
             </span>
+            <div class="absolute top-2.5 right-2.5 z-10">
+              ${renderStatusBadge(item.status || 'unlocked')}
+            </div>
           </div>
           <div class="p-4 pt-1">
             <span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Melhor Tempo (Recorde)</span>
-            <div class="text-2xl font-bold text-slate-900 mt-0.5">${r.bestTime}</div>
+            <div class="text-2xl font-bold text-slate-900 mt-0.5">${item.bestTime}</div>
             <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
               <span>Tempo Atual:</span>
-              <strong class="text-slate-700">${r.currentTime}</strong>
+              <strong class="text-slate-700">${item.currentTime}</strong>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function inspectRunningCard(id) {
-      const r = appData.running.find(x => x.id === id);
+    function renderAllEndurance() {
+      renderEnduranceRow('running', 'running-grid');
+      renderEnduranceRow('swimming', 'swimming-grid');
+      renderEnduranceRow('cycling', 'cycling-grid');
+    }
+
+    function inspectEnduranceCard(arrayKey, id) {
+      const item = appData[arrayKey].find(x => x.id === id);
       openCardModal({
-        title: `Corrida — ${r.dist}`,
-        subtitle: 'Desempenho Corporal',
-        badge: `Recorde: ${r.bestTime}`,
-        description: r.notes,
-        imageUrl: r.img,
+        title: `${item.sport} — ${item.dist}`,
+        subtitle: 'Recorde de Tempo & Distância',
+        badge: `Melhor: ${item.bestTime}`,
+        description: item.notes,
+        imageUrl: item.img,
         extraHtml: `
-          <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="grid grid-cols-3 gap-2 pt-2">
             <div>
-              <label class="text-xs text-slate-500">Melhor Tempo Histórico</label>
-              <input id="edit-r-best" type="text" value="${r.bestTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+              <label class="text-xs text-slate-500">Status</label>
+              <select id="edit-end-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-medium">
+                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
+                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
+              </select>
             </div>
             <div>
-              <label class="text-xs text-slate-500">Tempo Mais Recente</label>
-              <input id="edit-r-curr" type="text" value="${r.currentTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+              <label class="text-xs text-slate-500">Melhor Tempo</label>
+              <input id="edit-end-best" type="text" value="${item.bestTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Tempo Atual</label>
+              <input id="edit-end-curr" type="text" value="${item.currentTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
           </div>
           <div class="mt-3">
-            <label class="text-xs text-slate-500">Observações (Prova, Pace, Data)</label>
-            <input id="edit-r-notes" type="text" value="${r.notes}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            <label class="text-xs text-slate-500">Observações (Pace, Prova, Data)</label>
+            <input id="edit-end-notes" type="text" value="${item.notes}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
           </div>
-          <button onclick="saveRunningEdits('${r.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Tempo</button>
+          <button onclick="saveEnduranceEdits('${arrayKey}', '${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Tempo</button>
         `,
         onImageChange: (newUrl) => {
-          r.img = newUrl;
+          item.img = newUrl;
           saveData();
-          renderRunning();
+          renderAllEndurance();
         }
       });
     }
 
-    function saveRunningEdits(id) {
-      const r = appData.running.find(x => x.id === id);
-      r.bestTime = document.getElementById('edit-r-best').value;
-      r.currentTime = document.getElementById('edit-r-curr').value;
-      r.notes = document.getElementById('edit-r-notes').value;
+    function saveEnduranceEdits(arrayKey, id) {
+      const item = appData[arrayKey].find(x => x.id === id);
+      item.status = document.getElementById('edit-end-status').value;
+      item.bestTime = document.getElementById('edit-end-best').value;
+      item.currentTime = document.getElementById('edit-end-curr').value;
+      item.notes = document.getElementById('edit-end-notes').value;
       saveData();
-      renderRunning();
+      renderAllEndurance();
       closeModal();
     }
 
-    // ================= 3. LÓGICA DE ACADEMIA (1RM / 4-6 / 8-15) =================
+    // --- Conquistas Corporais Únicas (Human Flag, Muscle-Up, etc.) ---
+    function renderBodySkills() {
+      const statusFilter = document.getElementById('body-skill-status').value;
+      const sortBy = document.getElementById('body-skill-sort').value;
+
+      let list = appData.bodySkills.filter(item => statusFilter === 'all' || item.status === statusFilter);
+      list.sort((a, b) => {
+        if (sortBy === 'difficulty') return b.hiddenRank - a.hiddenRank;
+        return b.date.localeCompare(a.date);
+      });
+
+      const grid = document.getElementById('body-skills-grid');
+      grid.innerHTML = list.map(item => `
+        <div class="theme-card flex flex-col justify-between" onclick="inspectBodySkill('${item.id}')">
+          <div>
+            <div class="card-fade-header" style="background-image: url('${item.img}'); height: 135px;">
+              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
+                ${item.category}
+              </span>
+              <div class="absolute top-3 right-3 z-10">
+                ${renderStatusBadge(item.status)}
+              </div>
+            </div>
+            <div class="p-5 pt-2">
+              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
+              <p class="text-sm text-slate-600 mt-1 line-clamp-2">${item.desc}</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Marca: <strong class="text-slate-800">${item.metric}</strong></span>
+            <span>${item.date}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectBodySkill(id) {
+      const item = appData.bodySkills.find(x => x.id === id);
+      openCardModal({
+        title: item.title,
+        subtitle: item.category,
+        badge: item.metric,
+        description: item.desc,
+        imageUrl: item.img,
+        extraHtml: `
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Status</label>
+              <select id="edit-bs-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">
+                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
+                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Marca / Repetições / Tempo</label>
+              <input id="edit-bs-metric" type="text" value="${item.metric}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+          </div>
+          <button onclick="saveBodySkillEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Desafio Corporal</button>
+        `,
+        onImageChange: (newUrl) => {
+          item.img = newUrl;
+          saveData();
+          renderBodySkills();
+        }
+      });
+    }
+
+    function saveBodySkillEdits(id) {
+      const item = appData.bodySkills.find(x => x.id === id);
+      item.status = document.getElementById('edit-bs-status').value;
+      item.metric = document.getElementById('edit-bs-metric').value;
+      saveData();
+      renderBodySkills();
+      closeModal();
+    }
+
+    function addNewBodySkill() {
+      const title = prompt('Nome do Desafio Corporal (ex: Front Lever, Handstand Push-up, Planche):');
+      if (!title) return;
+      const category = prompt('Categoria (ex: Calistenia, Mobilidade, Força):', 'Calistenia') || 'Calistenia';
+      const metric = prompt('Meta ou Marca (ex: Segurar 10s, 10 repetições):', 'Meta ativa') || '';
+      const desc = prompt('Descrição do movimento ou desafio:') || '';
+      const hiddenRank = parseInt(prompt('Dificuldade de 1 a 1000 (para ordenar):', '880'), 10) || 880;
+      const isUnlocked = confirm('Já concluiu? (OK = ✓ Concluído | Cancelar = 🎯 Quero Conseguir)');
+
+      appData.bodySkills.push({
+        id: 'bs_' + Date.now(),
+        title, category,
+        status: isUnlocked ? 'unlocked' : 'hunting',
+        hiddenRank,
+        date: isUnlocked ? new Date().toISOString().slice(0, 7) : 'Meta',
+        metric, desc,
+        img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=700&q=80'
+      });
+      saveData();
+      renderBodySkills();
+    }
+
+    // --- Academia (1RM / 4-6 / 8-15) ---
     let currentGymGroup = 'Todos';
 
     function filterGym(group) {
       currentGymGroup = group;
       document.querySelectorAll('.gym-pill').forEach(btn => {
-        if (btn.textContent === group) {
-          btn.className = 'gym-pill bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-medium';
-        } else {
-          btn.className = 'gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium';
-        }
+        btn.className = (btn.textContent === group)
+          ? 'gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium'
+          : 'gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium';
       });
       renderGym();
     }
@@ -711,7 +1048,7 @@
       grid.innerHTML = list.map(item => `
         <div class="theme-card" onclick="inspectGymCard('${item.id}')">
           <div class="card-fade-header" style="background-image: url('${item.img}'); height: 120px;">
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 text-slate-700 border border-slate-200">
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-slate-700 border border-slate-200">
               ${item.group}
             </span>
           </div>
@@ -742,7 +1079,7 @@
         title: item.name,
         subtitle: `Grupo Muscular: ${item.group}`,
         badge: `1RM: ${item.oneRM}`,
-        description: 'Atualize abaixo suas cargas máximas para 1 repetição máxima (1RM), faixa de força (4 a 6 repetições) e faixa de hipertrofia (8 a 15 repetições).',
+        description: 'Atualize suas cargas máximas para 1RM, Força (4 a 6 reps) e Hipertrofia (8 a 15 reps).',
         imageUrl: item.img,
         extraHtml: `
           <div class="grid grid-cols-3 gap-2 pt-2">
@@ -784,8 +1121,8 @@
       if (!name) return;
       const group = prompt('Grupo muscular (Peito, Costas, Pernas, Ombros, Braços):', 'Peito') || 'Geral';
       const oneRM = prompt('Carga de 1 RM (ex: 80 kg):', '-- kg') || '-- kg';
-      const force4to6 = prompt('Carga de Força 4 a 6 reps (ex: 70 kg):', '-- kg') || '-- kg';
-      const hyper8to15 = prompt('Carga de Hipertrofia 8 a 15 reps (ex: 60 kg):', '-- kg') || '-- kg';
+      const force4to6 = prompt('Carga de Força 4 a 6 reps:', '-- kg') || '-- kg';
+      const hyper8to15 = prompt('Carga de Hipertrofia 8 a 15 reps:', '-- kg') || '-- kg';
 
       appData.gym.push({
         id: 'gym_' + Date.now(),
@@ -796,22 +1133,22 @@
       renderGym();
     }
 
-    // ================= 4. LÓGICA DE IDIOMAS =================
+    // ================= 3. LÓGICA DE IDIOMAS =================
     function renderLanguages() {
       const grid = document.getElementById('languages-grid');
       grid.innerHTML = appData.languages.map(l => `
         <div class="theme-card flex flex-col justify-between" onclick="inspectLanguageCard('${l.id}')">
           <div>
             <div class="card-fade-header" style="background-image: url('${l.img}'); height: 135px;">
-              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-900 border border-slate-200">
+              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-900 border border-slate-200">
                 ${l.lang}
               </span>
-              <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/85 text-white">
-                Nível Atual: ${l.currentLevel}
-              </span>
+              <div class="absolute top-3 right-3 z-10">
+                ${renderStatusBadge(l.status)}
+              </div>
             </div>
             <div class="p-5 pt-2">
-              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Exame / Certificado Alvo</div>
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Certificado Máximo</div>
               <h3 class="text-base font-bold text-slate-900 mt-0.5">${l.certTitle}</h3>
               <p class="text-xs font-medium text-slate-500 mt-1">${l.altCerts}</p>
               <p class="text-sm text-slate-600 mt-3 leading-relaxed">${l.desc}</p>
@@ -819,7 +1156,7 @@
           </div>
           <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
             <span>Duolingo: <strong class="text-slate-800">${l.duolingoStreak}</strong></span>
-            <span class="font-medium text-slate-700">${l.status}</span>
+            <span>Nível: <strong class="text-slate-900">${l.currentLevel}</strong></span>
           </div>
         </div>
       `).join('');
@@ -830,21 +1167,28 @@
       openCardModal({
         title: `${l.lang} — ${l.certTitle}`,
         subtitle: l.altCerts,
-        badge: `Atual: ${l.currentLevel}`,
+        badge: `Nível: ${l.currentLevel}`,
         description: l.desc,
         imageUrl: l.img,
         extraHtml: `
-          <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="grid grid-cols-3 gap-2 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Status</label>
+              <select id="edit-l-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2 py-1.5 text-xs">
+                <option value="hunting" ${l.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
+                <option value="unlocked" ${l.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
+              </select>
+            </div>
             <div>
               <label class="text-xs text-slate-500">Nível Atual</label>
               <input id="edit-l-level" type="text" value="${l.currentLevel}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
             <div>
-              <label class="text-xs text-slate-500">Progresso Duolingo</label>
+              <label class="text-xs text-slate-500">Duolingo</label>
               <input id="edit-l-duo" type="text" value="${l.duolingoStreak}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
           </div>
-          <button onclick="saveLanguageEdits('${l.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Progresso</button>
+          <button onclick="saveLanguageEdits('${l.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Idioma</button>
         `,
         onImageChange: (newUrl) => {
           l.img = newUrl;
@@ -856,6 +1200,7 @@
 
     function saveLanguageEdits(id) {
       const l = appData.languages.find(x => x.id === id);
+      l.status = document.getElementById('edit-l-status').value;
       l.currentLevel = document.getElementById('edit-l-level').value;
       l.duolingoStreak = document.getElementById('edit-l-duo').value;
       saveData();
@@ -866,38 +1211,37 @@
     function addNewLanguage() {
       const lang = prompt('Idioma (ex: Francês, Mandarim, Alemão):');
       if (!lang) return;
-      const certTitle = prompt('Certificado máximo ou meta (ex: DALF C2, HSK 6):', 'Proficiência C2');
-      const currentLevel = prompt('Seu nível atual ou progresso no Duolingo:', 'A1');
+      const certTitle = prompt('Certificado máximo (ex: DALF C2, HSK 6):', 'Proficiência C2');
+      const currentLevel = prompt('Seu nível atual:', 'A1');
       appData.languages.push({
         id: 'lang_' + Date.now(),
-        lang,
-        certTitle,
-        altCerts: 'Certificação Internacional + Duolingo',
+        lang, certTitle,
+        altCerts: 'Certificação Oficial + Duolingo',
         currentLevel,
-        duolingoStreak: 'Em estudo',
-        status: 'Em Progresso',
-        desc: 'Domínio progressivo de leitura, escrita, audição e conversação.',
+        duolingoStreak: 'Ativo',
+        status: 'hunting',
+        desc: 'Domínio completo do idioma.',
         img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'
       });
       saveData();
       renderLanguages();
     }
 
-    // ================= 5. LÓGICA DE ÁLBUNS =================
+    // ================= 4. LÓGICA DE ÁLBUNS =================
     function renderAlbums() {
       document.getElementById('albums-count').textContent = appData.albums.length;
       const grid = document.getElementById('albums-grid');
       grid.innerHTML = appData.albums.map(a => `
         <div class="theme-card" onclick="inspectAlbumCard('${a.id}')">
           <div class="card-fade-header" style="background-image: url('${a.img}'); height: 160px;">
-            <span class="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/90 text-slate-900">
+            <span class="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/95 text-slate-900 shadow-sm">
               ★ ${a.rating}
             </span>
           </div>
           <div class="p-4 pt-1">
             <h3 class="text-sm font-bold text-slate-900 truncate">${a.title}</h3>
             <p class="text-xs text-slate-500 truncate">${a.artist} • ${a.year}</p>
-            <p class="text-[11px] text-slate-400 mt-2 truncate">Faixa: ${a.favTrack}</p>
+            <p class="text-[11px] text-slate-400 mt-2 truncate">🎵 ${a.favTrack}</p>
           </div>
         </div>
       `).join('');
@@ -908,8 +1252,8 @@
       openCardModal({
         title: a.title,
         subtitle: `${a.artist} (${a.year})`,
-        badge: `Nota: ${a.rating}`,
-        description: `Faixa favorita destacada: "${a.favTrack}". Use o botão na foto acima para enviar a capa oficial do álbum.`,
+        badge: `★ ${a.rating}`,
+        description: `Faixa favorita: "${a.favTrack}".`,
         imageUrl: a.img,
         extraHtml: '',
         onImageChange: (newUrl) => {
@@ -924,9 +1268,9 @@
       const title = prompt('Nome do Álbum:');
       if (!title) return;
       const artist = prompt('Artista / Banda:') || '';
-      const year = prompt('Ano de lançamento:') || '';
-      const favTrack = prompt('Sua música favorita do álbum:') || '';
-      const rating = prompt('Sua nota (ex: 5/5 ou 10/10):', '5/5') || '5/5';
+      const year = prompt('Ano:') || '';
+      const favTrack = prompt('Faixa favorita:') || '';
+      const rating = prompt('Sua nota (ex: 5/5):', '5/5') || '5/5';
       appData.albums.unshift({
         id: 'alb_' + Date.now(),
         title, artist, year, favTrack, rating,
@@ -936,86 +1280,31 @@
       renderAlbums();
     }
 
-    // Inicializar todas as abas ao abrir a página
-    renderGamePills();
-    renderGames();
-    renderRunning();
-    renderGym();
-    renderLanguages();
-    renderAlbums();
-
-    // [CTRL+F: SCRIPTS-TI// ================= 6. LÓGICA DA LINHA DO TEMPO (TEMPORADAS) =================
-    if (!appData.seasons) {
-      appData.seasons = [
-        {
-          id: 's2',
-          title: 'Temporada 2 — Nova Fase, Carro & Casamento',
-          period: '2026 - Presente',
-          context: 'Início de uma nova etapa profissional, rotina intensa, compra do carro zero e preparativos para o casamento.',
-          friends: 'Mikaely, Isa, Ju, Milena, Matheus, Amigos próximos',
-          events: [
-            {
-              id: 'ev1',
-              title: 'Casamento',
-              date: 'Novembro 2026',
-              desc: 'Marco oficial do casamento e início da vida de casados.',
-              img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80'
-            },
-            {
-              id: 'ev2',
-              title: 'Conquista do Carro 0km',
-              date: 'Março 2026',
-              desc: 'Mudança de ciclo com a chegada do carro novo para as viagens e rotina diária.',
-              img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80'
-            }
-          ]
-        },
-        {
-          id: 's1',
-          title: 'Temporada 1 — Anos de Graduação',
-          period: '2020 - 2025',
-          context: 'Anos de faculdade, estágios, entrega do TCC e construção das amizades da época universitária.',
-          friends: 'Mikaely, Turma da UnB, Amigos de longa data',
-          events: [
-            {
-              id: 'ev3',
-              title: 'Formatura & Conclusão do Curso',
-              date: 'Dezembro 2025',
-              desc: 'Apresentação do trabalho final e encerramento do ciclo da faculdade.',
-              img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'
-            }
-          ]
-        }
-      ];
-      saveData();
-    }
-
+    // ================= 5. LÓGICA DA LINHA DO TEMPO =================
     function renderTimeline() {
       const container = document.getElementById('seasons-container');
       container.innerHTML = appData.seasons.map(season => `
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-5">
-          <!-- Cabeçalho da Temporada -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
           <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-4">
             <div class="space-y-1 max-w-3xl">
               <div class="flex items-center gap-2.5">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">${season.period}</span>
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-900 text-white">${season.period}</span>
                 <button onclick="editSeasonHeader('${season.id}')" class="text-xs text-slate-400 hover:text-slate-800 underline">Editar contexto</button>
               </div>
               <h3 class="text-lg font-bold text-slate-900 pt-1">${season.title}</h3>
               <p class="text-sm text-slate-600">${season.context}</p>
-              <p class="text-xs text-slate-500 pt-1"><strong>Pessoas / Amigos da época:</strong> ${season.friends}</p>
+              <p class="text-xs text-slate-500 pt-1">👥 <strong>Amigos & Pessoas da época:</strong> ${season.friends}</p>
             </div>
             <button onclick="addEventToSeason('${season.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3.5 py-2 rounded-xl transition">
-              + Adicionar Acontecimento / Foto
+              + Adicionar Marco / Foto
             </button>
           </div>
 
-          <!-- Cards de Acontecimentos da Temporada -->
           <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             ${season.events.map(ev => `
               <div class="theme-card" onclick="inspectTimelineEvent('${season.id}', '${ev.id}')">
                 <div class="card-fade-header" style="background-image: url('${ev.img}'); height: 155px;">
-                  <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-800 border border-slate-200">
+                  <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
                     ${ev.date}
                   </span>
                 </div>
@@ -1042,19 +1331,19 @@
         extraHtml: `
           <div class="space-y-3 pt-2">
             <div>
-              <label class="text-xs text-slate-500">Título do Acontecimento</label>
+              <label class="text-xs text-slate-500">Título</label>
               <input id="edit-ev-title" type="text" value="${ev.title}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
             </div>
             <div>
-              <label class="text-xs text-slate-500">Data / Época</label>
+              <label class="text-xs text-slate-500">Data</label>
               <input id="edit-ev-date" type="text" value="${ev.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
             <div>
-              <label class="text-xs text-slate-500">Contexto / História</label>
+              <label class="text-xs text-slate-500">Contexto</label>
               <textarea id="edit-ev-desc" rows="3" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${ev.desc}</textarea>
             </div>
           </div>
-          <button onclick="saveTimelineEventEdits('${seasonId}', '${eventId}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Acontecimento</button>
+          <button onclick="saveTimelineEventEdits('${seasonId}', '${eventId}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar</button>
         `,
         onImageChange: (newUrl) => {
           ev.img = newUrl;
@@ -1079,38 +1368,31 @@
       const season = appData.seasons.find(s => s.id === seasonId);
       const title = prompt('Nome da Temporada:', season.title);
       if (!title) return;
-      const period = prompt('Período (ex: 2024 - 2026):', season.period) || season.period;
-      const context = prompt('Contexto geral da época:', season.context) || season.context;
-      const friends = prompt('Amigos / Pessoas presentes nessa fase:', season.friends) || season.friends;
       season.title = title;
-      season.period = period;
-      season.context = context;
-      season.friends = friends;
+      season.period = prompt('Período:', season.period) || season.period;
+      season.context = prompt('Contexto da época:', season.context) || season.context;
+      season.friends = prompt('Amigos da época:', season.friends) || season.friends;
       saveData();
       renderTimeline();
     }
 
     function addNewSeason() {
-      const title = prompt('Nome da nova Temporada (ex: Temporada 3 — Novos Projetos):');
+      const title = prompt('Nome da Temporada:');
       if (!title) return;
-      const period = prompt('Período (ex: 2027):', '2026') || '';
-      const context = prompt('Resumo do contexto dessa fase:') || '';
-      const friends = prompt('Pessoas e amigos que marcaram essa fase:') || '';
-      appData.seasons.unshift({
-        id: 's_' + Date.now(),
-        title, period, context, friends,
-        events: []
-      });
+      const period = prompt('Período:', '2026') || '';
+      const context = prompt('Contexto da fase:') || '';
+      const friends = prompt('Amigos presentes:') || '';
+      appData.seasons.unshift({ id: 's_' + Date.now(), title, period, context, friends, events: [] });
       saveData();
       renderTimeline();
     }
 
     function addEventToSeason(seasonId) {
       const season = appData.seasons.find(s => s.id === seasonId);
-      const title = prompt('Nome do acontecimento ou conquista:');
+      const title = prompt('Nome do acontecimento:');
       if (!title) return;
-      const date = prompt('Mês/Ano (ex: Outubro 2026):') || '';
-      const desc = prompt('Descrição ou memória desse momento:') || '';
+      const date = prompt('Data:') || '';
+      const desc = prompt('Descrição:') || '';
       season.events.push({
         id: 'ev_' + Date.now(),
         title, date, desc,
@@ -1120,7 +1402,7 @@
       renderTimeline();
     }
 
-    // ================= 7. LÓGICA DO MAPA (BRASIL 27 UFs + MUNDO) =================
+    // ================= 6. LÓGICA DO MAPA =================
     const ALL_BRAZIL_UFS = [
       { uf: 'AC', name: 'Acre' }, { uf: 'AL', name: 'Alagoas' }, { uf: 'AP', name: 'Amapá' },
       { uf: 'AM', name: 'Amazonas' }, { uf: 'BA', name: 'Bahia' }, { uf: 'CE', name: 'Ceará' },
@@ -1132,16 +1414,6 @@
       { uf: 'RO', name: 'Rondônia' }, { uf: 'RR', name: 'Roraima' }, { uf: 'SC', name: 'Santa Catarina' },
       { uf: 'SP', name: 'São Paulo' }, { uf: 'SE', name: 'Sergipe' }, { uf: 'TO', name: 'Tocantins' }
     ];
-
-    if (!appData.mapPlaces) {
-      appData.mapPlaces = [
-        { id: 'uf_DF', type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Residência / Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
-        { id: 'uf_GO', type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Viagens e rotina no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
-        { id: 'uf_RJ', type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
-        { id: 'country_BR', type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
-      ];
-      saveData();
-    }
 
     let mapGalleryFilter = 'todos';
 
@@ -1157,20 +1429,15 @@
     }
 
     function toggleBrazilUF(ufCode) {
-      const existingIndex = appData.mapPlaces.findIndex(p => p.type === 'brasil' && p.code === ufCode);
-      if (existingIndex >= 0) {
-        if (confirm(`Deseja desmarcar ${ufCode} da lista de estados visitados?`)) {
-          appData.mapPlaces.splice(existingIndex, 1);
-        }
+      const idx = appData.mapPlaces.findIndex(p => p.type === 'brasil' && p.code === ufCode);
+      if (idx >= 0) {
+        if (confirm(`Desmarcar ${ufCode} dos visitados?`)) appData.mapPlaces.splice(idx, 1);
       } else {
         const ufObj = ALL_BRAZIL_UFS.find(u => u.uf === ufCode);
         appData.mapPlaces.push({
-          id: 'uf_' + ufCode,
-          type: 'brasil',
-          code: ufCode,
-          name: ufObj.name,
+          id: 'uf_' + ufCode, type: 'brasil', code: ufCode, name: ufObj.name,
           date: new Date().getFullYear().toString(),
-          notes: `Memória favorita em ${ufObj.name}. Clique para adicionar detalhes e foto.`,
+          notes: `Foto e lembrança favorita em ${ufObj.name}.`,
           img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80'
         });
       }
@@ -1182,14 +1449,10 @@
       const name = prompt('Nome do País visitado:');
       if (!name) return;
       const date = prompt('Ano da viagem:', new Date().getFullYear().toString()) || '';
-      const notes = prompt('Cidade favorita ou melhor lembrança do país:') || '';
+      const notes = prompt('Melhor lembrança ou cidade:') || '';
       appData.mapPlaces.push({
-        id: 'country_' + Date.now(),
-        type: 'mundo',
-        code: name.slice(0, 2).toUpperCase(),
-        name,
-        date,
-        notes,
+        id: 'country_' + Date.now(), type: 'mundo', code: name.slice(0, 2).toUpperCase(),
+        name, date, notes,
         img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80'
       });
       saveData();
@@ -1199,19 +1462,15 @@
     function renderMapSection() {
       const visitedBr = appData.mapPlaces.filter(p => p.type === 'brasil');
       const visitedWorld = appData.mapPlaces.filter(p => p.type === 'mundo');
-
       const brPct = ((visitedBr.length / 27) * 100).toFixed(1);
       const worldPct = ((visitedWorld.length / 195) * 100).toFixed(1);
 
       document.getElementById('br-progress-text').textContent = `${visitedBr.length} / 27 (${brPct}%)`;
       document.getElementById('br-progress-bar').style.width = `${brPct}%`;
-
       document.getElementById('world-progress-text').textContent = `${visitedWorld.length} / 195 (${worldPct}%)`;
       document.getElementById('world-progress-bar').style.width = `${Math.max(1, worldPct)}%`;
 
-      // Botões das 27 UFs
-      const ufContainer = document.getElementById('br-uf-buttons');
-      ufContainer.innerHTML = ALL_BRAZIL_UFS.map(u => {
+      document.getElementById('br-uf-buttons').innerHTML = ALL_BRAZIL_UFS.map(u => {
         const isVisited = visitedBr.some(p => p.code === u.uf);
         return `
           <button onclick="toggleBrazilUF('${u.uf}')" title="${u.name}" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition border ${isVisited ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}">
@@ -1220,14 +1479,12 @@
         `;
       }).join('');
 
-      // Grade de Cards com fotos dos lugares visitados
-      const filteredPlaces = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
-      const grid = document.getElementById('map-places-grid');
-      grid.innerHTML = filteredPlaces.map(place => `
+      const filtered = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
+      document.getElementById('map-places-grid').innerHTML = filtered.map(place => `
         <div class="theme-card" onclick="inspectMapPlace('${place.id}')">
           <div class="card-fade-header" style="background-image: url('${place.img}'); height: 150px;">
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-900 border border-slate-200">
-              ${place.type === 'brasil' ? 'UF: ' + place.code : 'País'}
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200">
+              ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
             </span>
             <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/80 text-white">
               ${place.date}
@@ -1245,18 +1502,18 @@
       const place = appData.mapPlaces.find(p => p.id === id);
       openCardModal({
         title: place.name,
-        subtitle: place.type === 'brasil' ? 'Estado Visitado (Brasil)' : 'País Visitado (Mundo)',
+        subtitle: place.type === 'brasil' ? 'Estado Visitado (Brasil)' : 'País Visitado',
         badge: place.date,
         description: place.notes,
         imageUrl: place.img,
         extraHtml: `
           <div class="space-y-3 pt-2">
             <div>
-              <label class="text-xs text-slate-500">Ano / Época da Viagem</label>
+              <label class="text-xs text-slate-500">Ano / Época</label>
               <input id="edit-map-date" type="text" value="${place.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
             </div>
             <div>
-              <label class="text-xs text-slate-500">Memória / Cidade Favorita no Local</label>
+              <label class="text-xs text-slate-500">Memória Favorita</label>
               <textarea id="edit-map-notes" rows="2" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${place.notes}</textarea>
             </div>
           </div>
@@ -1279,9 +1536,16 @@
       closeModal();
     }
 
-    // Inicializar Linha do Tempo e Mapa
+    // Inicializar Tudo
+    renderGamePills();
+    renderGames();
+    renderAllEndurance();
+    renderBodySkills();
+    renderGym();
+    renderLanguages();
+    renderAlbums();
     renderTimeline();
     renderMapSection();
   </script>
 </body>
-</html>MELINE-MAPA]
+</html>
