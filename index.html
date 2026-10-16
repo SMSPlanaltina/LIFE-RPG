@@ -206,14 +206,69 @@
       <div id="albums-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </section>
 
-    <!-- ABA 6: LINHA DO TEMPO -->
-    <section id="tab-timeline" class="tab-panel">
-      <!-- [CTRL+F: ABA-TIMELINE] -->
+    <!-- ABA 6: LINHA DO TEMPO (Temporadas & Contexto da Época) -->
+    <section id="tab-timeline" class="tab-panel space-y-8">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Linha do Tempo em Temporadas</h2>
+          <p class="text-sm text-slate-500">Dividida por fases da vida, contexto da época, amigos do ciclo e fotos dos acontecimentos.</p>
+        </div>
+        <button onclick="addNewSeason()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
+          + Nova Temporada / Fase
+        </button>
+      </div>
+
+      <!-- Container das Temporadas -->
+      <div id="seasons-container" class="space-y-8"></div>
     </section>
 
-    <!-- ABA 7: MAPA -->
-    <section id="tab-mapa" class="tab-panel">
-      <!-- [CTRL+F: ABA-MAPA] -->
+    <!-- ABA 7: MAPA (Brasil & Mundo com Progresso e Foto Favorita) -->
+    <section id="tab-mapa" class="tab-panel space-y-6">
+      <!-- Barra de Progresso Geral (Brasil e Mundo) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <!-- Card Progresso Brasil -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5">
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Progresso no Brasil (27 UFs)</span>
+            <span id="br-progress-text" class="text-sm font-bold text-slate-900">0 / 27 (0%)</span>
+          </div>
+          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+            <div id="br-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 0%"></div>
+          </div>
+          <p class="text-xs text-slate-500 mt-3">Clique nas siglas abaixo para pintar/desmarcar um estado visitado.</p>
+          <div id="br-uf-buttons" class="flex flex-wrap gap-1.5 mt-3"></div>
+        </div>
+
+        <!-- Card Progresso Mundo -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Países do Mundo Visitados</span>
+              <span id="world-progress-text" class="text-sm font-bold text-slate-900">1 / 195 (0.5%)</span>
+            </div>
+            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
+              <div id="world-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 1%"></div>
+            </div>
+            <p class="text-xs text-slate-500 mt-3">Adicione países visitados para registrar a porcentagem global e guardar sua foto favorita de cada país.</p>
+          </div>
+          <button onclick="addNewCountry()" class="mt-4 w-full bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium py-2.5 rounded-xl transition">
+            + Adicionar País Visitado
+          </button>
+        </div>
+      </div>
+
+      <!-- Filtro de visualização dos Cards de Fotos do Mapa -->
+      <div class="flex items-center justify-between pt-2">
+        <h3 class="text-base font-bold text-slate-900">Galeria de Lugares Visitados (Clique para colocar sua foto favorita)</h3>
+        <div class="flex items-center gap-2">
+          <button onclick="setMapGalleryFilter('todos')" id="map-tab-todos" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white">Todos</button>
+          <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Estados do Brasil</button>
+          <button onclick="setMapGalleryFilter('mundo')" id="map-tab-mundo" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Países</button>
+        </div>
+      </div>
+
+      <!-- Grade de Cards com Foto Favorita de cada Estado/País -->
+      <div id="map-places-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
     </section>
 
   </main>
@@ -889,4 +944,344 @@
     renderLanguages();
     renderAlbums();
 
-    // [CTRL+F: SCRIPTS-TIMELINE-MAPA]
+    // [CTRL+F: SCRIPTS-TI// ================= 6. LÓGICA DA LINHA DO TEMPO (TEMPORADAS) =================
+    if (!appData.seasons) {
+      appData.seasons = [
+        {
+          id: 's2',
+          title: 'Temporada 2 — Nova Fase, Carro & Casamento',
+          period: '2026 - Presente',
+          context: 'Início de uma nova etapa profissional, rotina intensa, compra do carro zero e preparativos para o casamento.',
+          friends: 'Mikaely, Isa, Ju, Milena, Matheus, Amigos próximos',
+          events: [
+            {
+              id: 'ev1',
+              title: 'Casamento',
+              date: 'Novembro 2026',
+              desc: 'Marco oficial do casamento e início da vida de casados.',
+              img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80'
+            },
+            {
+              id: 'ev2',
+              title: 'Conquista do Carro 0km',
+              date: 'Março 2026',
+              desc: 'Mudança de ciclo com a chegada do carro novo para as viagens e rotina diária.',
+              img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80'
+            }
+          ]
+        },
+        {
+          id: 's1',
+          title: 'Temporada 1 — Anos de Graduação',
+          period: '2020 - 2025',
+          context: 'Anos de faculdade, estágios, entrega do TCC e construção das amizades da época universitária.',
+          friends: 'Mikaely, Turma da UnB, Amigos de longa data',
+          events: [
+            {
+              id: 'ev3',
+              title: 'Formatura & Conclusão do Curso',
+              date: 'Dezembro 2025',
+              desc: 'Apresentação do trabalho final e encerramento do ciclo da faculdade.',
+              img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80'
+            }
+          ]
+        }
+      ];
+      saveData();
+    }
+
+    function renderTimeline() {
+      const container = document.getElementById('seasons-container');
+      container.innerHTML = appData.seasons.map(season => `
+        <div class="bg-white border border-slate-200 rounded-2xl p-6 space-y-5">
+          <!-- Cabeçalho da Temporada -->
+          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-4">
+            <div class="space-y-1 max-w-3xl">
+              <div class="flex items-center gap-2.5">
+                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-100 text-slate-700">${season.period}</span>
+                <button onclick="editSeasonHeader('${season.id}')" class="text-xs text-slate-400 hover:text-slate-800 underline">Editar contexto</button>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 pt-1">${season.title}</h3>
+              <p class="text-sm text-slate-600">${season.context}</p>
+              <p class="text-xs text-slate-500 pt-1"><strong>Pessoas / Amigos da época:</strong> ${season.friends}</p>
+            </div>
+            <button onclick="addEventToSeason('${season.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3.5 py-2 rounded-xl transition">
+              + Adicionar Acontecimento / Foto
+            </button>
+          </div>
+
+          <!-- Cards de Acontecimentos da Temporada -->
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            ${season.events.map(ev => `
+              <div class="theme-card" onclick="inspectTimelineEvent('${season.id}', '${ev.id}')">
+                <div class="card-fade-header" style="background-image: url('${ev.img}'); height: 155px;">
+                  <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-800 border border-slate-200">
+                    ${ev.date}
+                  </span>
+                </div>
+                <div class="p-4 pt-1">
+                  <h4 class="text-base font-bold text-slate-900">${ev.title}</h4>
+                  <p class="text-sm text-slate-600 mt-1 line-clamp-2">${ev.desc}</p>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectTimelineEvent(seasonId, eventId) {
+      const season = appData.seasons.find(s => s.id === seasonId);
+      const ev = season.events.find(e => e.id === eventId);
+      openCardModal({
+        title: ev.title,
+        subtitle: season.title,
+        badge: ev.date,
+        description: ev.desc,
+        imageUrl: ev.img,
+        extraHtml: `
+          <div class="space-y-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Título do Acontecimento</label>
+              <input id="edit-ev-title" type="text" value="${ev.title}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Data / Época</label>
+              <input id="edit-ev-date" type="text" value="${ev.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Contexto / História</label>
+              <textarea id="edit-ev-desc" rows="3" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${ev.desc}</textarea>
+            </div>
+          </div>
+          <button onclick="saveTimelineEventEdits('${seasonId}', '${eventId}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Acontecimento</button>
+        `,
+        onImageChange: (newUrl) => {
+          ev.img = newUrl;
+          saveData();
+          renderTimeline();
+        }
+      });
+    }
+
+    function saveTimelineEventEdits(seasonId, eventId) {
+      const season = appData.seasons.find(s => s.id === seasonId);
+      const ev = season.events.find(e => e.id === eventId);
+      ev.title = document.getElementById('edit-ev-title').value;
+      ev.date = document.getElementById('edit-ev-date').value;
+      ev.desc = document.getElementById('edit-ev-desc').value;
+      saveData();
+      renderTimeline();
+      closeModal();
+    }
+
+    function editSeasonHeader(seasonId) {
+      const season = appData.seasons.find(s => s.id === seasonId);
+      const title = prompt('Nome da Temporada:', season.title);
+      if (!title) return;
+      const period = prompt('Período (ex: 2024 - 2026):', season.period) || season.period;
+      const context = prompt('Contexto geral da época:', season.context) || season.context;
+      const friends = prompt('Amigos / Pessoas presentes nessa fase:', season.friends) || season.friends;
+      season.title = title;
+      season.period = period;
+      season.context = context;
+      season.friends = friends;
+      saveData();
+      renderTimeline();
+    }
+
+    function addNewSeason() {
+      const title = prompt('Nome da nova Temporada (ex: Temporada 3 — Novos Projetos):');
+      if (!title) return;
+      const period = prompt('Período (ex: 2027):', '2026') || '';
+      const context = prompt('Resumo do contexto dessa fase:') || '';
+      const friends = prompt('Pessoas e amigos que marcaram essa fase:') || '';
+      appData.seasons.unshift({
+        id: 's_' + Date.now(),
+        title, period, context, friends,
+        events: []
+      });
+      saveData();
+      renderTimeline();
+    }
+
+    function addEventToSeason(seasonId) {
+      const season = appData.seasons.find(s => s.id === seasonId);
+      const title = prompt('Nome do acontecimento ou conquista:');
+      if (!title) return;
+      const date = prompt('Mês/Ano (ex: Outubro 2026):') || '';
+      const desc = prompt('Descrição ou memória desse momento:') || '';
+      season.events.push({
+        id: 'ev_' + Date.now(),
+        title, date, desc,
+        img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80'
+      });
+      saveData();
+      renderTimeline();
+    }
+
+    // ================= 7. LÓGICA DO MAPA (BRASIL 27 UFs + MUNDO) =================
+    const ALL_BRAZIL_UFS = [
+      { uf: 'AC', name: 'Acre' }, { uf: 'AL', name: 'Alagoas' }, { uf: 'AP', name: 'Amapá' },
+      { uf: 'AM', name: 'Amazonas' }, { uf: 'BA', name: 'Bahia' }, { uf: 'CE', name: 'Ceará' },
+      { uf: 'DF', name: 'Distrito Federal' }, { uf: 'ES', name: 'Espírito Santo' }, { uf: 'GO', name: 'Goiás' },
+      { uf: 'MA', name: 'Maranhão' }, { uf: 'MT', name: 'Mato Grosso' }, { uf: 'MS', name: 'Mato Grosso do Sul' },
+      { uf: 'MG', name: 'Minas Gerais' }, { uf: 'PA', name: 'Pará' }, { uf: 'PB', name: 'Paraíba' },
+      { uf: 'PR', name: 'Paraná' }, { uf: 'PE', name: 'Pernambuco' }, { uf: 'PI', name: 'Piauí' },
+      { uf: 'RJ', name: 'Rio de Janeiro' }, { uf: 'RN', name: 'Rio Grande do Norte' }, { uf: 'RS', name: 'Rio Grande do Sul' },
+      { uf: 'RO', name: 'Rondônia' }, { uf: 'RR', name: 'Roraima' }, { uf: 'SC', name: 'Santa Catarina' },
+      { uf: 'SP', name: 'São Paulo' }, { uf: 'SE', name: 'Sergipe' }, { uf: 'TO', name: 'Tocantins' }
+    ];
+
+    if (!appData.mapPlaces) {
+      appData.mapPlaces = [
+        { id: 'uf_DF', type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Residência / Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
+        { id: 'uf_GO', type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Viagens e rotina no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
+        { id: 'uf_RJ', type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
+        { id: 'country_BR', type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
+      ];
+      saveData();
+    }
+
+    let mapGalleryFilter = 'todos';
+
+    function setMapGalleryFilter(filter) {
+      mapGalleryFilter = filter;
+      ['todos', 'brasil', 'mundo'].forEach(f => {
+        const btn = document.getElementById('map-tab-' + f);
+        btn.className = (f === filter)
+          ? 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white'
+          : 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700';
+      });
+      renderMapSection();
+    }
+
+    function toggleBrazilUF(ufCode) {
+      const existingIndex = appData.mapPlaces.findIndex(p => p.type === 'brasil' && p.code === ufCode);
+      if (existingIndex >= 0) {
+        if (confirm(`Deseja desmarcar ${ufCode} da lista de estados visitados?`)) {
+          appData.mapPlaces.splice(existingIndex, 1);
+        }
+      } else {
+        const ufObj = ALL_BRAZIL_UFS.find(u => u.uf === ufCode);
+        appData.mapPlaces.push({
+          id: 'uf_' + ufCode,
+          type: 'brasil',
+          code: ufCode,
+          name: ufObj.name,
+          date: new Date().getFullYear().toString(),
+          notes: `Memória favorita em ${ufObj.name}. Clique para adicionar detalhes e foto.`,
+          img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80'
+        });
+      }
+      saveData();
+      renderMapSection();
+    }
+
+    function addNewCountry() {
+      const name = prompt('Nome do País visitado:');
+      if (!name) return;
+      const date = prompt('Ano da viagem:', new Date().getFullYear().toString()) || '';
+      const notes = prompt('Cidade favorita ou melhor lembrança do país:') || '';
+      appData.mapPlaces.push({
+        id: 'country_' + Date.now(),
+        type: 'mundo',
+        code: name.slice(0, 2).toUpperCase(),
+        name,
+        date,
+        notes,
+        img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80'
+      });
+      saveData();
+      renderMapSection();
+    }
+
+    function renderMapSection() {
+      const visitedBr = appData.mapPlaces.filter(p => p.type === 'brasil');
+      const visitedWorld = appData.mapPlaces.filter(p => p.type === 'mundo');
+
+      const brPct = ((visitedBr.length / 27) * 100).toFixed(1);
+      const worldPct = ((visitedWorld.length / 195) * 100).toFixed(1);
+
+      document.getElementById('br-progress-text').textContent = `${visitedBr.length} / 27 (${brPct}%)`;
+      document.getElementById('br-progress-bar').style.width = `${brPct}%`;
+
+      document.getElementById('world-progress-text').textContent = `${visitedWorld.length} / 195 (${worldPct}%)`;
+      document.getElementById('world-progress-bar').style.width = `${Math.max(1, worldPct)}%`;
+
+      // Botões das 27 UFs
+      const ufContainer = document.getElementById('br-uf-buttons');
+      ufContainer.innerHTML = ALL_BRAZIL_UFS.map(u => {
+        const isVisited = visitedBr.some(p => p.code === u.uf);
+        return `
+          <button onclick="toggleBrazilUF('${u.uf}')" title="${u.name}" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition border ${isVisited ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}">
+            ${u.uf}
+          </button>
+        `;
+      }).join('');
+
+      // Grade de Cards com fotos dos lugares visitados
+      const filteredPlaces = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
+      const grid = document.getElementById('map-places-grid');
+      grid.innerHTML = filteredPlaces.map(place => `
+        <div class="theme-card" onclick="inspectMapPlace('${place.id}')">
+          <div class="card-fade-header" style="background-image: url('${place.img}'); height: 150px;">
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-900 border border-slate-200">
+              ${place.type === 'brasil' ? 'UF: ' + place.code : 'País'}
+            </span>
+            <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/80 text-white">
+              ${place.date}
+            </span>
+          </div>
+          <div class="p-4 pt-1">
+            <h4 class="text-base font-bold text-slate-900">${place.name}</h4>
+            <p class="text-xs text-slate-500 mt-1 line-clamp-2">${place.notes}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectMapPlace(id) {
+      const place = appData.mapPlaces.find(p => p.id === id);
+      openCardModal({
+        title: place.name,
+        subtitle: place.type === 'brasil' ? 'Estado Visitado (Brasil)' : 'País Visitado (Mundo)',
+        badge: place.date,
+        description: place.notes,
+        imageUrl: place.img,
+        extraHtml: `
+          <div class="space-y-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Ano / Época da Viagem</label>
+              <input id="edit-map-date" type="text" value="${place.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Memória / Cidade Favorita no Local</label>
+              <textarea id="edit-map-notes" rows="2" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${place.notes}</textarea>
+            </div>
+          </div>
+          <button onclick="saveMapPlaceEdits('${place.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Local</button>
+        `,
+        onImageChange: (newUrl) => {
+          place.img = newUrl;
+          saveData();
+          renderMapSection();
+        }
+      });
+    }
+
+    function saveMapPlaceEdits(id) {
+      const place = appData.mapPlaces.find(p => p.id === id);
+      place.date = document.getElementById('edit-map-date').value;
+      place.notes = document.getElementById('edit-map-notes').value;
+      saveData();
+      renderMapSection();
+      closeModal();
+    }
+
+    // Inicializar Linha do Tempo e Mapa
+    renderTimeline();
+    renderMapSection();
+  </script>
+</body>
+</html>MELINE-MAPA]
