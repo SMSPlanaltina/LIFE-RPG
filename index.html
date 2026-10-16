@@ -94,29 +94,116 @@
   <!-- CONTEÚDO PRINCIPAL -->
   <main class="max-w-6xl mx-auto px-4 pt-8">
 
-    <!-- ABA 1: JOGOS -->
-    <section id="tab-jogos" class="tab-panel active">
-      <!-- [CTRL+F: ABA-JOGOS] -->
+    <!-- ABA 1: JOGOS (Substitui o marcador ABA-JOGOS) -->
+    <section id="tab-jogos" class="tab-panel active space-y-6">
+      <!-- Topo: Contador Geral de Jogos + Botão de Nova Conquista -->
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-6">
+          <div>
+            <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Total de Jogos Jogados / Zerados</span>
+            <div class="flex items-baseline gap-3 mt-1">
+              <span id="total-games-counter" class="text-3xl font-bold text-slate-900">142</span>
+              <button onclick="editTotalGames()" class="text-xs font-medium text-slate-500 hover:text-slate-900 underline">Editar número</button>
+            </div>
+          </div>
+          <div class="h-10 w-px bg-slate-200 hidden sm:block"></div>
+          <div class="hidden sm:block">
+            <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Integração / Lista</span>
+            <div class="mt-1">
+              <a href="https://backloggd.com/" target="_blank" class="text-sm font-medium text-slate-700 hover:text-slate-900 underline">Abrir perfil no Backloggd ↗</a>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="openNewGameAchievementModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
+          + Adicionar Conquista / Desafio
+        </button>
+      </div>
+
+      <!-- Barra de Botões de Jogos (com Ícones) + Ordenação (Dificuldade nos bastidores ou Tempo) -->
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1">
+          <!-- Renderizado via JS com ícones dos jogos -->
+        </div>
+
+        <div class="flex items-center gap-2">
+          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 font-medium">
+            <option value="all">Todos (Concluídos + Na Mira)</option>
+            <option value="unlocked">Já Conquistados</option>
+            <option value="hunting">Na Mira (Quero Pegar)</option>
+          </select>
+
+          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-sm text-slate-700 font-medium">
+            <option value="difficulty">Ordem: Mais Difíceis</option>
+            <option value="recent">Ordem: Mais Recentes</option>
+            <option value="rarity">Ordem: Menor % de Jogadores</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Grade de Cards de Conquistas de Jogos -->
+      <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 2: CORRIDA -->
-    <section id="tab-corrida" class="tab-panel">
-      <!-- [CTRL+F: ABA-CORRIDA] -->
+    <!-- ABA 2: CORRIDA (Substitui o marcador ABA-CORRIDA) -->
+    <section id="tab-corrida" class="tab-panel space-y-6">
+      <div class="flex items-center justify-between">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Desafios de Corrida</h2>
+          <p class="text-sm text-slate-500">Clique em qualquer distância para atualizar seu melhor tempo histórico, tempo atual ou trocar a foto.</p>
+        </div>
+      </div>
+      <div id="running-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
     </section>
 
-    <!-- ABA 3: ACADEMIA -->
-    <section id="tab-academia" class="tab-panel">
-      <!-- [CTRL+F: ABA-ACADEMIA] -->
+    <!-- ABA 3: ACADEMIA (Substitui o marcador ABA-ACADEMIA) -->
+    <section id="tab-academia" class="tab-panel space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div class="flex items-center gap-2 overflow-x-auto pb-1" id="gym-Category-pills">
+          <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-medium">Todos</button>
+          <button onclick="filterGym('Peito')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Peito</button>
+          <button onclick="filterGym('Costas')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Costas</button>
+          <button onclick="filterGym('Pernas')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Pernas</button>
+          <button onclick="filterGym('Ombros')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Ombros</button>
+          <button onclick="filterGym('Braços')" class="gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium">Braços</button>
+        </div>
+        <button onclick="addNewGymExercise()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl transition">
+          + Novo Exercício / Equipamento
+        </button>
+      </div>
+
+      <div id="gym-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+    
+    <!-- ABA 4: IDIOMAS (Substitui o marcador ABA-IDIOMAS) -->
+    <section id="tab-idiomas" class="tab-panel space-y-6">
+      <div class="flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <h2 class="text-lg font-bold text-slate-900">Proficiência & Certificações de Idiomas</h2>
+          <p class="text-sm text-slate-500">Metas de domínio máximo (C2 / N1) e acompanhamento de consistência no Duolingo.</p>
+        </div>
+        <button onclick="addNewLanguage()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl transition">
+          + Adicionar Idioma
+        </button>
+      </div>
+      <div id="languages-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 4: IDIOMAS -->
-    <section id="tab-idiomas" class="tab-panel">
-      <!-- [CTRL+F: ABA-IDIOMAS] -->
-    </section>
-
-    <!-- ABA 5: ÁLBUNS -->
-    <section id="tab-albuns" class="tab-panel">
-      <!-- [CTRL+F: ABA-ALBUNS] -->
+    <!-- ABA 5: ÁLBUNS (Substitui o marcador ABA-ALBUNS) -->
+    <section id="tab-albuns" class="tab-panel space-y-6">
+      <div class="bg-white border border-slate-200 rounded-2xl p-5 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <span class="text-xs font-medium text-slate-400 uppercase tracking-wider">Coleção de Álbuns Ouvidos</span>
+          <div class="flex items-baseline gap-2 mt-1">
+            <span id="albums-count" class="text-2xl font-bold text-slate-900">0</span>
+            <span class="text-sm text-slate-500">álbuns registrados</span>
+          </div>
+        </div>
+        <button onclick="addNewAlbum()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
+          + Adicionar Álbum
+        </button>
+      </div>
+      <div id="albums-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
     </section>
 
     <!-- ABA 6: LINHA DO TEMPO -->
@@ -200,7 +287,606 @@
       reader.readAsDataURL(file);
     }
 
-    // [CTRL+F: SCRIPTS-MODULOS]
-  </script>
-</body>
-</html>
+    // ================= DADOS INICIAIS (SALVOS NO NAVEGADOR PARA VOCÊ EDITAR LIVREMENTE) =================
+    const defaultData = {
+      totalGamesPlayed: 142,
+      gameCatalog: [
+        { id: 'all', name: 'Todos os Jogos', icon: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=120&q=80' },
+        { id: 'League of Legends', name: 'League of Legends', icon: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=120&q=80' },
+        { id: 'Wild Rift', name: 'Wild Rift', icon: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=120&q=80' },
+        { id: 'Counter-Strike', name: 'Counter-Strike', icon: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=120&q=80' }
+      ],
+      gameAchievements: [
+        {
+          id: 'g1',
+          title: 'Challenger (Desafiante)',
+          game: 'League of Legends',
+          status: 'hunting',
+          rarity: 0.02,
+          hiddenRank: 1000, // Usado apenas nos bastidores para ordenar por dificuldade
+          date: '2026-10',
+          desc: 'Alcançar o topo da fila ranqueada do servidor.',
+          img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80'
+        },
+        {
+          id: 'g2',
+          title: 'Arena God (Deus da Arena)',
+          game: 'League of Legends',
+          status: 'hunting',
+          rarity: 0.1,
+          hiddenRank: 980,
+          date: '2026-09',
+          desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.',
+          img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=800&q=80'
+        },
+        {
+          id: 'g3',
+          title: 'Odisseia: Extração (Modo Mais Difícil)',
+          game: 'League of Legends',
+          status: 'unlocked',
+          rarity: 0.3,
+          hiddenRank: 950,
+          date: '2018-10',
+          desc: 'Completar o nível máximo de dificuldade do evento Odisseia com restrição de aprimoramentos.',
+          img: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80'
+        },
+        {
+          id: 'g4',
+          title: 'Bots da Maldição do Veigar',
+          game: 'League of Legends',
+          status: 'unlocked',
+          rarity: 1.2,
+          hiddenRank: 890,
+          date: '2024-09',
+          desc: 'Sobreviver e vencer a dificuldade máxima contra os Bots da Maldição e o Veigar gigante.',
+          img: 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?w=800&q=80'
+        },
+        {
+          id: 'g5',
+          title: 'Rank Alto no Wild Rift',
+          game: 'Wild Rift',
+          status: 'unlocked',
+          rarity: 2.0,
+          hiddenRank: 820,
+          date: '2025-06',
+          desc: 'Conquista competitiva nas filas ranqueadas do League of Legends: Wild Rift.',
+          img: 'https://images.unsplash.com/photo-1552820728-8b83bb6b773f?w=800&q=80'
+        }
+      ],
+      running: [
+        { id: 'r1', dist: '5 km', bestTime: '24:15', currentTime: '24:50', notes: 'Melhor marca pessoal nos 5 km.', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
+        { id: 'r2', dist: '10 km', bestTime: '52:30', currentTime: '53:40', notes: 'Ritmo consistente abaixo de 5:20/km.', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
+        { id: 'r3', dist: '15 km', bestTime: '1:22:10', currentTime: '--:--', notes: 'Prova de média-longa distância.', img: 'https://images.unsplash.com/photo-1502904550040-7534597429ae?w=600&q=80' },
+        { id: 'r4', dist: '21 km (Meia)', bestTime: 'Na Mira', currentTime: '--:--', notes: 'Meta de meia maratona.', img: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&q=80' },
+        { id: 'r5', dist: '42 km (Maratona)', bestTime: 'Na Mira', currentTime: '--:--', notes: 'Desafio máximo de resistência.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' }
+      ],
+      gym: [
+        { id: 'gym1', name: 'Supino Reto', group: 'Peito', oneRM: '100 kg', force4to6: '90 kg', hyper8to15: '78 kg', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
+        { id: 'gym2', name: 'Agachamento Livre', group: 'Pernas', oneRM: '130 kg', force4to6: '116 kg', hyper8to15: '96 kg', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
+        { id: 'gym3', name: 'Levantamento Terra', group: 'Costas', oneRM: '150 kg', force4to6: '134 kg', hyper8to15: '110 kg', img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80' },
+        { id: 'gym4', name: 'Leg Press 45°', group: 'Pernas', oneRM: '280 kg', force4to6: '250 kg', hyper8to15: '210 kg', img: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80' },
+        { id: 'gym5', name: 'Desenvolvimento com Halteres', group: 'Ombros', oneRM: '34 kg', force4to6: '30 kg', hyper8to15: '24 kg', img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80' },
+        { id: 'gym6', name: 'Rosca Direta', group: 'Braços', oneRM: '46 kg', force4to6: '40 kg', hyper8to15: '32 kg', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80' }
+      ],
+      languages: [
+        {
+          id: 'lang1',
+          lang: 'Inglês',
+          certTitle: 'C2 Proficiency (Cambridge CPE)',
+          altCerts: 'IELTS (banda 8.5 a 9.0) | TOEFL iBT (114 a 120 pts)',
+          currentLevel: 'B2 / C1',
+          duolingoStreak: 'Ativo',
+          status: 'Em Progresso para C2',
+          desc: 'Certificado de nível mais alto oferecido pela Cambridge, atestando domínio pleno do idioma (nível C2 do Quadro Europeu).',
+          img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80'
+        },
+        {
+          id: 'lang2',
+          lang: 'Espanhol',
+          certTitle: 'DELE C2 (Instituto Cervantes)',
+          altCerts: 'Ministério da Educação da Espanha',
+          currentLevel: 'B2',
+          duolingoStreak: 'Ativo',
+          status: 'Em Progresso para C2',
+          desc: 'Título oficial definitivo outorgado pelo Ministério da Educação da Espanha que certifica o grau máximo de competência no idioma.',
+          img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80'
+        },
+        {
+          id: 'lang3',
+          lang: 'Japonês',
+          certTitle: 'JLPT N1 (Nihongo Noryoku Shiken)',
+          altCerts: 'Fundação Japão (Domínio de ~2.000 Kanjis)',
+          currentLevel: 'N5 / N4',
+          duolingoStreak: 'Ativo',
+          status: 'Meta N1',
+          desc: 'Exame dividido em cinco níveis (do N5 ao N1). O N1 é o grau máximo, exigindo domínio avançado de leitura, gramática, vocabulário e audição.',
+          img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80'
+        }
+      ],
+      albums: [
+        { id: 'alb1', title: 'Diamond Life', artist: 'Sade', year: '1984', favTrack: 'Smooth Operator', rating: '5/5', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80' },
+        { id: 'alb2', title: 'Luz', artist: 'Djavan', year: '1982', favTrack: 'Samurai', rating: '5/5', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&q=80' },
+        { id: 'alb3', title: '333', artist: 'Matuê', year: '2024', favTrack: '333', rating: '5/5', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80' }
+      ]
+    };
+
+    let appData = JSON.parse(localStorage.getItem('personalAchievementsData_v2')) || defaultData;
+    function saveData() {
+      localStorage.setItem('personalAchievementsData_v2', JSON.stringify(appData));
+    }
+
+    // ================= 1. LÓGICA DE JOGOS =================
+    let selectedGameFilter = 'all';
+
+    function renderGamePills() {
+      const container = document.getElementById('game-filter-pills');
+      document.getElementById('total-games-counter').textContent = appData.totalGamesPlayed;
+
+      container.innerHTML = appData.gameCatalog.map(g => {
+        const active = selectedGameFilter === g.id;
+        return `
+          <button onclick="selectGameFilter('${g.id}')" class="flex items-center gap-2.5 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            <img src="${g.icon}" class="w-5 h-5 rounded-md object-cover" alt="${g.name}" />
+            <span>${g.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectGameFilter(gameId) {
+      selectedGameFilter = gameId;
+      renderGamePills();
+      renderGames();
+    }
+
+    function renderGames() {
+      const statusFilter = document.getElementById('game-status-filter').value;
+      const sortBy = document.getElementById('game-sort-select').value;
+
+      let list = appData.gameAchievements.filter(item => {
+        const matchGame = selectedGameFilter === 'all' || item.game === selectedGameFilter;
+        const matchStatus = statusFilter === 'all' || item.status === statusFilter;
+        return matchGame && matchStatus;
+      });
+
+      // Ordenação usando hiddenRank nos bastidores (sem poluir o card com número de score)
+      list.sort((a, b) => {
+        if (sortBy === 'difficulty') return b.hiddenRank - a.hiddenRank;
+        if (sortBy === 'rarity') return a.rarity - b.rarity;
+        if (sortBy === 'recent') return b.date.localeCompare(a.date);
+        return 0;
+      });
+
+      const grid = document.getElementById('games-grid');
+      grid.innerHTML = list.map(item => `
+        <div class="theme-card flex flex-col justify-between" onclick="inspectGameCard('${item.id}')">
+          <div>
+            <div class="card-fade-header" style="background-image: url('${item.img}')">
+              <div class="absolute top-3 left-3 z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold ${item.status === 'unlocked' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-amber-50 text-amber-700 border border-amber-200'}">
+                  ${item.status === 'unlocked' ? 'Concluído' : 'Na Mira'}
+                </span>
+              </div>
+              <div class="absolute top-3 right-3 z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 text-slate-700 border border-slate-200">
+                  ${item.game}
+                </span>
+              </div>
+            </div>
+
+            <div class="p-5 pt-2">
+              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
+              <p class="text-sm text-slate-600 mt-1.5 line-clamp-2">${item.desc}</p>
+            </div>
+          </div>
+
+          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Raridade: <strong class="text-slate-800">${item.rarity}% dos jogadores</strong></span>
+            <span>${item.date}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectGameCard(id) {
+      const item = appData.gameAchievements.find(x => x.id === id);
+      if (!item) return;
+
+      openCardModal({
+        title: item.title,
+        subtitle: item.game,
+        badge: `${item.rarity}% dos jogadores conseguiram`,
+        description: item.desc,
+        imageUrl: item.img,
+        extraHtml: `
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Status</label>
+              <select id="edit-g-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">
+                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>Concluído</option>
+                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>Na Mira (Quero pegar)</option>
+              </select>
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">% de Jogadores (Raridade)</label>
+              <input id="edit-g-rarity" type="number" step="0.01" value="${item.rarity}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+          </div>
+          <button onclick="saveGameEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Alterações</button>
+        `,
+        onImageChange: (newUrl) => {
+          item.img = newUrl;
+          saveData();
+          renderGames();
+        }
+      });
+    }
+
+    function saveGameEdits(id) {
+      const item = appData.gameAchievements.find(x => x.id === id);
+      item.status = document.getElementById('edit-g-status').value;
+      item.rarity = parseFloat(document.getElementById('edit-g-rarity').value) || item.rarity;
+      saveData();
+      renderGames();
+      closeModal();
+    }
+
+    function editTotalGames() {
+      const val = prompt('Quantos jogos você já jogou/zerou no geral?', appData.totalGamesPlayed);
+      if (val !== null && !isNaN(val)) {
+        appData.totalGamesPlayed = parseInt(val, 10);
+        saveData();
+        renderGamePills();
+      }
+    }
+
+    function openNewGameAchievementModal() {
+      const title = prompt('Nome do desafio ou conquista (ex: Pentakill no Clash, Global no CS):');
+      if (!title) return;
+      const game = prompt('Nome do Jogo (ex: League of Legends, Wild Rift, Counter-Strike):', 'League of Legends');
+      const desc = prompt('Breve descrição do que significa esse feito:') || '';
+      const rarity = parseFloat(prompt('Porcentagem aproximada de pessoas que conseguiram (ex: 0.5):', '1.0')) || 1.0;
+      const hiddenRank = parseInt(prompt('Peso de dificuldade nos bastidores de 1 a 1000 (apenas para ordenar a lista):', '850'), 10) || 850;
+      const isUnlocked = confirm('Você já concluiu esse desafio? (OK = Concluído | Cancelar = Ainda está Na Mira)');
+
+      if (!appData.gameCatalog.some(g => g.id === game)) {
+        appData.gameCatalog.push({ id: game, name: game, icon: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=120&q=80' });
+      }
+
+      appData.gameAchievements.push({
+        id: 'g_' + Date.now(),
+        title,
+        game,
+        status: isUnlocked ? 'unlocked' : 'hunting',
+        rarity,
+        hiddenRank,
+        date: new Date().toISOString().slice(0, 7),
+        desc,
+        img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=800&q=80'
+      });
+
+      saveData();
+      renderGamePills();
+      renderGames();
+    }
+
+    // ================= 2. LÓGICA DE CORRIDA =================
+    function renderRunning() {
+      const grid = document.getElementById('running-grid');
+      grid.innerHTML = appData.running.map(r => `
+        <div class="theme-card flex flex-col justify-between" onclick="inspectRunningCard('${r.id}')">
+          <div class="card-fade-header" style="background-image: url('${r.img}'); height: 125px;">
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/90 text-slate-900 border border-slate-200">
+              ${r.dist}
+            </span>
+          </div>
+          <div class="p-4 pt-1">
+            <span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Melhor Tempo (Recorde)</span>
+            <div class="text-2xl font-bold text-slate-900 mt-0.5">${r.bestTime}</div>
+            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+              <span>Tempo Atual:</span>
+              <strong class="text-slate-700">${r.currentTime}</strong>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectRunningCard(id) {
+      const r = appData.running.find(x => x.id === id);
+      openCardModal({
+        title: `Corrida — ${r.dist}`,
+        subtitle: 'Desempenho Corporal',
+        badge: `Recorde: ${r.bestTime}`,
+        description: r.notes,
+        imageUrl: r.img,
+        extraHtml: `
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Melhor Tempo Histórico</label>
+              <input id="edit-r-best" type="text" value="${r.bestTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Tempo Mais Recente</label>
+              <input id="edit-r-curr" type="text" value="${r.currentTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+          </div>
+          <div class="mt-3">
+            <label class="text-xs text-slate-500">Observações (Prova, Pace, Data)</label>
+            <input id="edit-r-notes" type="text" value="${r.notes}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+          </div>
+          <button onclick="saveRunningEdits('${r.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Tempo</button>
+        `,
+        onImageChange: (newUrl) => {
+          r.img = newUrl;
+          saveData();
+          renderRunning();
+        }
+      });
+    }
+
+    function saveRunningEdits(id) {
+      const r = appData.running.find(x => x.id === id);
+      r.bestTime = document.getElementById('edit-r-best').value;
+      r.currentTime = document.getElementById('edit-r-curr').value;
+      r.notes = document.getElementById('edit-r-notes').value;
+      saveData();
+      renderRunning();
+      closeModal();
+    }
+
+    // ================= 3. LÓGICA DE ACADEMIA (1RM / 4-6 / 8-15) =================
+    let currentGymGroup = 'Todos';
+
+    function filterGym(group) {
+      currentGymGroup = group;
+      document.querySelectorAll('.gym-pill').forEach(btn => {
+        if (btn.textContent === group) {
+          btn.className = 'gym-pill bg-slate-900 text-white px-3.5 py-1.5 rounded-full text-xs font-medium';
+        } else {
+          btn.className = 'gym-pill bg-white border border-slate-200 text-slate-700 px-3.5 py-1.5 rounded-full text-xs font-medium';
+        }
+      });
+      renderGym();
+    }
+
+    function renderGym() {
+      const list = appData.gym.filter(x => currentGymGroup === 'Todos' || x.group === currentGymGroup);
+      const grid = document.getElementById('gym-grid');
+      grid.innerHTML = list.map(item => `
+        <div class="theme-card" onclick="inspectGymCard('${item.id}')">
+          <div class="card-fade-header" style="background-image: url('${item.img}'); height: 120px;">
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/90 text-slate-700 border border-slate-200">
+              ${item.group}
+            </span>
+          </div>
+          <div class="p-5 pt-2">
+            <h3 class="text-base font-bold text-slate-900">${item.name}</h3>
+            <div class="grid grid-cols-3 gap-2 mt-4 text-center">
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-slate-400">1 RM</span>
+                <strong class="text-sm font-bold text-slate-900">${item.oneRM}</strong>
+              </div>
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-slate-400">Força (4-6)</span>
+                <strong class="text-sm font-bold text-slate-900">${item.force4to6}</strong>
+              </div>
+              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-slate-400">Hiper (8-15)</span>
+                <strong class="text-sm font-bold text-slate-900">${item.hyper8to15}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectGymCard(id) {
+      const item = appData.gym.find(x => x.id === id);
+      openCardModal({
+        title: item.name,
+        subtitle: `Grupo Muscular: ${item.group}`,
+        badge: `1RM: ${item.oneRM}`,
+        description: 'Atualize abaixo suas cargas máximas para 1 repetição máxima (1RM), faixa de força (4 a 6 repetições) e faixa de hipertrofia (8 a 15 repetições).',
+        imageUrl: item.img,
+        extraHtml: `
+          <div class="grid grid-cols-3 gap-2 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">1 RM</label>
+              <input id="edit-gym-1rm" type="text" value="${item.oneRM}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Força (4 a 6)</label>
+              <input id="edit-gym-46" type="text" value="${item.force4to6}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Hipertrofia (8 a 15)</label>
+              <input id="edit-gym-815" type="text" value="${item.hyper8to15}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
+            </div>
+          </div>
+          <button onclick="saveGymEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Cargas</button>
+        `,
+        onImageChange: (newUrl) => {
+          item.img = newUrl;
+          saveData();
+          renderGym();
+        }
+      });
+    }
+
+    function saveGymEdits(id) {
+      const item = appData.gym.find(x => x.id === id);
+      item.oneRM = document.getElementById('edit-gym-1rm').value;
+      item.force4to6 = document.getElementById('edit-gym-46').value;
+      item.hyper8to15 = document.getElementById('edit-gym-815').value;
+      saveData();
+      renderGym();
+      closeModal();
+    }
+
+    function addNewGymExercise() {
+      const name = prompt('Nome do exercício ou equipamento:');
+      if (!name) return;
+      const group = prompt('Grupo muscular (Peito, Costas, Pernas, Ombros, Braços):', 'Peito') || 'Geral';
+      const oneRM = prompt('Carga de 1 RM (ex: 80 kg):', '-- kg') || '-- kg';
+      const force4to6 = prompt('Carga de Força 4 a 6 reps (ex: 70 kg):', '-- kg') || '-- kg';
+      const hyper8to15 = prompt('Carga de Hipertrofia 8 a 15 reps (ex: 60 kg):', '-- kg') || '-- kg';
+
+      appData.gym.push({
+        id: 'gym_' + Date.now(),
+        name, group, oneRM, force4to6, hyper8to15,
+        img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80'
+      });
+      saveData();
+      renderGym();
+    }
+
+    // ================= 4. LÓGICA DE IDIOMAS =================
+    function renderLanguages() {
+      const grid = document.getElementById('languages-grid');
+      grid.innerHTML = appData.languages.map(l => `
+        <div class="theme-card flex flex-col justify-between" onclick="inspectLanguageCard('${l.id}')">
+          <div>
+            <div class="card-fade-header" style="background-image: url('${l.img}'); height: 135px;">
+              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/90 text-slate-900 border border-slate-200">
+                ${l.lang}
+              </span>
+              <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/85 text-white">
+                Nível Atual: ${l.currentLevel}
+              </span>
+            </div>
+            <div class="p-5 pt-2">
+              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Exame / Certificado Alvo</div>
+              <h3 class="text-base font-bold text-slate-900 mt-0.5">${l.certTitle}</h3>
+              <p class="text-xs font-medium text-slate-500 mt-1">${l.altCerts}</p>
+              <p class="text-sm text-slate-600 mt-3 leading-relaxed">${l.desc}</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Duolingo: <strong class="text-slate-800">${l.duolingoStreak}</strong></span>
+            <span class="font-medium text-slate-700">${l.status}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectLanguageCard(id) {
+      const l = appData.languages.find(x => x.id === id);
+      openCardModal({
+        title: `${l.lang} — ${l.certTitle}`,
+        subtitle: l.altCerts,
+        badge: `Atual: ${l.currentLevel}`,
+        description: l.desc,
+        imageUrl: l.img,
+        extraHtml: `
+          <div class="grid grid-cols-2 gap-3 pt-2">
+            <div>
+              <label class="text-xs text-slate-500">Nível Atual</label>
+              <input id="edit-l-level" type="text" value="${l.currentLevel}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+            <div>
+              <label class="text-xs text-slate-500">Progresso Duolingo</label>
+              <input id="edit-l-duo" type="text" value="${l.duolingoStreak}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
+            </div>
+          </div>
+          <button onclick="saveLanguageEdits('${l.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Progresso</button>
+        `,
+        onImageChange: (newUrl) => {
+          l.img = newUrl;
+          saveData();
+          renderLanguages();
+        }
+      });
+    }
+
+    function saveLanguageEdits(id) {
+      const l = appData.languages.find(x => x.id === id);
+      l.currentLevel = document.getElementById('edit-l-level').value;
+      l.duolingoStreak = document.getElementById('edit-l-duo').value;
+      saveData();
+      renderLanguages();
+      closeModal();
+    }
+
+    function addNewLanguage() {
+      const lang = prompt('Idioma (ex: Francês, Mandarim, Alemão):');
+      if (!lang) return;
+      const certTitle = prompt('Certificado máximo ou meta (ex: DALF C2, HSK 6):', 'Proficiência C2');
+      const currentLevel = prompt('Seu nível atual ou progresso no Duolingo:', 'A1');
+      appData.languages.push({
+        id: 'lang_' + Date.now(),
+        lang,
+        certTitle,
+        altCerts: 'Certificação Internacional + Duolingo',
+        currentLevel,
+        duolingoStreak: 'Em estudo',
+        status: 'Em Progresso',
+        desc: 'Domínio progressivo de leitura, escrita, audição e conversação.',
+        img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'
+      });
+      saveData();
+      renderLanguages();
+    }
+
+    // ================= 5. LÓGICA DE ÁLBUNS =================
+    function renderAlbums() {
+      document.getElementById('albums-count').textContent = appData.albums.length;
+      const grid = document.getElementById('albums-grid');
+      grid.innerHTML = appData.albums.map(a => `
+        <div class="theme-card" onclick="inspectAlbumCard('${a.id}')">
+          <div class="card-fade-header" style="background-image: url('${a.img}'); height: 160px;">
+            <span class="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/90 text-slate-900">
+              ★ ${a.rating}
+            </span>
+          </div>
+          <div class="p-4 pt-1">
+            <h3 class="text-sm font-bold text-slate-900 truncate">${a.title}</h3>
+            <p class="text-xs text-slate-500 truncate">${a.artist} • ${a.year}</p>
+            <p class="text-[11px] text-slate-400 mt-2 truncate">Faixa: ${a.favTrack}</p>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function inspectAlbumCard(id) {
+      const a = appData.albums.find(x => x.id === id);
+      openCardModal({
+        title: a.title,
+        subtitle: `${a.artist} (${a.year})`,
+        badge: `Nota: ${a.rating}`,
+        description: `Faixa favorita destacada: "${a.favTrack}". Use o botão na foto acima para enviar a capa oficial do álbum.`,
+        imageUrl: a.img,
+        extraHtml: '',
+        onImageChange: (newUrl) => {
+          a.img = newUrl;
+          saveData();
+          renderAlbums();
+        }
+      });
+    }
+
+    function addNewAlbum() {
+      const title = prompt('Nome do Álbum:');
+      if (!title) return;
+      const artist = prompt('Artista / Banda:') || '';
+      const year = prompt('Ano de lançamento:') || '';
+      const favTrack = prompt('Sua música favorita do álbum:') || '';
+      const rating = prompt('Sua nota (ex: 5/5 ou 10/10):', '5/5') || '5/5';
+      appData.albums.unshift({
+        id: 'alb_' + Date.now(),
+        title, artist, year, favTrack, rating,
+        img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80'
+      });
+      saveData();
+      renderAlbums();
+    }
+
+    // Inicializar todas as abas ao abrir a página
+    renderGamePills();
+    renderGames();
+    renderRunning();
+    renderGym();
+    renderLanguages();
+    renderAlbums();
+
+    // [CTRL+F: SCRIPTS-TIMELINE-MAPA]
