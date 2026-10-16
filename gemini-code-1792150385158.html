@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Conquistas & Marcos</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #F8FAFC;
+      color: #0F172A;
+    }
+
+    /* Card limpo com imagem e fade suave para o branco */
+    .theme-card {
+      background: #FFFFFF;
+      border: 1px solid #E2E8F0;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+      cursor: pointer;
+    }
+    .theme-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08);
+      border-color: #CBD5E1;
+    }
+
+    /* Container da imagem do card com o efeito Fade */
+    .card-fade-header {
+      position: relative;
+      height: 150px;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-color: #F1F5F9;
+    }
+    .card-fade-header::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.05) 20%, rgba(255,255,255,0.85) 80%, #FFFFFF 100%);
+    }
+
+    /* Botões de navegação das Abas */
+    .tab-btn {
+      padding: 10px 18px;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: #475569;
+      background: transparent;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .tab-btn:hover {
+      color: #0F172A;
+      background: #F1F5F9;
+    }
+    .tab-btn.active {
+      background: #0F172A;
+      color: #FFFFFF;
+    }
+
+    /* Controle de exibição das abas */
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+  </style>
+</head>
+<body class="min-h-screen pb-20">
+
+  <!-- CABEÇALHO E NAVEGAÇÃO DAS 7 ABAS SEPARADAS -->
+  <header class="sticky top-0 z-30 bg-white/90 backdrop-blur-md border-b border-slate-200">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col gap-4">
+      <div class="flex items-center justify-between">
+        <h1 class="text-xl font-bold tracking-tight text-slate-900">Arquivo Pessoal de Conquistas</h1>
+      </div>
+
+      <!-- Menu das 7 Abas -->
+      <nav class="flex items-center gap-2 overflow-x-auto pb-1">
+        <button class="tab-btn active" onclick="switchTab('jogos', this)">Jogos</button>
+        <button class="tab-btn" onclick="switchTab('corrida', this)">Corrida</button>
+        <button class="tab-btn" onclick="switchTab('academia', this)">Academia</button>
+        <button class="tab-btn" onclick="switchTab('idiomas', this)">Idiomas</button>
+        <button class="tab-btn" onclick="switchTab('albuns', this)">Álbuns</button>
+        <button class="tab-btn" onclick="switchTab('timeline', this)">Linha do Tempo</button>
+        <button class="tab-btn" onclick="switchTab('mapa', this)">Mapa</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main class="max-w-6xl mx-auto px-4 pt-8">
+
+    <!-- ABA 1: JOGOS -->
+    <section id="tab-jogos" class="tab-panel active">
+      <!-- [CTRL+F: ABA-JOGOS] -->
+    </section>
+
+    <!-- ABA 2: CORRIDA -->
+    <section id="tab-corrida" class="tab-panel">
+      <!-- [CTRL+F: ABA-CORRIDA] -->
+    </section>
+
+    <!-- ABA 3: ACADEMIA -->
+    <section id="tab-academia" class="tab-panel">
+      <!-- [CTRL+F: ABA-ACADEMIA] -->
+    </section>
+
+    <!-- ABA 4: IDIOMAS -->
+    <section id="tab-idiomas" class="tab-panel">
+      <!-- [CTRL+F: ABA-IDIOMAS] -->
+    </section>
+
+    <!-- ABA 5: ÁLBUNS -->
+    <section id="tab-albuns" class="tab-panel">
+      <!-- [CTRL+F: ABA-ALBUNS] -->
+    </section>
+
+    <!-- ABA 6: LINHA DO TEMPO -->
+    <section id="tab-timeline" class="tab-panel">
+      <!-- [CTRL+F: ABA-TIMELINE] -->
+    </section>
+
+    <!-- ABA 7: MAPA -->
+    <section id="tab-mapa" class="tab-panel">
+      <!-- [CTRL+F: ABA-MAPA] -->
+    </section>
+
+  </main>
+
+  <!-- MODAL UNIVERSAL (ABRE AO CLICAR EM QUALQUER CARD PARA VER DETALHES E COLOCAR IMAGEM) -->
+  <div id="card-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
+      
+      <!-- Imagem de Capa dentro do Modal -->
+      <div id="modal-image-preview" class="relative h-56 w-full bg-slate-100 bg-cover bg-center">
+        <button onclick="closeModal()" class="absolute top-3 right-3 bg-white/90 hover:bg-white text-slate-800 rounded-full px-3 py-1 text-sm font-medium shadow">
+          Fechar ✕
+        </button>
+        <label class="absolute bottom-3 right-3 bg-slate-900/80 hover:bg-slate-900 text-white text-xs font-medium px-3 py-2 rounded-lg cursor-pointer shadow">
+          Trocar / Enviar Imagem
+          <input type="file" id="modal-image-input" accept="image/*" class="hidden" onchange="handleModalImageUpload(event)" />
+        </label>
+      </div>
+
+      <!-- Corpo do Modal -->
+      <div class="p-6 space-y-4">
+        <div class="flex items-center justify-between">
+          <span id="modal-subtitle" class="text-xs font-semibold uppercase tracking-wider text-slate-500"></span>
+          <span id="modal-badge" class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-700"></span>
+        </div>
+        <h2 id="modal-title" class="text-xl font-bold text-slate-900"></h2>
+        <p id="modal-description" class="text-sm text-slate-600 leading-relaxed"></p>
+        <div id="modal-extra-fields" class="pt-2 border-t border-slate-100"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script>
+    // Troca de abas principais
+    function switchTab(tabId, btnElement) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById('tab-' + tabId).classList.add('active');
+      btnElement.classList.add('active');
+    }
+
+    // Controle do Modal e Upload de Imagem de cada Card
+    let activeCardCallback = null;
+
+    function openCardModal({ title, subtitle, badge, description, imageUrl, extraHtml, onImageChange }) {
+      document.getElementById('modal-title').textContent = title || '';
+      document.getElementById('modal-subtitle').textContent = subtitle || '';
+      document.getElementById('modal-badge').textContent = badge || '';
+      document.getElementById('modal-description').textContent = description || '';
+      document.getElementById('modal-extra-fields').innerHTML = extraHtml || '';
+      document.getElementById('modal-image-preview').style.backgroundImage = `url('${imageUrl || ''}')`;
+      activeCardCallback = onImageChange || null;
+      document.getElementById('card-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('card-modal').classList.add('hidden');
+    }
+
+    function handleModalImageUpload(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const dataUrl = e.target.result;
+        document.getElementById('modal-image-preview').style.backgroundImage = `url('${dataUrl}')`;
+        if (activeCardCallback) activeCardCallback(dataUrl);
+      };
+      reader.readAsDataURL(file);
+    }
+
+    // [CTRL+F: SCRIPTS-MODULOS]
+  </script>
+</body>
+</html>
