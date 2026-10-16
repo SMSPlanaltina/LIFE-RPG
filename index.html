@@ -13,38 +13,30 @@
       color: #0F172A;
     }
 
-    /* Card limpo com imagem e  suave para o branco */
     .theme-card {
       background: #FFFFFF;
       border: 1px solid #E2E8F0;
       border-radius: 16px;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
-      cursor: pointer;
     }
     .theme-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 24px -6px rgba(15, 23, 42, 0.08);
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -6px rgba(15, 23, 42, 0.06);
       border-color: #CBD5E1;
     }
 
-    /* Container da imagem do card com o efeito  */
-    .card-fade-header {
+    /* Imagem limpa SEM FADE mantendo a formatação exata */
+    .card-img-header {
       position: relative;
       height: 150px;
       width: 100%;
       background-size: cover;
       background-position: center;
-      background-color: #F1F5F9;
-    }
-    .card--header::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,0.05) 20%, rgba(255,255,255,0.85) 80%, #FFFFFF 100%);
+      background-color: #E2E8F0;
+      border-bottom: 1px solid #F1F5F9;
     }
 
-    /* Botões de navegação das Abas */
     .tab-btn {
       padding: 10px 18px;
       border-radius: 9999px;
@@ -64,14 +56,13 @@
       color: #FFFFFF;
     }
 
-    /* Controle de exibição das abas */
     .tab-panel { display: none; }
     .tab-panel.active { display: block; }
   </style>
 </head>
 <body class="min-h-screen pb-20">
 
-  <!-- CABEÇALHO COM ÍCONES NAS ABAS -->
+  <!-- CABEÇALHO PRINCIPAL (CONQUISTAS ANTES DE JOGOS, SEM ÁLBUNS E SEM TIMELINE) -->
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
       <div class="flex items-center gap-3">
@@ -80,26 +71,22 @@
         </div>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-slate-900">Sala de Conquistas</h1>
-          <p class="text-xs text-slate-500">Registro Pessoal de Desafios, Recordes & Marcos</p>
+          <p class="text-xs text-slate-500">Arquivo Pessoal de Desafios, Recordes & Marcos</p>
         </div>
       </div>
 
-      <!-- Menu das 6 Abas com Ícones -->
       <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80">
-        <button class="tab-btn active flex items-center gap-2" onclick="switchTab('jogos', this)">
+        <button class="tab-btn active flex items-center gap-2" onclick="switchTab('conquistas', this)">
+          <span>🏆</span><span>Conquistas</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('jogos', this)">
           <span>🎮</span><span>Jogos</span>
         </button>
         <button class="tab-btn flex items-center gap-2" onclick="switchTab('exercicio', this)">
           <span>🏋️</span><span>Exercício</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('idiomas', this)">
-          <span>🌍</span><span>Idiomas</span>
-        </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('albuns', this)">
-          <span>💿</span><span>Álbuns</span>
-        </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('timeline', this)">
-          <span>⏳</span><span>Linha do Tempo</span>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('conhecimento', this)">
+          <span>🎓</span><span>Conhecimento</span>
         </button>
         <button class="tab-btn flex items-center gap-2" onclick="switchTab('mapa', this)">
           <span>🗺️</span><span>Mapa</span>
@@ -108,77 +95,72 @@
     </div>
   </header>
 
-  <!-- CONTEÚDO PRINCIPAL (TODAS AS SECTIONS FECHADAS CORRETAMENTE) -->
   <main class="max-w-6xl mx-auto px-4 pt-8 space-y-8">
 
-    <!-- ABA 1: JOGOS -->
-    <section id="tab-jogos" class="tab-panel active space-y-6">
-      <!-- Topo: Contador Geral de Jogos + Botão de Nova Conquista -->
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-6">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-slate-100 border border-slate-200 flex items-center justify-center text-2xl">🕹️</div>
-            <div>
-              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Total de Jogos Jogados / Zerados</span>
-              <div class="flex items-baseline gap-3 mt-0.5">
-                <span id="total-games-counter" class="text-3xl font-bold text-slate-900">142</span>
-                <button onclick="editTotalGames()" class="text-xs font-medium text-slate-500 hover:text-slate-900 underline">Editar</button>
-              </div>
-            </div>
-          </div>
-          <div class="h-10 w-px bg-slate-200 hidden sm:block"></div>
-          <div class="hidden sm:block">
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Catálogo Externo</span>
-            <div class="mt-1">
-              <a href="https://backloggd.com/u/Bruterake/" target="_blank" class="text-sm font-semibold text-slate-700 hover:text-slate-900 inline-flex items-center gap-1 underline">
-                <span>Backloggd</span><span>↗</span>
-              </a>
-            </div>
-          </div>
-        </div>
+    <!-- ================= ABA 1: CONQUISTAS (VIDA, CASAMENTO, PRODUÇÃO, UTILIDADES, MÚSICA, DIREÇÃO) ================= -->
+    <section id="tab-conquistas" class="tab-panel active space-y-6">
+      <div id="life-stats-banner"></div>
 
-        <button onclick="openNewGameAchievementModal()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition shadow-sm">
-          + Adicionar Conquista
-        </button>
-      </div>
-
-      <!-- Barra Estilizada de Filtros (Idêntica ao seu Print 2) -->
       <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto"></div>
+        <div id="life-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
 
         <div class="flex items-center gap-2">
-          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium hover:border-slate-300 focus:outline-none">
+          <select id="life-status-filter" onchange="renderLife()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
             <option value="all">Status: Todos</option>
             <option value="unlocked">✓ Concluído</option>
             <option value="hunting">🎯 Quero Conseguir</option>
           </select>
 
-          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium hover:border-slate-300 focus:outline-none">
-            <option value="difficulty">Ordenar: Mais Difíceis</option>
-            <option value="recent">Ordenar: Mais Recentes</option>
-            <option value="rarity">Ordenar: Menor % de Jogadores</option>
+          <select id="life-sort-select" onchange="renderLife()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+            <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
+            <option value="date">Ordenar: Data</option>
           </select>
         </div>
       </div>
 
-      <!-- Grade de Cards de Jogos -->
+      <div id="life-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- ================= ABA 2: JOGOS (LOL, WILD RIFT, SABER JOGAR) ================= -->
+    <section id="tab-jogos" class="tab-panel space-y-6">
+      <div id="games-stats-banner"></div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
+
+        <div class="flex items-center gap-2">
+          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            <option value="all">Status: Todos</option>
+            <option value="unlocked">✓ Concluído</option>
+            <option value="hunting">🎯 Quero Conseguir</option>
+          </select>
+
+          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            <option value="rarity_asc">Ordenar: Menor % de Pessoas</option>
+            <option value="rarity_desc">Ordenar: Maior % de Pessoas</option>
+            <option value="recent">Ordenar: Mais Recentes</option>
+          </select>
+        </div>
+      </div>
+
       <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 2: EXERCÍCIO (Corrida + Natação + Ciclismo + Desafios Corporais Únicos + Academia) -->
+    <!-- ================= ABA 3: EXERCÍCIO (CORRIDA/NATAÇÃO/CICLISMO + FÍSICOS & DANÇA + ACADEMIA) ================= -->
     <section id="tab-exercicio" class="tab-panel space-y-10">
+      <div id="exercise-stats-banner"></div>
 
-      <!-- BLOCO 1: Modalidades de Tempo & Distância (Corrida, Natação e Ciclismo) -->
+      <!-- BLOCO 1: Modalidades de Tempo & Distância -->
       <div class="space-y-6">
         <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <span class="text-2xl">⏱️</span>
             <div>
               <h2 class="text-base font-bold text-slate-900">Recordes de Tempo & Resistência</h2>
-              <p class="text-xs text-slate-500">Corrida, Natação e Ciclismo separados por distância. Clique em qualquer card para editar seu tempo ou foto.</p>
+              <p class="text-xs text-slate-500">Corrida, Natação e Ciclismo com melhor tempo e raridade populacional.</p>
             </div>
           </div>
-          <!-- Seletor rápido de modalidade ou ver todas as 3 linhas juntas -->
           <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
             <button onclick="filterEndurance('all')" id="endurance-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white">Todas as Linhas</button>
             <button onclick="filterEndurance('corrida')" id="endurance-btn-corrida" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🏃 Corrida</button>
@@ -187,189 +169,122 @@
           </div>
         </div>
 
-        <!-- Linha 1: Corrida -->
         <div id="row-corrida" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-              <span>🏃 Linha de Corrida</span>
-              <span class="text-xs font-normal text-slate-400">(5k • 10k • 15k • 21k • Maratona 42k)</span>
-            </h3>
-          </div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🏃 Linha de Corrida (5k • 10k • 15k • 21k • Maratona 42k)</h3>
           <div id="running-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
 
-        <!-- Linha 2: Natação -->
         <div id="row-natacao" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-              <span>🏊 Linha de Natação</span>
-              <span class="text-xs font-normal text-slate-400">(100m • 400m • 1.000m • 1.500m • Travessia 3km)</span>
-            </h3>
-          </div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🏊 Linha de Natação (100m • 200m • 400m • 800m • 1.500m)</h3>
           <div id="swimming-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
 
-        <!-- Linha 3: Ciclismo -->
         <div id="row-ciclismo" class="space-y-3">
-          <div class="flex items-center justify-between">
-            <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700 flex items-center gap-2">
-              <span>🚴 Linha de Ciclismo</span>
-              <span class="text-xs font-normal text-slate-400">(10 km • 25 km • 50 km • 100 km Gran Fondo • 160 km)</span>
-            </h3>
-          </div>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🚴 Linha de Ciclismo (10 km • 25 km • 50 km • 100 km • 160 km)</h3>
           <div id="cycling-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
       </div>
 
-      <!-- BLOCO 2: Conquistas Corporais Únicas / Calistenia & Feitos Físicos (Human Flag, Muscle-Up, etc.) -->
+      <!-- BLOCO 2: Desafios Físicos, Calistenia & Dança -->
       <div class="space-y-4 pt-4 border-t border-slate-200">
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
-          <div class="flex items-center gap-3">
-            <span class="text-2xl">🤸</span>
-            <div>
-              <h2 class="text-base font-bold text-slate-900">Conquistas Corporais Únicas & Calistenia</h2>
-              <p class="text-xs text-slate-500">Feitos físicos estáticos, movimentos difíceis (Human Flag, Muscle-Up, Pistol Squat) e desafios de resistência.</p>
-            </div>
-          </div>
+        <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div id="body-filter-pills" class="flex items-center gap-2 overflow-x-auto"></div>
 
-          <div class="flex flex-wrap items-center gap-2">
+          <div class="flex items-center gap-2">
             <select id="body-skill-status" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
               <option value="all">Status: Todos</option>
               <option value="unlocked">✓ Concluído</option>
               <option value="hunting">🎯 Quero Conseguir</option>
             </select>
             <select id="body-skill-sort" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
-              <option value="difficulty">Ordenar: Mais Difíceis</option>
-              <option value="recent">Ordenar: Mais Recentes</option>
+              <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+              <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
             </select>
-            <button onclick="addNewBodySkill()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
-              + Novo Desafio Corporal
-            </button>
           </div>
         </div>
 
         <div id="body-skills-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </div>
 
-      <!-- BLOCO 3: Cargas Máximas na Academia (1RM | Força 4-6 | Hipertrofia 8-15) -->
+      <!-- BLOCO 3: Pesos Máximos na Academia -->
       <div class="space-y-4 pt-4 border-t border-slate-200">
         <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <span class="text-2xl">🏋️</span>
             <div>
               <h2 class="text-base font-bold text-slate-900">Pesos Máximos na Academia (PRs por Equipamento)</h2>
-              <p class="text-xs text-slate-500">Dividido em 1 Repetição Máxima (1RM), Faixa de Força (4 a 6) e Faixa de Hipertrofia (8 a 15).</p>
+              <p class="text-xs text-slate-500">1 Repetição Máxima (1RM), Força (4 a 6 reps) e Hipertrofia (8 a 15 reps).</p>
             </div>
           </div>
 
-          <div class="flex flex-wrap items-center gap-2">
-            <div class="flex items-center gap-1.5 overflow-x-auto" id="gym-Category-pills">
-              <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium">Todos</button>
-              <button onclick="filterGym('Peito')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Peito</button>
-              <button onclick="filterGym('Costas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Costas</button>
-              <button onclick="filterGym('Pernas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Pernas</button>
-              <button onclick="filterGym('Ombros')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Ombros</button>
-              <button onclick="filterGym('Braços')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Braços</button>
-            </div>
-            <button onclick="addNewGymExercise()" class="bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold px-3.5 py-2 rounded-xl transition">
-              + Novo Exercício
-            </button>
+          <div class="flex items-center gap-1.5 overflow-x-auto">
+            <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium">Todos</button>
+            <button onclick="filterGym('Peito')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Peito</button>
+            <button onclick="filterGym('Costas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Costas</button>
+            <button onclick="filterGym('Pernas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Pernas</button>
+            <button onclick="filterGym('Ombros')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Ombros</button>
+            <button onclick="filterGym('Braços')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Braços</button>
           </div>
         </div>
 
         <div id="gym-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
       </div>
-
     </section>
 
-    <!-- ABA 3: IDIOMAS -->
-    <section id="tab-idiomas" class="tab-panel space-y-6">
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl">🌍</span>
-          <div>
-            <h2 class="text-lg font-bold text-slate-900">Proficiência & Certificações de Idiomas</h2>
-            <p class="text-xs text-slate-500">Certificados máximos (Cambridge CPE C2, DELE C2, JLPT N1) e consistência no Duolingo.</p>
-          </div>
+    <!-- ================= ABA 4: CONHECIMENTO (TITULAÇÕES ACADÊMICAS + CERTIFICADOS C2/N1 + 40 IDIOMAS) ================= -->
+    <section id="tab-conhecimento" class="tab-panel space-y-6">
+      <div id="knowledge-stats-banner"></div>
+
+      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+        <div id="knowledge-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
+
+        <div class="flex items-center gap-2">
+          <select id="knowledge-status-filter" onchange="renderKnowledge()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            <option value="all">Status: Todos</option>
+            <option value="unlocked">✓ Concluído</option>
+            <option value="hunting">🎯 Quero Conseguir</option>
+          </select>
+
+          <select id="knowledge-sort-select" onchange="renderKnowledge()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+            <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+            <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
+          </select>
         </div>
-        <button onclick="addNewLanguage()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2 rounded-xl transition">
-          + Adicionar Idioma
-        </button>
       </div>
-      <div id="languages-grid" class="grid grid-cols-1 md:grid-cols-3 gap-5"></div>
+
+      <div id="knowledge-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ABA 4: ÁLBUNS -->
-    <section id="tab-albuns" class="tab-panel space-y-6">
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl">💿</span>
-          <div>
-            <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Coleção Musical</span>
-            <div class="flex items-baseline gap-2 mt-0.5">
-              <span id="albums-count" class="text-2xl font-bold text-slate-900">0</span>
-              <span class="text-sm text-slate-500">álbuns registrados</span>
-            </div>
-          </div>
-        </div>
-        <button onclick="addNewAlbum()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
-          + Adicionar Álbum
-        </button>
-      </div>
-      <div id="albums-grid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4"></div>
-    </section>
-
-    <!-- ABA 5: LINHA DO TEMPO -->
-    <section id="tab-timeline" class="tab-panel space-y-6">
-      <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="text-2xl">⏳</span>
-          <div>
-            <h2 class="text-lg font-bold text-slate-900">Linha do Tempo em Temporadas</h2>
-            <p class="text-xs text-slate-500">Fases da vida, contexto da época, amigos do ciclo e fotos reais de cada conquista.</p>
-          </div>
-        </div>
-        <button onclick="addNewSeason()" class="bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium px-4 py-2.5 rounded-xl transition">
-          + Nova Temporada
-        </button>
-      </div>
-      <div id="seasons-container" class="space-y-6"></div>
-    </section>
-
-    <!-- ABA 6: MAPA -->
+    <!-- ================= ABA 5: MAPA ================= -->
     <section id="tab-mapa" class="tab-panel space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
             <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🇧🇷 Estados Visitados no Brasil (27 UFs)</span>
-            <span id="br-progress-text" class="text-sm font-bold text-slate-900">0 / 27 (0%)</span>
+            <span id="br-progress-text" class="text-sm font-bold text-slate-900"></span>
           </div>
           <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-            <div id="br-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 0%"></div>
+            <div id="br-progress-bar" class="h-full bg-slate-900 transition-all duration-300"></div>
           </div>
-          <p class="text-xs text-slate-500 mt-3">Clique nas siglas para marcar/desmarcar um estado visitado:</p>
-          <div id="br-uf-buttons" class="flex flex-wrap gap-1.5 mt-3"></div>
+          <div id="br-uf-buttons" class="flex flex-wrap gap-1.5 mt-4"></div>
         </div>
 
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-2">
               <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🌎 Países do Mundo Visitados</span>
-              <span id="world-progress-text" class="text-sm font-bold text-slate-900">1 / 195 (0.5%)</span>
+              <span id="world-progress-text" class="text-sm font-bold text-slate-900"></span>
             </div>
             <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-              <div id="world-progress-bar" class="h-full bg-slate-900 transition-all duration-300" style="width: 1%"></div>
+              <div id="world-progress-bar" class="h-full bg-slate-900 transition-all duration-300"></div>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Registre cada país visitado e coloque sua foto favorita da viagem.</p>
+            <p class="text-xs text-slate-500 mt-3">Progresso de estados e países visitados registrados no código.</p>
           </div>
-          <button onclick="addNewCountry()" class="mt-4 w-full bg-slate-900 hover:bg-slate-800 text-white text-sm font-medium py-2.5 rounded-xl transition">
-            + Adicionar País Visitado
-          </button>
         </div>
       </div>
 
       <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <h3 class="text-sm font-bold text-slate-900">📸 Galeria de Lugares Visitados (Clique no card para trocar a foto)</h3>
+        <h3 class="text-sm font-bold text-slate-900">📸 Galeria de Lugares Visitados</h3>
         <div class="flex items-center gap-2">
           <button onclick="setMapGalleryFilter('todos')" id="map-tab-todos" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white">Todos</button>
           <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Estados (BR)</button>
@@ -421,254 +336,7 @@
       btnElement.classList.add('active');
     }
 
-    // Controle do Modal e Upload de Imagem de cada Card
-    let activeCardCallback = null;
-
-    function openCardModal({ title, subtitle, badge, description, imageUrl, extraHtml, onImageChange }) {
-      document.getElementById('modal-title').textContent = title || '';
-      document.getElementById('modal-subtitle').textContent = subtitle || '';
-      document.getElementById('modal-badge').textContent = badge || '';
-      document.getElementById('modal-description').textContent = description || '';
-      document.getElementById('modal-extra-fields').innerHTML = extraHtml || '';
-      document.getElementById('modal-image-preview').style.backgroundImage = `url('${imageUrl || ''}')`;
-      activeCardCallback = onImageChange || null;
-      document.getElementById('card-modal').classList.remove('hidden');
-    }
-
-    function closeModal() {
-      document.getElementById('card-modal').classList.add('hidden');
-    }
-
-    function handleModalImageUpload(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const dataUrl = e.target.result;
-        document.getElementById('modal-image-preview').style.backgroundImage = `url('${dataUrl}')`;
-        if (activeCardCallback) activeCardCallback(dataUrl);
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // ================= DADOS INICIAIS (NOVA CHAVE v4 PARA ATUALIZAR AS IMAGENS IMEDIATAMENTE) =================
-    const defaultData = {
-      totalGamesPlayed: 142,
-      gameCatalog: [
-        { id: 'all', name: 'Todos', icon: '🎮' },
-        { id: 'League of Legends', name: 'League of Legends', imgIcon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10' },
-        { id: 'Wild Rift', name: 'Wild Rift', imgIcon: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/profileicon/4568.png' },
-        { id: 'Counter-Strike', name: 'Counter-Strike', imgIcon: 'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=120&q=80' }
-      ],
-      gameAchievements: [
-        {
-          id: 'g1',
-          title: 'Challenger (Desafiante)',
-          game: 'League of Legends',
-          status: 'hunting',
-          rarity: 0.02,
-          hiddenRank: 1000,
-          date: '2026-10',
-          desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.',
-          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg'
-        },
-        {
-          id: 'g2',
-          title: 'Arena God (Deus da Arena)',
-          game: 'League of Legends',
-          status: 'hunting',
-          rarity: 0.1,
-          hiddenRank: 980,
-          date: '2026-09',
-          desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.',
-          img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL'
-        },
-        {
-          id: 'g3',
-          title: 'Odisseia: Extração (Modo Mais Difícil)',
-          game: 'League of Legends',
-          status: 'unlocked',
-          rarity: 2.9,
-          hiddenRank: 950,
-          date: '2018-10',
-          desc: 'Completar o nível máximo de dificuldade do evento Odisseia.',
-          img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244'
-        },
-        {
-          id: 'g4',
-          title: 'Bots da Maldição do Veigar',
-          game: 'League of Legends',
-          status: 'unlocked',
-          rarity: 1.2,
-          hiddenRank: 890,
-          date: '2024-09',
-          desc: 'Sobreviver e vencer a dificuldade máxima contra os Bots da Maldição e o Veigar chefão.',
-          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Veigar_8.jpg'
-        },
-        {
-          id: 'g5',
-          title: 'Rank Mestre / Challenger no Wild Rift',
-          game: 'Wild Rift',
-          status: 'unlocked',
-          rarity: 2.0,
-          hiddenRank: 820,
-          date: '2025-06',
-          desc: 'Conquista de alto nível competitivo nas filas ranqueadas do League of Legends: Wild Rift.',
-          img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg'
-        }
-      ],
-      running: [
-        { id: 'r1', sport: 'Corrida', dist: '5 km', bestTime: '24:15', currentTime: '24:50', status: 'unlocked', notes: 'Melhor marca pessoal nos 5 km.', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
-        { id: 'r2', sport: 'Corrida', dist: '10 km', bestTime: '52:30', currentTime: '53:40', status: 'unlocked', notes: 'Ritmo consistente abaixo de 5:20/km.', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
-        { id: 'r3', sport: 'Corrida', dist: '15 km', bestTime: '1:22:10', currentTime: '--:--', status: 'unlocked', notes: 'Prova de média-longa distância.', img: 'https://images.unsplash.com/photo-1502904550040-7534597429ae?w=600&q=80' },
-        { id: 'r4', sport: 'Corrida', dist: '21 km (Meia)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio de meia maratona.', img: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&q=80' },
-        { id: 'r5', sport: 'Corrida', dist: '42 km (Maratona)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio máximo de resistência.', img: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&q=80' }
-      ],
-      swimming: [
-        { id: 'sw1', sport: 'Natação', dist: '100 m', bestTime: '1:35', currentTime: '1:40', status: 'unlocked', notes: 'Tiro de velocidade na piscina.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
-        { id: 'sw2', sport: 'Natação', dist: '200 m', bestTime: '7:20', currentTime: '--:--', status: 'unlocked', notes: 'Médio fundo na piscina.', img: 'https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=600&q=80' },
-        { id: 'sw3', sport: 'Natação', dist: '400 m', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: '1 km contínuo nadando.', img: 'https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&q=80' },
-        { id: 'sw4', sport: 'Natação', dist: '800 m', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Distância olímpica de fundo.', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
-        { id: 'sw5', sport: 'Natação', dist: '1.500 m', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Travessia em mar ou lago.', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80' }
-      ],
-      cycling: [
-        { id: 'cy1', sport: 'Ciclismo', dist: '10 km', bestTime: '21:00', currentTime: '22:10', status: 'unlocked', notes: 'Percurso rápido urbano.', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' },
-        { id: 'cy2', sport: 'Ciclismo', dist: '25 km', bestTime: '54:00', currentTime: '--:--', status: 'unlocked', notes: 'Pedal de ritmo médio.', img: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=600&q=80' },
-        { id: 'cy3', sport: 'Ciclismo', dist: '50 km', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Meio século de pedal.', img: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?w=600&q=80' },
-        { id: 'cy4', sport: 'Ciclismo', dist: '100 km (Gran Fondo)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio clássico de 100 km.', img: 'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=600&q=80' },
-        { id: 'cy5', sport: 'Ciclismo', dist: '160 km (Century)', bestTime: '--:--', currentTime: '--:--', status: 'hunting', notes: 'Desafio de longa distância (100 milhas).', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' }
-      ],
-      bodySkills: [
-        {
-          id: 'bs1',
-          title: 'Human Flag (Bandeira Humana)',
-          category: 'Calistenia / Isometria',
-          status: 'hunting',
-          hiddenRank: 990,
-          date: 'Meta',
-          metric: 'Segurar 5 segundos estrito',
-          desc: 'Sustentar o corpo totalmente na horizontal segurando em uma barra vertical.',
-          img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=700&q=80'
-        },
-        {
-          id: 'bs2',
-          title: 'Muscle-Up na Barra Fixa',
-          category: 'Calistenia / Força Explosiva',
-          status: 'hunting',
-          hiddenRank: 920,
-          date: 'Meta',
-          metric: '3 repetições limpas',
-          desc: 'Subir a barra fixa passando o tronco inteiro para cima da linha da barra em um movimento fluido.',
-          img: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=700&q=80'
-        },
-        {
-          id: 'bs3',
-          title: 'Pistol Squat (Agachamento Unilateral)',
-          category: 'Mobilidade & Força nas Pernas',
-          status: 'unlocked',
-          hiddenRank: 840,
-          date: '2026-04',
-          metric: '5 reps cada perna (Foco Perna Esquerda)',
-          desc: 'Agachamento completo até o chão equilibrando em apenas uma perna com a outra estendida à frente.',
-          img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=700&q=80'
-        },
-        {
-          id: 'bs4',
-          title: '20 Barras Fixas Estritas (Pull-ups)',
-          category: 'Resistência de Costas/Braços',
-          status: 'hunting',
-          hiddenRank: 860,
-          date: 'Meta',
-          metric: 'Atual: 12 / 20 reps',
-          desc: 'Completar 20 repetições completas passando o queixo e estendendo tudo sem roubar com o quadril.',
-          img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=700&q=80'
-        }
-      ],
-      gym: [
-        { id: 'gym1', name: 'Supino Reto', group: 'Peito', oneRM: '100 kg', force4to6: '90 kg', hyper8to15: '78 kg', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
-        { id: 'gym2', name: 'Agachamento Livre', group: 'Pernas', oneRM: '130 kg', force4to6: '116 kg', hyper8to15: '96 kg', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
-        { id: 'gym3', name: 'Levantamento Terra', group: 'Costas', oneRM: '150 kg', force4to6: '134 kg', hyper8to15: '110 kg', img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80' },
-        { id: 'gym4', name: 'Leg Press 45°', group: 'Pernas', oneRM: '280 kg', force4to6: '250 kg', hyper8to15: '210 kg', img: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80' },
-        { id: 'gym5', name: 'Desenvolvimento com Halteres', group: 'Ombros', oneRM: '34 kg', force4to6: '30 kg', hyper8to15: '24 kg', img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80' },
-        { id: 'gym6', name: 'Rosca Direta', group: 'Braços', oneRM: '46 kg', force4to6: '40 kg', hyper8to15: '32 kg', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80' }
-      ],
-      languages: [
-        {
-          id: 'lang1',
-          lang: 'Inglês',
-          certTitle: 'C2 Proficiency (Cambridge CPE)',
-          altCerts: 'IELTS (8.5 a 9.0) | TOEFL iBT (114 a 120 pts)',
-          currentLevel: 'B2 / C1',
-          duolingoStreak: 'Ativo',
-          status: 'hunting',
-          desc: 'Certificado de nível mais alto oferecido pela Cambridge, atestando domínio pleno do idioma (nível C2 do Quadro Europeu).',
-          img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80'
-        },
-        {
-          id: 'lang2',
-          lang: 'Espanhol',
-          certTitle: 'DELE C2 (Instituto Cervantes)',
-          altCerts: 'Ministério da Educação da Espanha',
-          currentLevel: 'B2',
-          duolingoStreak: 'Ativo',
-          status: 'hunting',
-          desc: 'Título oficial definitivo outorgado pelo Ministério da Educação da Espanha que certifica o grau máximo de competência no idioma.',
-          img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80'
-        },
-        {
-          id: 'lang3',
-          lang: 'Japonês',
-          certTitle: 'JLPT N1 (Nihongo Noryoku Shiken)',
-          altCerts: 'Fundação Japão (Domínio de ~2.000 Kanjis)',
-          currentLevel: 'N5 / N4',
-          duolingoStreak: 'Ativo',
-          status: 'hunting',
-          desc: 'Exame dividido em cinco níveis (do N5 ao N1). O N1 é o grau máximo, exigindo domínio avançado de leitura, gramática, vocabulário e audição.',
-          img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80'
-        }
-      ],
-      albums: [
-        { id: 'alb1', title: 'Diamond Life', artist: 'Sade', year: '1984', favTrack: 'Smooth Operator', rating: '5/5', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80' },
-        { id: 'alb2', title: 'Luz', artist: 'Djavan', year: '1982', favTrack: 'Samurai', rating: '5/5', img: 'https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=500&q=80' },
-        { id: 'alb3', title: '333', artist: 'Matuê', year: '2024', favTrack: '333', rating: '5/5', img: 'https://images.unsplash.com/photo-1514525253161-7a46d19cd819?w=500&q=80' }
-      ],
-      seasons: [
-        {
-          id: 's2',
-          title: 'Temporada 2 — Nova Fase, Carro & Casamento',
-          period: '2026 - Presente',
-          context: 'Nova rotina profissional, conquista do carro zero e preparativos para o casamento.',
-          friends: 'Mikaely, Isa, Ju, Milena, Matheus e amigos próximos',
-          events: [
-            { id: 'ev1', title: 'Casamento', date: '08/11/2026', desc: 'Marco oficial do casamento e início da vida de casados.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=800&q=80' },
-            { id: 'ev2', title: 'Carro 0km (Fiat Pulse)', date: 'Março 2026', desc: 'Conquista do carro novo para a rotina e viagens.', img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=800&q=80' }
-          ]
-        },
-        {
-          id: 's1',
-          title: 'Temporada 1 — Anos de Graduação',
-          period: '2020 - 2025',
-          context: 'Anos de faculdade na UnB, estágios, entrega do TCC e amizades da época.',
-          friends: 'Mikaely, Turma da UnB, Amigos de longa data',
-          events: [
-            { id: 'ev3', title: 'Formatura na UnB', date: 'Dezembro 2025', desc: 'Apresentação do TCC e conclusão da faculdade.', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=800&q=80' }
-          ]
-        }
-      ],
-      mapPlaces: [
-        { id: 'uf_DF', type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
-        { id: 'uf_GO', type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Viagens e rotina no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
-        { id: 'uf_RJ', type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
-        { id: 'country_BR', type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
-      ]
-    };
-
-    let appData = JSON.parse(localStorage.getItem('salaConquistasData_v4')) || defaultData;
-    function saveData() {
-      localStorage.setItem('salaConquistasData_v4', JSON.stringify(appData));
-    }
-
-    // Helper para gerar o Badge "✓ Concluído" ou "🎯 Quero Conseguir"
+    // Badge de Status ("✓ Concluído" ou "🎯 Quero Conseguir")
     function renderStatusBadge(status) {
       if (status === 'unlocked') {
         return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"><span>✓</span><span>Concluído</span></span>`;
@@ -676,22 +344,345 @@
       return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm"><span>🎯</span><span>Quero Conseguir</span></span>`;
     }
 
-    // ================= 1. LÓGICA DE JOGOS =================
+    // Gerador do Painel de Contagem Dinâmica no Topo de Cada Aba
+    function renderStatsBanner(containerId, label, items) {
+      const total = items.length;
+      const done = items.filter(i => i.status === 'unlocked').length;
+      const todo = total - done;
+      const pct = total > 0 ? ((done / total) * 100).toFixed(1) : '0.0';
+
+      document.getElementById(containerId).innerHTML = `
+        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-6">
+          <div class="flex items-center gap-3.5">
+            <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl font-bold">${pct}%</div>
+            <div>
+              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filtro Ativo: ${label}</span>
+              <div class="text-lg font-bold text-slate-900 mt-0.5">${done} de ${total} Desafios Concluídos</div>
+            </div>
+          </div>
+
+          <div class="flex items-center gap-6">
+            <div>
+              <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">✓ Concluídos</span>
+              <div class="text-2xl font-bold text-slate-900 mt-0.5">${done}</div>
+            </div>
+            <div class="h-9 w-px bg-slate-200"></div>
+            <div>
+              <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider">🎯 Quero Conseguir</span>
+              <div class="text-2xl font-bold text-slate-900 mt-0.5">${todo}</div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // Card Padrão Limpo (Sem Fade e Sem Clique de Edição)
+    function buildStandardCard(item, categoryLabel) {
+      return `
+        <div class="theme-card flex flex-col justify-between">
+          <div>
+            <div class="card-img-header" style="background-image: url('${item.img}')">
+              <div class="absolute top-3 left-3 z-10">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200 shadow-sm">
+                  ${categoryLabel}
+                </span>
+              </div>
+              <div class="absolute top-3 right-3 z-10">
+                ${renderStatusBadge(item.status)}
+              </div>
+            </div>
+            <div class="p-5 pt-3">
+              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
+              <p class="text-sm text-slate-600 mt-1.5">${item.desc}</p>
+            </div>
+          </div>
+          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+            <span>Raridade: <strong class="text-slate-800">${item.rarity}% da população</strong></span>
+            <span>${item.date || ''}</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // ================= DADOS FIXOS NO CÓDIGO (EDITE DIRETO AQUI) =================
+    const appData = {
+      // --- ABA 1: CONQUISTAS ---
+      lifeCategories: [
+        { id: 'all', name: 'Todas as Conquistas', icon: '🏆' },
+        { id: 'Casamento', name: 'Casamento & Família', icon: '💍' },
+        { id: 'Produção', name: 'Produção', icon: '💻' },
+        { id: 'Utilidades', name: 'Utilidades', icon: '🛠️' },
+        { id: 'Tocar', name: 'Tocar & Cantar', icon: '🎸' },
+        { id: 'Direção', name: 'Direção & Pilotagem', icon: '🚗' }
+      ],
+      lifeAchievements: [
+        // CASAMENTO (Base: 08/11/2026) & FILHOS
+        { category: 'Casamento', title: 'Casamento Oficial', status: 'hunting', rarity: 50.0, date: '08/11/2026', desc: 'Celebração do casamento e início oficial da vida a dois.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '1 Ano: Bodas de Papel', status: 'hunting', rarity: 46.0, date: '08/11/2027', desc: 'Representa o início frágil e flexível do primeiro ano de casados.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
+        { category: 'Casamento', title: '2 Anos: Bodas de Algodão', status: 'hunting', rarity: 44.2, date: '08/11/2028', desc: 'Segundo aniversário de casamento.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
+        { category: 'Casamento', title: '3 Anos: Bodas de Trigo ou Couro', status: 'hunting', rarity: 42.5, date: '08/11/2029', desc: 'Terceiro aniversário de casamento.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
+        { category: 'Casamento', title: '4 Anos: Bodas de Flores ou Frutas', status: 'hunting', rarity: 40.8, date: '08/11/2030', desc: 'Quarto aniversário de casamento.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
+        { category: 'Casamento', title: '5 Anos: Bodas de Madeira ou Ferro', status: 'hunting', rarity: 39.0, date: '08/11/2031', desc: 'Primeiro lustro de união sólida.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
+        { category: 'Casamento', title: '10 Anos: Bodas de Estanho ou Zinco', status: 'hunting', rarity: 32.5, date: '08/11/2036', desc: 'Uma década completa de casamento.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '15 Anos: Bodas de Cristal', status: 'hunting', rarity: 26.8, date: '08/11/2041', desc: 'Quinze anos de transparência e solidez.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '20 Anos: Bodas de Porcelana', status: 'hunting', rarity: 21.5, date: '08/11/2046', desc: 'Duas décadas de história construída.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '25 Anos: Bodas de Prata', status: 'hunting', rarity: 16.8, date: '08/11/2051', desc: 'Marco histórico tradicional de um quarto de século com coroa de prata.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '30 Anos: Bodas de Pérola', status: 'hunting', rarity: 12.4, date: '08/11/2056', desc: 'Três décadas de união.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '35 Anos: Bodas de Coral', status: 'hunting', rarity: 8.9, date: '08/11/2061', desc: 'Trinta e cinco anos de matrimônio.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '40 Anos: Bodas de Rubi', status: 'hunting', rarity: 6.1, date: '08/11/2066', desc: 'Quatro décadas de vida compartilhada.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '45 Anos: Bodas de Safira', status: 'hunting', rarity: 3.8, date: '08/11/2071', desc: 'Quarenta e cinco anos de união.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '50 Anos: Bodas de Ouro', status: 'hunting', rarity: 2.2, date: '08/11/2076', desc: 'Marco histórico tradicional de meio século com coroa de ouro.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '55 Anos: Bodas de Esmeralda', status: 'hunting', rarity: 1.1, date: '08/11/2081', desc: 'Cinquenta e cinco anos de casamento.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '60 Anos: Bodas de Diamante', status: 'hunting', rarity: 0.45, date: '08/11/2086', desc: 'Sessenta anos indestrutíveis.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '65 Anos: Bodas de Platina', status: 'hunting', rarity: 0.12, date: '08/11/2091', desc: 'Sessenta e cinco anos de matrimônio.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '70 Anos: Bodas de Vinho', status: 'hunting', rarity: 0.03, date: '08/11/2096', desc: 'Sete décadas completas de história.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: '75 Anos: Bodas de Brilhante', status: 'hunting', rarity: 0.004, date: '08/11/2101', desc: 'Setenta e cinco anos de união.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: 'Ter 1 Filho', status: 'hunting', rarity: 48.5, date: 'Futuro', desc: 'Tornar-se pai do primeiro filho.', img: 'https://images.unsplash.com/photo-1519689680058-324335c77eba?w=600&q=80' },
+        { category: 'Casamento', title: 'Ter 2 Filhos', status: 'hunting', rarity: 37.0, date: 'Futuro', desc: 'Expandir a família com dois filhos.', img: 'https://images.unsplash.com/photo-1511895426328-dc8714191300?w=600&q=80' },
+
+        // PRODUÇÃO
+        { category: 'Produção', title: 'Fazer um Site', status: 'unlocked', rarity: 1.8, date: '2026-10', desc: 'Construir e publicar um site próprio funcional na internet.', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80' },
+        { category: 'Produção', title: 'Fazer um Painel no Power BI', status: 'unlocked', rarity: 0.35, date: '2026-05', desc: 'Criar um dashboard analítico interativo estruturado no Power BI.', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&q=80' },
+        { category: 'Produção', title: 'Fazer um Aplicativo de Celular', status: 'hunting', rarity: 0.22, date: 'Meta', desc: 'Desenvolver e compilar um aplicativo mobile funcional.', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
+        { category: 'Produção', title: 'Fazer um Jogo', status: 'hunting', rarity: 0.18, date: 'Meta', desc: 'Programar e estruturar um jogo digital completo jogável.', img: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600&q=80' },
+
+        // UTILIDADES
+        { category: 'Utilidades', title: 'Montar um Móvel', status: 'unlocked', rarity: 42.0, date: 'Concluído', desc: 'Montar um móvel doméstico completo por conta própria.', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80' },
+        { category: 'Utilidades', title: 'Pintar a Casa', status: 'hunting', rarity: 34.0, date: 'Meta', desc: 'Preparar e pintar paredes ou cômodos da residência.', img: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&q=80' },
+        { category: 'Utilidades', title: 'Trocar o Mecanismo de uma Porta', status: 'hunting', rarity: 11.5, date: 'Meta', desc: 'Substituir fechadura, cilindro e maçaneta de uma porta.', img: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80' },
+        { category: 'Utilidades', title: 'Trocar o Mecanismo de Dentro do Vaso', status: 'hunting', rarity: 10.2, date: 'Meta', desc: 'Realizar o reparo da torre de entrada/descarga da caixa acoplada.', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&q=80' },
+        { category: 'Utilidades', title: 'Trocar um Chuveiro', status: 'hunting', rarity: 9.5, date: 'Meta', desc: 'Instalar ou substituir a resistência/chuveiro elétrico com segurança.', img: 'https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=600&q=80' },
+        { category: 'Utilidades', title: 'Trocar Óleo de um Carro Sozinho', status: 'hunting', rarity: 7.8, date: 'Meta', desc: 'Drenar o óleo antigo, substituir o filtro e abastecer o óleo novo.', img: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80' },
+        { category: 'Utilidades', title: 'Montar um Computador', status: 'unlocked', rarity: 2.4, date: 'Concluído', desc: 'Montar placa-mãe, processador, RAM, armazenamento, fonte e gabinete do zero.', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&q=80' },
+
+        // TOCAR & CANTAR
+        { category: 'Tocar', title: 'Cantar', status: 'hunting', rarity: 14.0, date: 'Meta', desc: 'Cantar com afinação, controle vocal e no ritmo.', img: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Violão', status: 'hunting', rarity: 5.5, date: 'Meta', desc: 'Tocar músicas completas, acordes e dedilhados no violão.', img: 'https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Piano', status: 'hunting', rarity: 3.6, date: 'Meta', desc: 'Tocar peças com independência das duas mãos no piano/teclado.', img: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Guitarra', status: 'hunting', rarity: 2.8, date: 'Meta', desc: 'Dominar bases, riffs e solos na guitarra elétrica.', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Bateria', status: 'hunting', rarity: 1.4, date: 'Meta', desc: 'Manter grooves e viradas coordenando os quatro membros.', img: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Triângulo', status: 'hunting', rarity: 1.2, date: 'Meta', desc: 'Executar a levada rítmica contínua com abertura e abafamento.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Ukulele', status: 'hunting', rarity: 1.1, date: 'Meta', desc: 'Tocar repertório de acordes e batidas no ukulele.', img: 'https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Violino', status: 'hunting', rarity: 0.65, date: 'Meta', desc: 'Dominar postura de arco e afinação no violino.', img: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Pandeiro', status: 'hunting', rarity: 0.35, date: 'Meta', desc: 'Fazer a levada tradicional de samba/choro no pandeiro.', img: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Sanfona', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Coordenar fole, baixos e teclado no acordeão/sanfona.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Saxofone', status: 'hunting', rarity: 0.22, date: 'Meta', desc: 'Dominar embocadura e escala melódica no saxofone.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Berimbau', status: 'hunting', rarity: 0.04, date: 'Meta', desc: 'Executar os toques tradicionais de capoeira no berimbau.', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80' },
+
+        // DIREÇÃO & PILOTAGEM
+        { category: 'Direção', title: 'Saber Dirigir Automóvel', status: 'unlocked', rarity: 31.0, date: 'Concluído', desc: 'Habilitado e conduzindo veículo regularmente no trânsito.', img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q=80' },
+        { category: 'Direção', title: 'Dirigir Carro Manual', status: 'unlocked', rarity: 19.5, date: 'Concluído', desc: 'Domínio de embreagem, controle em ladeira e câmbio manual.', img: 'https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=600&q=80' },
+        { category: 'Direção', title: 'Pilotar Moto', status: 'hunting', rarity: 16.5, date: 'Meta', desc: 'Equilíbrio, troca de marchas e condução de motocicleta.', img: 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=600&q=80' },
+        { category: 'Direção', title: 'Pilotar Jet Ski', status: 'hunting', rarity: 1.9, date: 'Meta', desc: 'Conduzir moto aquática com segurança.', img: 'https://images.unsplash.com/photo-1544551763-46a013bb70d5?w=600&q=80' },
+        { category: 'Direção', title: 'Dirigir Caminhão', status: 'hunting', rarity: 1.8, date: 'Meta', desc: 'Conduzir veículo pesado de carga.', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80' },
+        { category: 'Direção', title: 'Pilotar Lancha', status: 'hunting', rarity: 1.4, date: 'Meta', desc: 'Navegar e manobrar embarcação a motor.', img: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80' },
+        { category: 'Direção', title: 'Dirigir Ônibus', status: 'hunting', rarity: 0.65, date: 'Meta', desc: 'Conduzir veículo de grande porte para transporte de passageiros.', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80' },
+        { category: 'Direção', title: 'Pilotar Planador', status: 'hunting', rarity: 0.004, date: 'Meta', desc: 'Voo a vela em aeronave sem motor.', img: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&q=80' }
+      ],
+
+      // --- ABA 2: JOGOS (LOL, WILD RIFT, SABER JOGAR) ---
+      gameCatalog: [
+        { id: 'all', name: 'Todos', icon: '🎮' },
+        { id: 'League of Legends', name: 'League of Legends', imgIcon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10' },
+        { id: 'Wild Rift', name: 'Wild Rift', imgIcon: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/profileicon/4568.png' },
+        { id: 'Saber Jogar', name: 'Saber Jogar (Tabuleiro & Cartas)', icon: '♟️' }
+      ],
+      gameAchievements: [
+        { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, date: '2026-10', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg' },
+        { game: 'League of Legends', title: 'Arena God (Deus da Arena)', status: 'hunting', rarity: 0.1, date: '2026-09', desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.', img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL' },
+        { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 1.2, date: '2024-09', desc: 'Sobreviver e vencer a dificuldade máxima contra os Bots da Maldição e o Veigar chefão.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Veigar_8.jpg' },
+        { game: 'League of Legends', title: 'Odisseia: Extração (Modo Mais Difícil)', status: 'unlocked', rarity: 2.9, date: '2018-10', desc: 'Completar o nível máximo de dificuldade do evento Odisseia.', img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244' },
+        { game: 'Wild Rift', title: 'Rank Mestre / Challenger no Wild Rift', status: 'unlocked', rarity: 2.0, date: '2025-06', desc: 'Conquista de alto nível competitivo nas filas ranqueadas do Wild Rift.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Yasuo_0.jpg' },
+        // SABER JOGAR (JOGOS REAIS)
+        { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'unlocked', rarity: 15.0, date: 'Concluído', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Truco', status: 'unlocked', rarity: 2.2, date: 'Concluído', desc: 'Domínio das manilhas, sinais, blefes e contagem de tentos no Truco.', img: 'https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
+      ],
+
+      // --- ABA 3: EXERCÍCIO (CORRIDA, NATAÇÃO, CICLISMO COM RARIDADE + FÍSICOS & DANÇA + ACADEMIA) ---
+      running: [
+        { sport: 'Corrida', dist: '5 km', bestTime: '24:15', rarity: 8.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
+        { sport: 'Corrida', dist: '10 km', bestTime: '52:30', rarity: 3.2, status: 'unlocked', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
+        { sport: 'Corrida', dist: '15 km', bestTime: '1:22:10', rarity: 1.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1502904550040-7534597429ae?w=600&q=80' },
+        { sport: 'Corrida', dist: '21 km (Meia)', bestTime: '--:--', rarity: 0.6, status: 'hunting', img: 'https://images.unsplash.com/photo-1513593771513-7b58b6c4af38?w=600&q=80' },
+        { sport: 'Corrida', dist: '42 km (Maratona)', bestTime: '--:--', rarity: 0.15, status: 'hunting', img: 'https://images.unsplash.com/photo-1452626038306-9aae5e071dd3?w=600&q=80' }
+      ],
+      swimming: [
+        { sport: 'Natação', dist: '100 m', bestTime: '1:35', rarity: 4.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
+        { sport: 'Natação', dist: '200 m', bestTime: '3:30', rarity: 2.1, status: 'unlocked', img: 'https://images.unsplash.com/photo-1519315901367-f34ff9154487?w=600&q=80' },
+        { sport: 'Natação', dist: '400 m', bestTime: '7:20', rarity: 0.9, status: 'hunting', img: 'https://images.unsplash.com/photo-1560090995-01632a28895b?w=600&q=80' },
+        { sport: 'Natação', dist: '800 m', bestTime: '--:--', rarity: 0.35, status: 'hunting', img: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?w=600&q=80' },
+        { sport: 'Natação', dist: '1.500 m', bestTime: '--:--', rarity: 0.12, status: 'hunting', img: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=600&q=80' }
+      ],
+      cycling: [
+        { sport: 'Ciclismo', dist: '10 km', bestTime: '21:00', rarity: 18.0, status: 'unlocked', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' },
+        { sport: 'Ciclismo', dist: '25 km', bestTime: '54:00', rarity: 6.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1541625602330-2277a4c46182?w=600&q=80' },
+        { sport: 'Ciclismo', dist: '50 km', bestTime: '--:--', rarity: 2.0, status: 'hunting', img: 'https://images.unsplash.com/photo-1471506480208-91b3a4cc78be?w=600&q=80' },
+        { sport: 'Ciclismo', dist: '100 km (Gran Fondo)', bestTime: '--:--', rarity: 0.45, status: 'hunting', img: 'https://images.unsplash.com/photo-1507035895480-2b3156c31fc8?w=600&q=80' },
+        { sport: 'Ciclismo', dist: '160 km (Century)', bestTime: '--:--', rarity: 0.08, status: 'hunting', img: 'https://images.unsplash.com/photo-1517649763962-0c623066013b?w=600&q=80' }
+      ],
+      bodyCategories: [
+        { id: 'all', name: 'Todos (Físicos & Dança)', icon: '🤸' },
+        { id: 'Físicos', name: 'Desafios Físicos & Calistenia', icon: '💪' },
+        { id: 'Dança', name: 'Dança', icon: '💃' }
+      ],
+      bodySkills: [
+        { category: 'Físicos', title: 'Ficar Acordado Direto por 1 Dia e Meio (36h)', status: 'unlocked', rarity: 19.5, date: '14/07/2018', desc: 'Superar 36 horas consecutivas acordado sem dormir.', img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=80' },
+        { category: 'Físicos', title: 'Pistol Squat (Agachamento Unilateral)', status: 'unlocked', rarity: 1.8, date: '2026-04', desc: 'Agachamento completo equilibrando em apenas uma perna.', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
+        { category: 'Físicos', title: '20 Barras Fixas Estritas (Pull-ups)', status: 'hunting', rarity: 0.8, date: 'Meta', desc: 'Completar 20 repetições limpas na barra fixa.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
+        { category: 'Físicos', title: 'Muscle-Up na Barra Fixa', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Subir a barra fixa passando o tronco inteiro acima da linha da barra.', img: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80' },
+        { category: 'Físicos', title: 'Human Flag (Bandeira Humana)', status: 'hunting', rarity: 0.01, date: 'Meta', desc: 'Sustentar o corpo na horizontal segurando em uma barra vertical.', img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80' },
+        // DANÇA
+        { category: 'Dança', title: 'Dançar Valsa', status: 'hunting', rarity: 6.5, date: 'Meta', desc: 'Dominar a condução e o passo base ternário da valsa.', img: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80' },
+        { category: 'Dança', title: 'Dançar Forró', status: 'hunting', rarity: 1.1, date: 'Meta', desc: 'Saber conduzir, girar e marcar o compasso no forró.', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80' },
+        { category: 'Dança', title: 'Sarrada e Passinho do RJ (Funk)', status: 'hunting', rarity: 0.45, date: 'Meta', desc: 'Mandar o passinho de funk carioca com coordenação e ritmo.', img: 'https://images.unsplash.com/photo-1547153760-18fc86324498?w=600&q=80' }
+      ],
+      gym: [
+        { name: 'Supino Reto', group: 'Peito', oneRM: '100 kg', force4to6: '90 kg', hyper8to15: '78 kg', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
+        { name: 'Agachamento Livre', group: 'Pernas', oneRM: '130 kg', force4to6: '116 kg', hyper8to15: '96 kg', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
+        { name: 'Levantamento Terra', group: 'Costas', oneRM: '150 kg', force4to6: '134 kg', hyper8to15: '110 kg', img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80' },
+        { name: 'Leg Press 45°', group: 'Pernas', oneRM: '280 kg', force4to6: '250 kg', hyper8to15: '210 kg', img: 'https://images.unsplash.com/photo-1574680096145-d05b474e2155?w=600&q=80' },
+        { name: 'Desenvolvimento com Halteres', group: 'Ombros', oneRM: '34 kg', force4to6: '30 kg', hyper8to15: '24 kg', img: 'https://images.unsplash.com/photo-1581009146145-b5ef050c2e1e?w=600&q=80' },
+        { name: 'Rosca Direta', group: 'Braços', oneRM: '46 kg', force4to6: '40 kg', hyper8to15: '32 kg', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80' }
+      ],
+
+      // --- ABA 4: CONHECIMENTO (TITULAÇÕES + CERTIFICADOS C2/N1 + 40 IDIOMAS) ---
+      knowledgeCategories: [
+        { id: 'all', name: 'Todos', icon: '🎓' },
+        { id: 'Acadêmico', name: 'Formação Acadêmica', icon: '🏛️' },
+        { id: 'Certificações', name: 'Certificados Máximos (C2/N1)', icon: '📜' },
+        { id: 'Idiomas', name: 'Saber Falar Idiomas (39 Línguas)', icon: '🗣️' }
+      ],
+      knowledgeItems: [
+        // FORMAÇÃO ACADÊMICA
+        { category: 'Acadêmico', title: 'Ensino Médio Técnico', status: 'hunting', rarity: 8.5, date: 'Titulação', desc: 'Formação técnica profissionalizante integrada ao ensino médio.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Graduação (Farmácia - UnB)', status: 'unlocked', rarity: 0.08, date: '2025-12', desc: 'Graduação superior concluída em Farmácia (apenas 0,08% da pop. mundial; 12,5% considerando qualquer curso).', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Pós-Graduação / Residência', status: 'unlocked', rarity: 0.18, date: '2026-03', desc: 'Programa de pós-graduação prática em regime de Residência em Saúde.', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Mestrado (Master\'s Degree)', status: 'hunting', rarity: 2.8, date: 'Meta', desc: 'Título acadêmico de Mestre em programa stricto sensu.', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Doutorado (PhD / Doctorate)', status: 'hunting', rarity: 0.45, date: 'Meta', desc: 'Grau máximo de titulação acadêmica e defesa de tese inédita.', img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&q=80' },
+
+        // CERTIFICAÇÕES MÁXIMAS
+        { category: 'Certificações', title: 'Inglês: Cambridge C2 Proficiency (CPE)', status: 'hunting', rarity: 0.15, date: 'Meta C2', desc: 'Domínio pleno C2 (ou IELTS 8.5-9.0 / TOEFL iBT 114-120).', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80' },
+        { category: 'Certificações', title: 'Espanhol: DELE C2 (Instituto Cervantes)', status: 'hunting', rarity: 0.08, date: 'Meta C2', desc: 'Grau máximo de competência oficial no idioma espanhol.', img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80' },
+        { category: 'Certificações', title: 'Japonês: JLPT N1 (Fundação Japão)', status: 'hunting', rarity: 0.02, date: 'Meta N1', desc: 'Grau máximo N1 exigindo domínio de ~2.000 kanjis.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80' }
+      ],
+
+      // --- ABA 5: MAPA ---
+      mapPlaces: [
+        { type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
+        { type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Planaltina e viagens no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
+        { type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
+        { type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
+      ]
+    };
+
+    // Lista compacta dos 39 Idiomas (Convertida automaticamente em cards na aba Conhecimento)
+    const ALL_LANGUAGES_LIST = [
+      ['Inglês (Intermediário+)', 18.2, 'unlocked', ' ~1,49 bilhão de falantes no mundo.'],
+      ['Chinês (Mandarim)', 14.42, 'hunting', '~1,18 bilhão de falantes no mundo.'],
+      ['Hindi', 7.45, 'hunting', '~611 milhões de falantes no mundo.'],
+      ['Espanhol', 6.84, 'hunting', '~561 milhões de falantes no mundo.'],
+      ['Árabe (Arabic)', 4.60, 'hunting', '~375 milhões de falantes no mundo.'],
+      ['Francês', 3.80, 'hunting', '~312 milhões de falantes no mundo.'],
+      ['Indonésio (Indonesian)', 3.11, 'hunting', '~255 milhões de falantes no mundo.'],
+      ['Russo', 2.56, 'hunting', '~210 milhões de falantes no mundo.'],
+      ['Alemão', 1.62, 'hunting', '~133 milhões de falantes no mundo.'],
+      ['Japonês', 1.54, 'hunting', '~126 milhões de falantes no mundo.'],
+      ['Turco (Turkish)', 1.10, 'hunting', '~90 milhões de falantes no mundo.'],
+      ['Vietnamita (Vietnamese)', 1.05, 'hunting', '~86 milhões de falantes no mundo.'],
+      ['Suaíli (Swahili)', 1.05, 'hunting', '~85 milhões de falantes no mundo.'],
+      ['Coreano', 1.00, 'hunting', '~82 milhões de falantes no mundo.'],
+      ['Italiano', 0.83, 'hunting', '~68 milhões de falantes no mundo.'],
+      ['Polonês (Polish)', 0.52, 'hunting', '~43 milhões de falantes no mundo.'],
+      ['Ucraniano (Ukrainian)', 0.43, 'hunting', '~35 milhões de falantes no mundo.'],
+      ['Zulu', 0.34, 'hunting', '~28 milhões de falantes no mundo.'],
+      ['Holandês (Dutch)', 0.30, 'hunting', '~25 milhões de falantes no mundo.'],
+      ['Romeno (Romanian)', 0.29, 'hunting', '~24 milhões de falantes no mundo.'],
+      ['Grego (Greek)', 0.16, 'hunting', '~13,5 milhões de falantes no mundo.'],
+      ['Sueco (Swedish)', 0.16, 'hunting', '~13 milhões de falantes no mundo.'],
+      ['Húngaro (Hungarian)', 0.16, 'hunting', '~13 milhões de falantes no mundo.'],
+      ['Crioulo Haitiano (Haitian Creole)', 0.15, 'hunting', '~12 milhões de falantes no mundo.'],
+      ['Tcheco (Czech)', 0.13, 'hunting', '~10,7 milhões de falantes no mundo.'],
+      ['Hebraico (Hebrew)', 0.12, 'hunting', '~9,5 milhões de falantes no mundo.'],
+      ['Dinamarquês (Danish)', 0.07, 'hunting', '~6 milhões de falantes no mundo.'],
+      ['Finlandês (Finnish)', 0.07, 'hunting', '~5,8 milhões de falantes no mundo.'],
+      ['Norueguês (Norwegian)', 0.067, 'hunting', '~5,5 milhões de falantes no mundo.'],
+      ['Irlandês (Irish)', 0.022, 'hunting', '~1,8 milhão de falantes no mundo.'],
+      ['Iídiche (Yiddish)', 0.012, 'hunting', '~1 milhão de falantes no mundo.'],
+      ['Latim (Latin)', 0.012, 'hunting', '~1 milhão de estudiosos capazes de ler/traduzir.'],
+      ['Galês (Welsh)', 0.010, 'hunting', '~850 mil falantes no mundo.'],
+      ['Esperanto', 0.006, 'hunting', '~500 mil falantes ativos no mundo.'],
+      ['Navajo', 0.002, 'hunting', '~170 mil falantes no mundo.'],
+      ['Havaiano (Hawaiian)', 0.001, 'hunting', '~80 mil falantes no mundo.'],
+      ['Gaélico Escocês (Scottish Gaelic)', 0.001, 'hunting', '~70 mil falantes no mundo.'],
+      ['Alto Valiriano (High Valyrian)', 0.0003, 'hunting', '~25 mil pessoas com domínio conversacional.'],
+      ['Klingon', 0.00005, 'hunting', '~4 mil estudiosos fluentes no mundo.']
+    ];
+
+    ALL_LANGUAGES_LIST.forEach(([langName, rarityPct, st, info]) => {
+      appData.knowledgeItems.push({
+        category: 'Idiomas',
+        title: `Falar ${langName}`,
+        status: st,
+        rarity: rarityPct,
+        date: 'Idioma',
+        desc: `Capacidade de comunicação no idioma (${info})`,
+        img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'
+      });
+    });
+
+    // ================= 1. RENDERIZAR ABA CONQUISTAS =================
+    let selectedLifeCat = 'all';
+
+    function renderLifePills() {
+      document.getElementById('life-filter-pills').innerHTML = appData.lifeCategories.map(c => {
+        const active = selectedLifeCat === c.id;
+        return `
+          <button onclick="selectLifeCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            <span>${c.icon}</span><span>${c.name}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectLifeCat(catId) {
+      selectedLifeCat = catId;
+      renderLifePills();
+      renderLife();
+    }
+
+    function renderLife() {
+      const statusFilter = document.getElementById('life-status-filter').value;
+      const sortBy = document.getElementById('life-sort-select').value;
+
+      const categoryPool = appData.lifeAchievements.filter(i => selectedLifeCat === 'all' || i.category === selectedLifeCat);
+      const catObj = appData.lifeCategories.find(c => c.id === selectedLifeCat);
+      renderStatsBanner('life-stats-banner', catObj ? catObj.name : 'Todas', categoryPool);
+
+      let list = categoryPool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      list.sort((a, b) => {
+        if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
+        if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
+        return (a.date || '').localeCompare(b.date || '');
+      });
+
+      document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
+    }
+
+    // ================= 2. RENDERIZAR ABA JOGOS =================
     let selectedGameFilter = 'all';
 
     function renderGamePills() {
-      const container = document.getElementById('game-filter-pills');
-      document.getElementById('total-games-counter').textContent = appData.totalGamesPlayed;
-
-      container.innerHTML = appData.gameCatalog.map(g => {
+      document.getElementById('game-filter-pills').innerHTML = appData.gameCatalog.map(g => {
         const active = selectedGameFilter === g.id;
         const iconHtml = g.imgIcon
           ? `<img src="${g.imgIcon}" class="w-5 h-5 rounded-md object-cover" alt="${g.name}" />`
           : `<span>${g.icon || '🎮'}</span>`;
         return `
           <button onclick="selectGameFilter('${g.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
-            ${iconHtml}
-            <span>${g.name}</span>
+            ${iconHtml}<span>${g.name}</span>
           </button>
         `;
       }).join('');
@@ -707,137 +698,36 @@
       const statusFilter = document.getElementById('game-status-filter').value;
       const sortBy = document.getElementById('game-sort-select').value;
 
-      let list = appData.gameAchievements.filter(item => {
-        const matchGame = selectedGameFilter === 'all' || item.game === selectedGameFilter;
-        const matchStatus = statusFilter === 'all' || item.status === statusFilter;
-        return matchGame && matchStatus;
-      });
+      const gamePool = appData.gameAchievements.filter(i => selectedGameFilter === 'all' || i.game === selectedGameFilter);
+      const gameObj = appData.gameCatalog.find(g => g.id === selectedGameFilter);
+      renderStatsBanner('games-stats-banner', gameObj ? gameObj.name : 'Todos', gamePool);
 
+      let list = gamePool.filter(i => statusFilter === 'all' || i.status === statusFilter);
       list.sort((a, b) => {
-        if (sortBy === 'difficulty') return b.hiddenRank - a.hiddenRank;
-        if (sortBy === 'rarity') return a.rarity - b.rarity;
-        if (sortBy === 'recent') return b.date.localeCompare(a.date);
-        return 0;
+        if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
+        if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
+        return (b.date || '').localeCompare(a.date || '');
       });
 
-      const grid = document.getElementById('games-grid');
-      grid.innerHTML = list.map(item => `
-        <div class="theme-card flex flex-col justify-between" onclick="inspectGameCard('${item.id}')">
-          <div>
-            <div class="card--header" style="background-image: url('${item.img}')">
-              <div class="absolute top-3 left-3 z-10">
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200 shadow-sm">
-                  ${item.game}
-                </span>
-              </div>
-              <div class="absolute top-3 right-3 z-10">
-                ${renderStatusBadge(item.status)}
-              </div>
-            </div>
-
-            <div class="p-5 pt-2">
-              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
-              <p class="text-sm text-slate-600 mt-1.5 line-clamp-2">${item.desc}</p>
-            </div>
-          </div>
-
-          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Raridade: <strong class="text-slate-800">${item.rarity}% dos jogadores</strong></span>
-            <span>${item.date}</span>
-          </div>
-        </div>
-      `).join('');
+      document.getElementById('games-grid').innerHTML = list.map(i => buildStandardCard(i, i.game)).join('');
     }
 
-    function inspectGameCard(id) {
-      const item = appData.gameAchievements.find(x => x.id === id);
-      if (!item) return;
+    // ================= 3. RENDERIZAR ABA EXERCÍCIO =================
+    let selectedEnduranceMode = 'all';
+    let selectedBodyCat = 'all';
 
-      openCardModal({
-        title: item.title,
-        subtitle: item.game,
-        badge: `${item.rarity}% dos jogadores conseguiram`,
-        description: item.desc,
-        imageUrl: item.img,
-        extraHtml: `
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Status</label>
-              <select id="edit-g-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">
-                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
-                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">% de Jogadores (Raridade)</label>
-              <input id="edit-g-rarity" type="number" step="0.01" value="${item.rarity}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-          </div>
-          <div class="mt-3">
-            <label class="text-xs text-slate-500">Ou cole o Link Direto de uma Imagem (URL)</label>
-            <input id="edit-g-imgurl" type="text" value="${item.img}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-xs" />
-          </div>
-          <button onclick="saveGameEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Alterações</button>
-        `,
-        onImageChange: (newUrl) => {
-          item.img = newUrl;
-          document.getElementById('edit-g-imgurl').value = newUrl;
-          saveData();
-          renderGames();
-        }
-      });
+    function updateExerciseBanner() {
+      const allExerciseItems = [
+        ...appData.running,
+        ...appData.swimming,
+        ...appData.cycling,
+        ...appData.bodySkills
+      ];
+      renderStatsBanner('exercise-stats-banner', 'Exercício (Resistência, Físicos & Dança)', allExerciseItems);
     }
 
-    function saveGameEdits(id) {
-      const item = appData.gameAchievements.find(x => x.id === id);
-      item.status = document.getElementById('edit-g-status').value;
-      item.rarity = parseFloat(document.getElementById('edit-g-rarity').value) || item.rarity;
-      const customUrl = document.getElementById('edit-g-imgurl').value.trim();
-      if (customUrl) item.img = customUrl;
-      saveData();
-      renderGames();
-      closeModal();
-    }
-
-    function editTotalGames() {
-      const val = prompt('Quantos jogos você já jogou/zerou no geral?', appData.totalGamesPlayed);
-      if (val !== null && !isNaN(val)) {
-        appData.totalGamesPlayed = parseInt(val, 10);
-        saveData();
-        renderGamePills();
-      }
-    }
-
-    function openNewGameAchievementModal() {
-      const title = prompt('Nome do desafio ou conquista:');
-      if (!title) return;
-      const game = prompt('Nome do Jogo (ex: League of Legends, Wild Rift, Counter-Strike):', 'League of Legends');
-      const desc = prompt('Breve descrição do que significa esse feito:') || '';
-      const rarity = parseFloat(prompt('Porcentagem aproximada de pessoas que conseguiram (ex: 0.5):', '1.0')) || 1.0;
-      const hiddenRank = parseInt(prompt('Peso de dificuldade nos bastidores de 1 a 1000 (para ordenar):', '850'), 10) || 850;
-      const isUnlocked = confirm('Já concluiu esse desafio? (OK = ✓ Concluído | Cancelar = 🎯 Quero Conseguir)');
-
-      if (!appData.gameCatalog.some(g => g.id === game)) {
-        appData.gameCatalog.push({ id: game, name: game, icon: '🎮' });
-      }
-
-      appData.gameAchievements.push({
-        id: 'g_' + Date.now(),
-        title, game,
-        status: isUnlocked ? 'unlocked' : 'hunting',
-        rarity, hiddenRank,
-        date: new Date().toISOString().slice(0, 7),
-        desc,
-        img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Veigar_8.jpg'
-      });
-
-      saveData();
-      renderGamePills();
-      renderGames();
-    }
-
-    // ================= 2. LÓGICA DA ABA EXERCÍCIO (CORRIDA, NATAÇÃO, CICLISMO, CALISTENIA E ACADEMIA) =================
     function filterEndurance(mode) {
+      selectedEnduranceMode = mode;
       ['all', 'corrida', 'natacao', 'ciclismo'].forEach(m => {
         const btn = document.getElementById('endurance-btn-' + m);
         btn.className = (m === mode)
@@ -850,188 +740,57 @@
     }
 
     function renderEnduranceRow(arrayKey, gridId) {
-      const grid = document.getElementById(gridId);
-      grid.innerHTML = appData[arrayKey].map(item => `
-        <div class="theme-card flex flex-col justify-between" onclick="inspectEnduranceCard('${arrayKey}', '${item.id}')">
-          <div class="card--header" style="background-image: url('${item.img}'); height: 120px;">
+      document.getElementById(gridId).innerHTML = appData[arrayKey].map(item => `
+        <div class="theme-card flex flex-col justify-between">
+          <div class="card-img-header" style="background-image: url('${item.img}'); height: 120px;">
             <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-sm">
               ${item.dist}
             </span>
             <div class="absolute top-2.5 right-2.5 z-10">
-              ${renderStatusBadge(item.status || 'unlocked')}
+              ${renderStatusBadge(item.status)}
             </div>
           </div>
-          <div class="p-4 pt-1">
+          <div class="p-4 pt-2">
             <span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Melhor Tempo (Recorde)</span>
             <div class="text-2xl font-bold text-slate-900 mt-0.5">${item.bestTime}</div>
             <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-              <span>Tempo Atual:</span>
-              <strong class="text-slate-700">${item.currentTime}</strong>
+              <span>Raridade:</span>
+              <strong class="text-slate-800">${item.rarity}% da pop.</strong>
             </div>
           </div>
         </div>
       `).join('');
     }
 
-    function renderAllEndurance() {
-      renderEnduranceRow('running', 'running-grid');
-      renderEnduranceRow('swimming', 'swimming-grid');
-      renderEnduranceRow('cycling', 'cycling-grid');
+    function renderBodyPills() {
+      document.getElementById('body-filter-pills').innerHTML = appData.bodyCategories.map(c => {
+        const active = selectedBodyCat === c.id;
+        return `
+          <button onclick="selectBodyCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            <span>${c.icon}</span><span>${c.name}</span>
+          </button>
+        `;
+      }).join('');
     }
 
-    function inspectEnduranceCard(arrayKey, id) {
-      const item = appData[arrayKey].find(x => x.id === id);
-      openCardModal({
-        title: `${item.sport} — ${item.dist}`,
-        subtitle: 'Recorde de Tempo & Distância',
-        badge: `Melhor: ${item.bestTime}`,
-        description: item.notes,
-        imageUrl: item.img,
-        extraHtml: `
-          <div class="grid grid-cols-3 gap-2 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Status</label>
-              <select id="edit-end-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2 py-1.5 text-xs font-medium">
-                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
-                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Melhor Tempo</label>
-              <input id="edit-end-best" type="text" value="${item.bestTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Tempo Atual</label>
-              <input id="edit-end-curr" type="text" value="${item.currentTime}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-          </div>
-          <div class="mt-3">
-            <label class="text-xs text-slate-500">Observações (Pace, Prova, Data)</label>
-            <input id="edit-end-notes" type="text" value="${item.notes}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-          </div>
-          <button onclick="saveEnduranceEdits('${arrayKey}', '${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Tempo</button>
-        `,
-        onImageChange: (newUrl) => {
-          item.img = newUrl;
-          saveData();
-          renderAllEndurance();
-        }
-      });
+    function selectBodyCat(catId) {
+      selectedBodyCat = catId;
+      renderBodyPills();
+      renderBodySkills();
     }
 
-    function saveEnduranceEdits(arrayKey, id) {
-      const item = appData[arrayKey].find(x => x.id === id);
-      item.status = document.getElementById('edit-end-status').value;
-      item.bestTime = document.getElementById('edit-end-best').value;
-      item.currentTime = document.getElementById('edit-end-curr').value;
-      item.notes = document.getElementById('edit-end-notes').value;
-      saveData();
-      renderAllEndurance();
-      closeModal();
-    }
-
-    // --- Conquistas Corporais Únicas (Human Flag, Muscle-Up, etc.) ---
     function renderBodySkills() {
       const statusFilter = document.getElementById('body-skill-status').value;
       const sortBy = document.getElementById('body-skill-sort').value;
 
-      let list = appData.bodySkills.filter(item => statusFilter === 'all' || item.status === statusFilter);
-      list.sort((a, b) => {
-        if (sortBy === 'difficulty') return b.hiddenRank - a.hiddenRank;
-        return b.date.localeCompare(a.date);
-      });
+      let pool = appData.bodySkills.filter(i => selectedBodyCat === 'all' || i.category === selectedBodyCat);
+      let list = pool.filter(i => statusFilter === 'all' || i.status === statusFilter);
 
-      const grid = document.getElementById('body-skills-grid');
-      grid.innerHTML = list.map(item => `
-        <div class="theme-card flex flex-col justify-between" onclick="inspectBodySkill('${item.id}')">
-          <div>
-            <div class="card--header" style="background-image: url('${item.img}'); height: 135px;">
-              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
-                ${item.category}
-              </span>
-              <div class="absolute top-3 right-3 z-10">
-                ${renderStatusBadge(item.status)}
-              </div>
-            </div>
-            <div class="p-5 pt-2">
-              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
-              <p class="text-sm text-slate-600 mt-1 line-clamp-2">${item.desc}</p>
-            </div>
-          </div>
-          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Marca: <strong class="text-slate-800">${item.metric}</strong></span>
-            <span>${item.date}</span>
-          </div>
-        </div>
-      `).join('');
+      list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
+      document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
     }
 
-    function inspectBodySkill(id) {
-      const item = appData.bodySkills.find(x => x.id === id);
-      openCardModal({
-        title: item.title,
-        subtitle: item.category,
-        badge: item.metric,
-        description: item.desc,
-        imageUrl: item.img,
-        extraHtml: `
-          <div class="grid grid-cols-2 gap-3 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Status</label>
-              <select id="edit-bs-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">
-                <option value="unlocked" ${item.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
-                <option value="hunting" ${item.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Marca / Repetições / Tempo</label>
-              <input id="edit-bs-metric" type="text" value="${item.metric}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-          </div>
-          <button onclick="saveBodySkillEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Desafio Corporal</button>
-        `,
-        onImageChange: (newUrl) => {
-          item.img = newUrl;
-          saveData();
-          renderBodySkills();
-        }
-      });
-    }
-
-    function saveBodySkillEdits(id) {
-      const item = appData.bodySkills.find(x => x.id === id);
-      item.status = document.getElementById('edit-bs-status').value;
-      item.metric = document.getElementById('edit-bs-metric').value;
-      saveData();
-      renderBodySkills();
-      closeModal();
-    }
-
-    function addNewBodySkill() {
-      const title = prompt('Nome do Desafio Corporal (ex: Front Lever, Handstand Push-up, Planche):');
-      if (!title) return;
-      const category = prompt('Categoria (ex: Calistenia, Mobilidade, Força):', 'Calistenia') || 'Calistenia';
-      const metric = prompt('Meta ou Marca (ex: Segurar 10s, 10 repetições):', 'Meta ativa') || '';
-      const desc = prompt('Descrição do movimento ou desafio:') || '';
-      const hiddenRank = parseInt(prompt('Dificuldade de 1 a 1000 (para ordenar):', '880'), 10) || 880;
-      const isUnlocked = confirm('Já concluiu? (OK = ✓ Concluído | Cancelar = 🎯 Quero Conseguir)');
-
-      appData.bodySkills.push({
-        id: 'bs_' + Date.now(),
-        title, category,
-        status: isUnlocked ? 'unlocked' : 'hunting',
-        hiddenRank,
-        date: isUnlocked ? new Date().toISOString().slice(0, 7) : 'Meta',
-        metric, desc,
-        img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=700&q=80'
-      });
-      saveData();
-      renderBodySkills();
-    }
-
-    // --- Academia (1RM / 4-6 / 8-15) ---
     let currentGymGroup = 'Todos';
-
     function filterGym(group) {
       currentGymGroup = group;
       document.querySelectorAll('.gym-pill').forEach(btn => {
@@ -1044,15 +803,14 @@
 
     function renderGym() {
       const list = appData.gym.filter(x => currentGymGroup === 'Todos' || x.group === currentGymGroup);
-      const grid = document.getElementById('gym-grid');
-      grid.innerHTML = list.map(item => `
-        <div class="theme-card" onclick="inspectGymCard('${item.id}')">
-          <div class="card--header" style="background-image: url('${item.img}'); height: 120px;">
+      document.getElementById('gym-grid').innerHTML = list.map(item => `
+        <div class="theme-card">
+          <div class="card-img-header" style="background-image: url('${item.img}'); height: 120px;">
             <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-slate-700 border border-slate-200">
               ${item.group}
             </span>
           </div>
-          <div class="p-5 pt-2">
+          <div class="p-5 pt-3">
             <h3 class="text-base font-bold text-slate-900">${item.name}</h3>
             <div class="grid grid-cols-3 gap-2 mt-4 text-center">
               <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
@@ -1073,348 +831,45 @@
       `).join('');
     }
 
-    function inspectGymCard(id) {
-      const item = appData.gym.find(x => x.id === id);
-      openCardModal({
-        title: item.name,
-        subtitle: `Grupo Muscular: ${item.group}`,
-        badge: `1RM: ${item.oneRM}`,
-        description: 'Atualize suas cargas máximas para 1RM, Força (4 a 6 reps) e Hipertrofia (8 a 15 reps).',
-        imageUrl: item.img,
-        extraHtml: `
-          <div class="grid grid-cols-3 gap-2 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">1 RM</label>
-              <input id="edit-gym-1rm" type="text" value="${item.oneRM}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Força (4 a 6)</label>
-              <input id="edit-gym-46" type="text" value="${item.force4to6}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Hipertrofia (8 a 15)</label>
-              <input id="edit-gym-815" type="text" value="${item.hyper8to15}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
-            </div>
-          </div>
-          <button onclick="saveGymEdits('${item.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Cargas</button>
-        `,
-        onImageChange: (newUrl) => {
-          item.img = newUrl;
-          saveData();
-          renderGym();
-        }
-      });
+    // ================= 4. RENDERIZAR ABA CONHECIMENTO =================
+    let selectedKnowledgeCat = 'all';
+
+    function renderKnowledgePills() {
+      document.getElementById('knowledge-filter-pills').innerHTML = appData.knowledgeCategories.map(c => {
+        const active = selectedKnowledgeCat === c.id;
+        return `
+          <button onclick="selectKnowledgeCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+            <span>${c.icon}</span><span>${c.name}</span>
+          </button>
+        `;
+      }).join('');
     }
 
-    function saveGymEdits(id) {
-      const item = appData.gym.find(x => x.id === id);
-      item.oneRM = document.getElementById('edit-gym-1rm').value;
-      item.force4to6 = document.getElementById('edit-gym-46').value;
-      item.hyper8to15 = document.getElementById('edit-gym-815').value;
-      saveData();
-      renderGym();
-      closeModal();
+    function selectKnowledgeCat(catId) {
+      selectedKnowledgeCat = catId;
+      renderKnowledgePills();
+      renderKnowledge();
     }
 
-    function addNewGymExercise() {
-      const name = prompt('Nome do exercício ou equipamento:');
-      if (!name) return;
-      const group = prompt('Grupo muscular (Peito, Costas, Pernas, Ombros, Braços):', 'Peito') || 'Geral';
-      const oneRM = prompt('Carga de 1 RM (ex: 80 kg):', '-- kg') || '-- kg';
-      const force4to6 = prompt('Carga de Força 4 a 6 reps:', '-- kg') || '-- kg';
-      const hyper8to15 = prompt('Carga de Hipertrofia 8 a 15 reps:', '-- kg') || '-- kg';
+    function renderKnowledge() {
+      const statusFilter = document.getElementById('knowledge-status-filter').value;
+      const sortBy = document.getElementById('knowledge-sort-select').value;
 
-      appData.gym.push({
-        id: 'gym_' + Date.now(),
-        name, group, oneRM, force4to6, hyper8to15,
-        img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80'
-      });
-      saveData();
-      renderGym();
+      const pool = appData.knowledgeItems.filter(i => selectedKnowledgeCat === 'all' || i.category === selectedKnowledgeCat);
+      const catObj = appData.knowledgeCategories.find(c => c.id === selectedKnowledgeCat);
+      renderStatsBanner('knowledge-stats-banner', catObj ? catObj.name : 'Todos', pool);
+
+      let list = pool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
+
+      document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
     }
 
-    // ================= 3. LÓGICA DE IDIOMAS =================
-    function renderLanguages() {
-      const grid = document.getElementById('languages-grid');
-      grid.innerHTML = appData.languages.map(l => `
-        <div class="theme-card flex flex-col justify-between" onclick="inspectLanguageCard('${l.id}')">
-          <div>
-            <div class="card--header" style="background-image: url('${l.img}'); height: 135px;">
-              <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-900 border border-slate-200">
-                ${l.lang}
-              </span>
-              <div class="absolute top-3 right-3 z-10">
-                ${renderStatusBadge(l.status)}
-              </div>
-            </div>
-            <div class="p-5 pt-2">
-              <div class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Certificado Máximo</div>
-              <h3 class="text-base font-bold text-slate-900 mt-0.5">${l.certTitle}</h3>
-              <p class="text-xs font-medium text-slate-500 mt-1">${l.altCerts}</p>
-              <p class="text-sm text-slate-600 mt-3 leading-relaxed">${l.desc}</p>
-            </div>
-          </div>
-          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Duolingo: <strong class="text-slate-800">${l.duolingoStreak}</strong></span>
-            <span>Nível: <strong class="text-slate-900">${l.currentLevel}</strong></span>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function inspectLanguageCard(id) {
-      const l = appData.languages.find(x => x.id === id);
-      openCardModal({
-        title: `${l.lang} — ${l.certTitle}`,
-        subtitle: l.altCerts,
-        badge: `Nível: ${l.currentLevel}`,
-        description: l.desc,
-        imageUrl: l.img,
-        extraHtml: `
-          <div class="grid grid-cols-3 gap-2 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Status</label>
-              <select id="edit-l-status" class="w-full mt-1 border border-slate-200 rounded-lg px-2 py-1.5 text-xs">
-                <option value="hunting" ${l.status === 'hunting' ? 'selected' : ''}>🎯 Quero Conseguir</option>
-                <option value="unlocked" ${l.status === 'unlocked' ? 'selected' : ''}>✓ Concluído</option>
-              </select>
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Nível Atual</label>
-              <input id="edit-l-level" type="text" value="${l.currentLevel}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Duolingo</label>
-              <input id="edit-l-duo" type="text" value="${l.duolingoStreak}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-          </div>
-          <button onclick="saveLanguageEdits('${l.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Idioma</button>
-        `,
-        onImageChange: (newUrl) => {
-          l.img = newUrl;
-          saveData();
-          renderLanguages();
-        }
-      });
-    }
-
-    function saveLanguageEdits(id) {
-      const l = appData.languages.find(x => x.id === id);
-      l.status = document.getElementById('edit-l-status').value;
-      l.currentLevel = document.getElementById('edit-l-level').value;
-      l.duolingoStreak = document.getElementById('edit-l-duo').value;
-      saveData();
-      renderLanguages();
-      closeModal();
-    }
-
-    function addNewLanguage() {
-      const lang = prompt('Idioma (ex: Francês, Mandarim, Alemão):');
-      if (!lang) return;
-      const certTitle = prompt('Certificado máximo (ex: DALF C2, HSK 6):', 'Proficiência C2');
-      const currentLevel = prompt('Seu nível atual:', 'A1');
-      appData.languages.push({
-        id: 'lang_' + Date.now(),
-        lang, certTitle,
-        altCerts: 'Certificação Oficial + Duolingo',
-        currentLevel,
-        duolingoStreak: 'Ativo',
-        status: 'hunting',
-        desc: 'Domínio completo do idioma.',
-        img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'
-      });
-      saveData();
-      renderLanguages();
-    }
-
-    // ================= 4. LÓGICA DE ÁLBUNS =================
-    function renderAlbums() {
-      document.getElementById('albums-count').textContent = appData.albums.length;
-      const grid = document.getElementById('albums-grid');
-      grid.innerHTML = appData.albums.map(a => `
-        <div class="theme-card" onclick="inspectAlbumCard('${a.id}')">
-          <div class="card--header" style="background-image: url('${a.img}'); height: 160px;">
-            <span class="absolute top-2.5 right-2.5 z-10 px-2 py-0.5 rounded-full text-xs font-semibold bg-white/95 text-slate-900 shadow-sm">
-              ★ ${a.rating}
-            </span>
-          </div>
-          <div class="p-4 pt-1">
-            <h3 class="text-sm font-bold text-slate-900 truncate">${a.title}</h3>
-            <p class="text-xs text-slate-500 truncate">${a.artist} • ${a.year}</p>
-            <p class="text-[11px] text-slate-400 mt-2 truncate">🎵 ${a.favTrack}</p>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function inspectAlbumCard(id) {
-      const a = appData.albums.find(x => x.id === id);
-      openCardModal({
-        title: a.title,
-        subtitle: `${a.artist} (${a.year})`,
-        badge: `★ ${a.rating}`,
-        description: `Faixa favorita: "${a.favTrack}".`,
-        imageUrl: a.img,
-        extraHtml: '',
-        onImageChange: (newUrl) => {
-          a.img = newUrl;
-          saveData();
-          renderAlbums();
-        }
-      });
-    }
-
-    function addNewAlbum() {
-      const title = prompt('Nome do Álbum:');
-      if (!title) return;
-      const artist = prompt('Artista / Banda:') || '';
-      const year = prompt('Ano:') || '';
-      const favTrack = prompt('Faixa favorita:') || '';
-      const rating = prompt('Sua nota (ex: 5/5):', '5/5') || '5/5';
-      appData.albums.unshift({
-        id: 'alb_' + Date.now(),
-        title, artist, year, favTrack, rating,
-        img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=500&q=80'
-      });
-      saveData();
-      renderAlbums();
-    }
-
-    // ================= 5. LÓGICA DA LINHA DO TEMPO =================
-    function renderTimeline() {
-      const container = document.getElementById('seasons-container');
-      container.innerHTML = appData.seasons.map(season => `
-        <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-5">
-          <div class="flex flex-wrap items-start justify-between gap-4 border-b border-slate-100 pb-4">
-            <div class="space-y-1 max-w-3xl">
-              <div class="flex items-center gap-2.5">
-                <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-slate-900 text-white">${season.period}</span>
-                <button onclick="editSeasonHeader('${season.id}')" class="text-xs text-slate-400 hover:text-slate-800 underline">Editar contexto</button>
-              </div>
-              <h3 class="text-lg font-bold text-slate-900 pt-1">${season.title}</h3>
-              <p class="text-sm text-slate-600">${season.context}</p>
-              <p class="text-xs text-slate-500 pt-1">👥 <strong>Amigos & Pessoas da época:</strong> ${season.friends}</p>
-            </div>
-            <button onclick="addEventToSeason('${season.id}')" class="bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold px-3.5 py-2 rounded-xl transition">
-              + Adicionar Marco / Foto
-            </button>
-          </div>
-
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-            ${season.events.map(ev => `
-              <div class="theme-card" onclick="inspectTimelineEvent('${season.id}', '${ev.id}')">
-                <div class="card--header" style="background-image: url('${ev.img}'); height: 155px;">
-                  <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200">
-                    ${ev.date}
-                  </span>
-                </div>
-                <div class="p-4 pt-1">
-                  <h4 class="text-base font-bold text-slate-900">${ev.title}</h4>
-                  <p class="text-sm text-slate-600 mt-1 line-clamp-2">${ev.desc}</p>
-                </div>
-              </div>
-            `).join('')}
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function inspectTimelineEvent(seasonId, eventId) {
-      const season = appData.seasons.find(s => s.id === seasonId);
-      const ev = season.events.find(e => e.id === eventId);
-      openCardModal({
-        title: ev.title,
-        subtitle: season.title,
-        badge: ev.date,
-        description: ev.desc,
-        imageUrl: ev.img,
-        extraHtml: `
-          <div class="space-y-3 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Título</label>
-              <input id="edit-ev-title" type="text" value="${ev.title}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm font-semibold" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Data</label>
-              <input id="edit-ev-date" type="text" value="${ev.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Contexto</label>
-              <textarea id="edit-ev-desc" rows="3" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${ev.desc}</textarea>
-            </div>
-          </div>
-          <button onclick="saveTimelineEventEdits('${seasonId}', '${eventId}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar</button>
-        `,
-        onImageChange: (newUrl) => {
-          ev.img = newUrl;
-          saveData();
-          renderTimeline();
-        }
-      });
-    }
-
-    function saveTimelineEventEdits(seasonId, eventId) {
-      const season = appData.seasons.find(s => s.id === seasonId);
-      const ev = season.events.find(e => e.id === eventId);
-      ev.title = document.getElementById('edit-ev-title').value;
-      ev.date = document.getElementById('edit-ev-date').value;
-      ev.desc = document.getElementById('edit-ev-desc').value;
-      saveData();
-      renderTimeline();
-      closeModal();
-    }
-
-    function editSeasonHeader(seasonId) {
-      const season = appData.seasons.find(s => s.id === seasonId);
-      const title = prompt('Nome da Temporada:', season.title);
-      if (!title) return;
-      season.title = title;
-      season.period = prompt('Período:', season.period) || season.period;
-      season.context = prompt('Contexto da época:', season.context) || season.context;
-      season.friends = prompt('Amigos da época:', season.friends) || season.friends;
-      saveData();
-      renderTimeline();
-    }
-
-    function addNewSeason() {
-      const title = prompt('Nome da Temporada:');
-      if (!title) return;
-      const period = prompt('Período:', '2026') || '';
-      const context = prompt('Contexto da fase:') || '';
-      const friends = prompt('Amigos presentes:') || '';
-      appData.seasons.unshift({ id: 's_' + Date.now(), title, period, context, friends, events: [] });
-      saveData();
-      renderTimeline();
-    }
-
-    function addEventToSeason(seasonId) {
-      const season = appData.seasons.find(s => s.id === seasonId);
-      const title = prompt('Nome do acontecimento:');
-      if (!title) return;
-      const date = prompt('Data:') || '';
-      const desc = prompt('Descrição:') || '';
-      season.events.push({
-        id: 'ev_' + Date.now(),
-        title, date, desc,
-        img: 'https://images.unsplash.com/photo-1511795409834-ef04bbd61622?w=800&q=80'
-      });
-      saveData();
-      renderTimeline();
-    }
-
-    // ================= 6. LÓGICA DO MAPA =================
+    // ================= 5. RENDERIZAR ABA MAPA =================
     const ALL_BRAZIL_UFS = [
-      { uf: 'AC', name: 'Acre' }, { uf: 'AL', name: 'Alagoas' }, { uf: 'AP', name: 'Amapá' },
-      { uf: 'AM', name: 'Amazonas' }, { uf: 'BA', name: 'Bahia' }, { uf: 'CE', name: 'Ceará' },
-      { uf: 'DF', name: 'Distrito Federal' }, { uf: 'ES', name: 'Espírito Santo' }, { uf: 'GO', name: 'Goiás' },
-      { uf: 'MA', name: 'Maranhão' }, { uf: 'MT', name: 'Mato Grosso' }, { uf: 'MS', name: 'Mato Grosso do Sul' },
-      { uf: 'MG', name: 'Minas Gerais' }, { uf: 'PA', name: 'Pará' }, { uf: 'PB', name: 'Paraíba' },
-      { uf: 'PR', name: 'Paraná' }, { uf: 'PE', name: 'Pernambuco' }, { uf: 'PI', name: 'Piauí' },
-      { uf: 'RJ', name: 'Rio de Janeiro' }, { uf: 'RN', name: 'Rio Grande do Norte' }, { uf: 'RS', name: 'Rio Grande do Sul' },
-      { uf: 'RO', name: 'Rondônia' }, { uf: 'RR', name: 'Roraima' }, { uf: 'SC', name: 'Santa Catarina' },
-      { uf: 'SP', name: 'São Paulo' }, { uf: 'SE', name: 'Sergipe' }, { uf: 'TO', name: 'Tocantins' }
+      'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG',
+      'PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'
     ];
-
     let mapGalleryFilter = 'todos';
 
     function setMapGalleryFilter(filter) {
@@ -1425,37 +880,6 @@
           ? 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white'
           : 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700';
       });
-      renderMapSection();
-    }
-
-    function toggleBrazilUF(ufCode) {
-      const idx = appData.mapPlaces.findIndex(p => p.type === 'brasil' && p.code === ufCode);
-      if (idx >= 0) {
-        if (confirm(`Desmarcar ${ufCode} dos visitados?`)) appData.mapPlaces.splice(idx, 1);
-      } else {
-        const ufObj = ALL_BRAZIL_UFS.find(u => u.uf === ufCode);
-        appData.mapPlaces.push({
-          id: 'uf_' + ufCode, type: 'brasil', code: ufCode, name: ufObj.name,
-          date: new Date().getFullYear().toString(),
-          notes: `Foto e lembrança favorita em ${ufObj.name}.`,
-          img: 'https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=600&q=80'
-        });
-      }
-      saveData();
-      renderMapSection();
-    }
-
-    function addNewCountry() {
-      const name = prompt('Nome do País visitado:');
-      if (!name) return;
-      const date = prompt('Ano da viagem:', new Date().getFullYear().toString()) || '';
-      const notes = prompt('Melhor lembrança ou cidade:') || '';
-      appData.mapPlaces.push({
-        id: 'country_' + Date.now(), type: 'mundo', code: name.slice(0, 2).toUpperCase(),
-        name, date, notes,
-        img: 'https://images.unsplash.com/photo-1488646953014-85cb44e25828?w=600&q=80'
-      });
-      saveData();
       renderMapSection();
     }
 
@@ -1470,19 +894,15 @@
       document.getElementById('world-progress-text').textContent = `${visitedWorld.length} / 195 (${worldPct}%)`;
       document.getElementById('world-progress-bar').style.width = `${Math.max(1, worldPct)}%`;
 
-      document.getElementById('br-uf-buttons').innerHTML = ALL_BRAZIL_UFS.map(u => {
-        const isVisited = visitedBr.some(p => p.code === u.uf);
-        return `
-          <button onclick="toggleBrazilUF('${u.uf}')" title="${u.name}" class="px-2.5 py-1 rounded-lg text-xs font-semibold transition border ${isVisited ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-500 border-slate-200 hover:bg-slate-100'}">
-            ${u.uf}
-          </button>
-        `;
+      document.getElementById('br-uf-buttons').innerHTML = ALL_BRAZIL_UFS.map(uf => {
+        const isVisited = visitedBr.some(p => p.code === uf);
+        return `<span class="px-2.5 py-1 rounded-lg text-xs font-semibold border ${isVisited ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-400 border-slate-200'}">${uf}</span>`;
       }).join('');
 
       const filtered = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
       document.getElementById('map-places-grid').innerHTML = filtered.map(place => `
-        <div class="theme-card" onclick="inspectMapPlace('${place.id}')">
-          <div class="card--header" style="background-image: url('${place.img}'); height: 150px;">
+        <div class="theme-card">
+          <div class="card-img-header" style="background-image: url('${place.img}'); height: 150px;">
             <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200">
               ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
             </span>
@@ -1490,61 +910,28 @@
               ${place.date}
             </span>
           </div>
-          <div class="p-4 pt-1">
+          <div class="p-4 pt-3">
             <h4 class="text-base font-bold text-slate-900">${place.name}</h4>
-            <p class="text-xs text-slate-500 mt-1 line-clamp-2">${place.notes}</p>
+            <p class="text-xs text-slate-500 mt-1">${place.notes}</p>
           </div>
         </div>
       `).join('');
     }
 
-    function inspectMapPlace(id) {
-      const place = appData.mapPlaces.find(p => p.id === id);
-      openCardModal({
-        title: place.name,
-        subtitle: place.type === 'brasil' ? 'Estado Visitado (Brasil)' : 'País Visitado',
-        badge: place.date,
-        description: place.notes,
-        imageUrl: place.img,
-        extraHtml: `
-          <div class="space-y-3 pt-2">
-            <div>
-              <label class="text-xs text-slate-500">Ano / Época</label>
-              <input id="edit-map-date" type="text" value="${place.date}" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm" />
-            </div>
-            <div>
-              <label class="text-xs text-slate-500">Memória Favorita</label>
-              <textarea id="edit-map-notes" rows="2" class="w-full mt-1 border border-slate-200 rounded-lg px-2.5 py-1.5 text-sm">${place.notes}</textarea>
-            </div>
-          </div>
-          <button onclick="saveMapPlaceEdits('${place.id}')" class="mt-4 w-full bg-slate-900 text-white py-2 rounded-xl text-sm font-medium">Salvar Local</button>
-        `,
-        onImageChange: (newUrl) => {
-          place.img = newUrl;
-          saveData();
-          renderMapSection();
-        }
-      });
-    }
-
-    function saveMapPlaceEdits(id) {
-      const place = appData.mapPlaces.find(p => p.id === id);
-      place.date = document.getElementById('edit-map-date').value;
-      place.notes = document.getElementById('edit-map-notes').value;
-      saveData();
-      renderMapSection();
-      closeModal();
-    }
-
-    // Inicializar Tudo
+    // Inicialização Geral
+    renderLifePills();
+    renderLife();
     renderGamePills();
     renderGames();
-    renderAllEndurance();
+    updateExerciseBanner();
+    renderEnduranceRow('running', 'running-grid');
+    renderEnduranceRow('swimming', 'swimming-grid');
+    renderEnduranceRow('cycling', 'cycling-grid');
+    renderBodyPills();
     renderBodySkills();
     renderGym();
-    renderLanguages();
-    renderAlbums();
-    renderTimeline();
+    renderKnowledgePills();
+    renderKnowledge();
     renderMapSection();
   </script>
 </body>
