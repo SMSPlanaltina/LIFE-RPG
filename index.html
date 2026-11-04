@@ -62,13 +62,11 @@
 </head>
 <body class="min-h-screen pb-20">
 
-  <!-- CABEÇALHO PRINCIPAL (CONQUISTAS ANTES DE JOGOS, SEM ÁLBUNS E SEM TIMELINE) -->
+  <!-- CABEÇALHO PRINCIPAL LIMPO -->
   <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
     <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center text-lg shadow-sm">
-          🏆
-        </div>
+      <div class="flex items-center gap-2.5">
+        <span class="text-2xl">🏆</span>
         <div>
           <h1 class="text-xl font-bold tracking-tight text-slate-900">Sala de Conquistas</h1>
           <p class="text-xs text-slate-500">Arquivo Pessoal de Desafios, Recordes & Marcos</p>
@@ -81,6 +79,9 @@
         </button>
         <button class="tab-btn flex items-center gap-2" onclick="switchTab('jogos', this)">
           <span>🎮</span><span>Jogos</span>
+        </button>
+        <button class="tab-btn flex items-center gap-2" onclick="switchTab('rank', this)">
+          <span>⚔️</span><span>Rank</span>
         </button>
         <button class="tab-btn flex items-center gap-2" onclick="switchTab('exercicio', this)">
           <span>🏋️</span><span>Exercício</span>
@@ -97,7 +98,7 @@
 
   <main class="max-w-6xl mx-auto px-4 pt-8 space-y-8">
 
-    <!-- ================= ABA 1: CONQUISTAS (VIDA, CASAMENTO, PRODUÇÃO, UTILIDADES, MÚSICA, DIREÇÃO) ================= -->
+    <!-- ================= ABA 1: CONQUISTAS ================= -->
     <section id="tab-conquistas" class="tab-panel active space-y-6">
       <div id="life-stats-banner"></div>
 
@@ -137,14 +138,57 @@
           </select>
 
           <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
-            <option value="rarity_asc">Ordenar: Menor % de Pessoas</option>
-            <option value="rarity_desc">Ordenar: Maior % de Pessoas</option>
+            <option value="rarity_asc">Ordenar: Menor %</option>
+            <option value="rarity_desc">Ordenar: Maior %</option>
             <option value="recent">Ordenar: Mais Recentes</option>
           </select>
         </div>
       </div>
 
       <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- ================= ABA NOVA: RANK (RANKING OFICIAL DOS AMIGOS NO LOL) ================= -->
+    <section id="tab-rank" class="tab-panel space-y-6">
+      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-3">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10" class="w-10 h-10 rounded-xl border border-slate-200 object-cover" alt="LoL" />
+            <div>
+              <h2 class="text-lg font-bold text-slate-900">Ranking Oficial dos Amigos — League of Legends</h2>
+              <p class="text-xs text-slate-500">Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico de Temporadas</p>
+            </div>
+          </div>
+          <span class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
+            7 Jogadores Analisados • Patch 16.22 (S2026)
+          </span>
+        </div>
+
+        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-2">
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">1. Elo & Pico (30 pts)</span>
+            <p class="text-xs text-slate-700 mt-1">SoloQ, Flex, Top % BR e consistência multi-season.</p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">2. Impacto (25 pts)</span>
+            <p class="text-xs text-slate-700 mt-1">Winrate real, KDA e Participação em Abates (KP%).</p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">3. Conversão (20 pts)</span>
+            <p class="text-xs text-slate-700 mt-1">Dano por Minuto (DPM), DPM/Ouro e Farm (CS/m).</p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">4. Macro/Visão (15 pts)</span>
+            <p class="text-xs text-slate-700 mt-1">Placar de Visão/min (VSPM) e pressão de rota.</p>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 col-span-2 sm:col-span-1">
+            <span class="text-[11px] font-bold text-slate-400 uppercase">5. Pool & Feitos (10 pts)</span>
+            <p class="text-xs text-slate-700 mt-1">Versatilidade de campeões e pontos em Challenges.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="lol-rank-container" class="space-y-4"></div>
     </section>
 
     <!-- ================= ABA 3: EXERCÍCIO (CORRIDA/NATAÇÃO/CICLISMO + FÍSICOS & DANÇA + ACADEMIA) ================= -->
@@ -297,35 +341,6 @@
 
   </main>
 
-  <!-- MODAL UNIVERSAL (ABRE AO CLICAR EM QUALQUER CARD PARA VER DETALHES E COLOCAR IMAGEM) -->
-  <div id="card-modal" class="fixed inset-0 z-50 hidden bg-slate-900/50 backdrop-blur-sm flex items-center justify-center p-4">
-    <div class="bg-white border border-slate-200 rounded-2xl max-w-lg w-full overflow-hidden shadow-2xl">
-      
-      <!-- Imagem de Capa dentro do Modal -->
-      <div id="modal-image-preview" class="relative h-56 w-full bg-slate-100 bg-cover bg-center">
-        <button onclick="closeModal()" class="absolute top-3 right-3 bg-white/90 hover:bg-white text-slate-800 rounded-full px-3 py-1 text-sm font-medium shadow">
-          Fechar ✕
-        </button>
-        <label class="absolute bottom-3 right-3 bg-slate-900/80 hover:bg-slate-900 text-white text-xs font-medium px-3 py-2 rounded-lg cursor-pointer shadow">
-          Trocar / Enviar Imagem
-          <input type="file" id="modal-image-input" accept="image/*" class="hidden" onchange="handleModalImageUpload(event)" />
-        </label>
-      </div>
-
-      <!-- Corpo do Modal -->
-      <div class="p-6 space-y-4">
-        <div class="flex items-center justify-between">
-          <span id="modal-subtitle" class="text-xs font-semibold uppercase tracking-wider text-slate-500"></span>
-          <span id="modal-badge" class="text-xs font-medium px-2.5 py-1 rounded-full bg-slate-100 text-slate-700"></span>
-        </div>
-        <h2 id="modal-title" class="text-xl font-bold text-slate-900"></h2>
-        <p id="modal-description" class="text-sm text-slate-600 leading-relaxed"></p>
-        <div id="modal-extra-fields" class="pt-2 border-t border-slate-100"></div>
-      </div>
-
-    </div>
-  </div>
-
   <!-- SCRIPTS -->
   <script>
     // Troca de abas principais
@@ -338,23 +353,25 @@
 
     // Badge de Status ("✓ Concluído" ou "🎯 Quero Conseguir")
     function renderStatusBadge(status) {
-      if (status === 'unlocked') {
+      if (String(status).toLowerCase() === 'unlocked') {
         return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"><span>✓</span><span>Concluído</span></span>`;
       }
       return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm"><span>🎯</span><span>Quero Conseguir</span></span>`;
     }
 
-    // Gerador do Painel de Contagem Dinâmica no Topo de Cada Aba
+    // Painel de Contagem Dinâmica no Topo de Cada Aba (Caixa de % corrigida sem estourar)
     function renderStatsBanner(containerId, label, items) {
       const total = items.length;
-      const done = items.filter(i => i.status === 'unlocked').length;
+      const done = items.filter(i => String(i.status).toLowerCase() === 'unlocked').length;
       const todo = total - done;
       const pct = total > 0 ? ((done / total) * 100).toFixed(1) : '0.0';
 
       document.getElementById(containerId).innerHTML = `
         <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-6">
-          <div class="flex items-center gap-3.5">
-            <div class="w-12 h-12 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl font-bold">${pct}%</div>
+          <div class="flex items-center gap-4">
+            <div class="px-4 py-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-900 text-lg font-bold whitespace-nowrap">
+              ${pct}%
+            </div>
             <div>
               <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filtro Ativo: ${label}</span>
               <div class="text-lg font-bold text-slate-900 mt-0.5">${done} de ${total} Desafios Concluídos</div>
@@ -376,8 +393,9 @@
       `;
     }
 
-    // Card Padrão Limpo (Sem Fade e Sem Clique de Edição)
-    function buildStandardCard(item, categoryLabel) {
+    // Card Padrão Limpo (diferencia "% dos jogadores" para LoL/Wild Rift e "% da população" para o resto)
+    function buildStandardCard(item, categoryLabel, defaultSuffix = 'da população') {
+      const suffix = item.rarityUnit || defaultSuffix;
       return `
         <div class="theme-card flex flex-col justify-between">
           <div>
@@ -397,14 +415,14 @@
             </div>
           </div>
           <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Raridade: <strong class="text-slate-800">${item.rarity}% da população</strong></span>
+            <span>Raridade: <strong class="text-slate-800">${item.rarity}% ${suffix}</strong></span>
             <span>${item.date || ''}</span>
           </div>
         </div>
       `;
     }
 
-    // ================= DADOS FIXOS NO CÓDIGO (EDITE DIRETO AQUI) =================
+    // ================= DADOS FIXOS NO CÓDIGO (COM TODAS AS SUAS EDIÇÕES MANTIDAS) =================
     const appData = {
       // --- ABA 1: CONQUISTAS ---
       lifeCategories: [
@@ -412,6 +430,7 @@
         { id: 'Casamento', name: 'Casamento & Família', icon: '💍' },
         { id: 'Produção', name: 'Produção', icon: '💻' },
         { id: 'Utilidades', name: 'Utilidades', icon: '🛠️' },
+        { id: 'Habilidades', name: 'Habilidades & Vivências', icon: '✨' },
         { id: 'Tocar', name: 'Tocar & Cantar', icon: '🎸' },
         { id: 'Direção', name: 'Direção & Pilotagem', icon: '🚗' }
       ],
@@ -449,11 +468,17 @@
         // UTILIDADES
         { category: 'Utilidades', title: 'Montar um Móvel', status: 'unlocked', rarity: 42.0, date: '2026', desc: 'Montar um móvel doméstico completo por conta própria.', img: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=600&q=80' },
         { category: 'Utilidades', title: 'Pintar a Casa', status: 'hunting', rarity: 34.0, date: 'Meta', desc: 'Preparar e pintar paredes ou cômodos da residência.', img: 'https://images.unsplash.com/photo-1562259949-e8e7689d7828?w=600&q=80' },
-        { category: 'Utilidades', title: 'Trocar o Mecanismo de uma Porta', status: 'Unlocked', rarity: 11.5, date: 'Meta', desc: 'Substituir fechadura, cilindro e maçaneta de uma porta.', img: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80' },
+        { category: 'Utilidades', title: 'Trocar o Mecanismo de uma Porta', status: 'unlocked', rarity: 11.5, date: '2026', desc: 'Substituir fechadura, cilindro e maçaneta de uma porta.', img: 'https://images.unsplash.com/photo-1558002038-1055907df827?w=600&q=80' },
         { category: 'Utilidades', title: 'Trocar o Mecanismo de Dentro do Vaso', status: 'unlocked', rarity: 10.2, date: '2026', desc: 'Realizar o reparo da torre de entrada/descarga da caixa acoplada.', img: 'https://images.unsplash.com/photo-1584622650111-993a426fbf0a?w=600&q=80' },
         { category: 'Utilidades', title: 'Trocar um Chuveiro', status: 'hunting', rarity: 9.5, date: 'Meta', desc: 'Instalar ou substituir a resistência/chuveiro elétrico com segurança.', img: 'https://images.unsplash.com/photo-1584622781564-1d987f7333c1?w=600&q=80' },
         { category: 'Utilidades', title: 'Trocar Óleo de um Carro Sozinho', status: 'unlocked', rarity: 7.8, date: '2024', desc: 'Drenar o óleo antigo, substituir o filtro e abastecer o óleo novo.', img: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80' },
         { category: 'Utilidades', title: 'Montar um Computador', status: 'hunting', rarity: 2.4, date: 'Meta', desc: 'Montar placa-mãe, processador, RAM, armazenamento, fonte e gabinete do zero.', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&q=80' },
+
+        // HABILIDADES & VIVÊNCIAS (OS NOVOS ITENS PEDIDOS)
+        { category: 'Habilidades', title: 'Digitar sem Ver (Touch Typing)', status: 'unlocked', rarity: 8.5, date: 'Concluído', desc: 'Digitar em alta velocidade usando todos os dedos sem olhar para o teclado.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80' },
+        { category: 'Habilidades', title: 'Pen Spinning (Girar Caneta)', status: 'hunting', rarity: 1.2, date: 'Meta', desc: 'Dominar manobras e giros contínuos de caneta entre os dedos (ThumbAround, Sonic, Charge).', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80' },
+        { category: 'Habilidades', title: 'Ler Tarô (78 Arcanos)', status: 'hunting', rarity: 0.40, date: 'Meta', desc: 'Dominar a simbologia dos 22 Arcanos Maiores e 56 Menores e realizar tiragens completas.', img: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80' },
+        { category: 'Habilidades', title: 'Participar dos Maiores Festivais do Mundo', status: 'hunting', rarity: 0.35, date: 'Meta', desc: 'Estar presencialmente nos maiores mega-festivais globais (Tomorrowland, Rock in Rio, Coachella, Lollapalooza).', img: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80' },
 
         // TOCAR & CANTAR
         { category: 'Tocar', title: 'Cantar', status: 'hunting', rarity: 14.0, date: 'Meta', desc: 'Cantar com afinação, controle vocal e no ritmo.', img: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?w=600&q=80' },
@@ -488,22 +513,213 @@
         { id: 'Saber Jogar', name: 'Saber Jogar (Tabuleiro & Cartas)', icon: '♟️' }
       ],
       gameAchievements: [
-        { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, date: '2026', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg' },
-        { game: 'League of Legends', title: 'Arena God (Deus da Arena)', status: 'hunting', rarity: 0.1, date: '2026', desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.', img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL' },
-        { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 9, date: '2024', desc: 'Vencer o Doom bots Maldição do Veigar', img: 'https://wiki.leagueoflegends.com/en-us/images/thumb/Doom_Bots_2025_Promo.jpg/500px-Doom_Bots_2025_Promo.jpg?12f9b' },
-        { game: 'League of Legends', title: 'Odisseia: Extração (Modo Mais Difícil)', status: 'unlocked', rarity: 2.9, date: '2018', desc: 'Completar o nível máximo de dificuldade do evento Odisseia.', img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244' },
-        { game: 'Wild Rift', title: 'Monarca no Wild Rift', status: 'unlocked', rarity: 2.0, date: '2025', desc: 'Rank máximo da fila normal Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcSX4F1G09X8VqkaWgFapfEWj4p5SLS2sG0fV-37lQTqxIqH_0FONpvkM&s=10' },
-        { game: 'Wild Rift', title: 'Lenda no Wild Rift', status: 'unlocked', rarity: 2.0, date: '2025', desc: 'Rank máximo na fila lendária do Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sZGuw2qcyHOxeVjM5Jfj27EOJapmZFKJ7h3urtmQH3kg2ZE0Myd4QD0&s=10' },
+        { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, rarityUnit: 'dos jogadores', date: '2026', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg' },
+        { game: 'League of Legends', title: 'Arena God (Deus da Arena)', status: 'hunting', rarity: 0.1, rarityUnit: 'dos jogadores', date: '2026', desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.', img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL' },
+        { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 9, rarityUnit: 'dos jogadores', date: '2024', desc: 'Vencer o Doom bots Maldição do Veigar', img: 'https://wiki.leagueoflegends.com/en-us/images/thumb/Doom_Bots_2025_Promo.jpg/500px-Doom_Bots_2025_Promo.jpg?12f9b' },
+        { game: 'League of Legends', title: 'Odisseia: Extração (Modo Mais Difícil)', status: 'unlocked', rarity: 2.9, rarityUnit: 'dos jogadores', date: '2018', desc: 'Completar o nível máximo de dificuldade do evento Odisseia.', img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244' },
+        { game: 'Wild Rift', title: 'Monarca no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo da fila normal Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcSX4F1G09X8VqkaWgFapfEWj4p5SLS2sG0fV-37lQTqxIqH_0FONpvkM&s=10' },
+        { game: 'Wild Rift', title: 'Lenda no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo na fila lendária do Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sZGuw2qcyHOxeVjM5Jfj27EOJapmZFKJ7h3urtmQH3kg2ZE0Myd4QD0&s=10' },
 
         // SABER JOGAR (JOGOS REAIS)
-        { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'hunting', rarity: 15.0, date: 'Meta', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Truco', status: 'unlocked', rarity: 2.2, date: '2017', desc: 'Domínio das manilhas, sinais, blefes e contagem de tentos no Truco.', img: 'https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
+        { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, rarityUnit: 'da população', date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'hunting', rarity: 15.0, rarityUnit: 'da população', date: 'Meta', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, rarityUnit: 'da população', date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Truco', status: 'unlocked', rarity: 2.2, rarityUnit: 'da população', date: '2017', desc: 'Domínio das manilhas, sinais, blefes e contagem de tentos no Truco.', img: 'https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, rarityUnit: 'da população', date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
       ],
 
-      // --- ABA 3: EXERCÍCIO (CORRIDA, NATAÇÃO, CICLISMO COM RARIDADE + FÍSICOS & DANÇA + ACADEMIA) ---
+      // --- ABA NOVA: RANKING DOS AMIGOS NO LOL ---
+      lolFriendsRank: [
+        {
+          rank: 1,
+          tier: 'S+',
+          score: 94.5,
+          name: 'Lurdes',
+          riotId: 'joyboy#00007',
+          role: 'Mid (54%) / ADC (36%)',
+          currentElo: 'Mestre 132 LP (SoloQ) • Diamante 4 (Flex)',
+          peakElo: 'Mestre 162 LP (Top 0.60% BR)',
+          winrate: '52% (583 jogos S2026)',
+          kda: '3.26:1 (44% KP)',
+          dpmGpm: '908 DPM • 8.4 CS/m (1.94 Dano/Ouro)',
+          visionChallenges: '0.8 VSPM • 16.500 pts Challenges (Diamond I - Top 3.9%)',
+          signature: 'Fizz (#1.572 Mundial • 424k), Orianna (381k), Jinx (64% WR)',
+          summary: 'Líder em elo absoluto (Mestre 162 LP) e volume no High Elo. Tem farm de nível semi-profissional (8.4 CS/min de média geral em quase 600 jogos) e altíssima conversão de dano por ouro (908 DPM).',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Fizz.png'
+        },
+        {
+          rank: 2,
+          tier: 'S',
+          score: 89.2,
+          name: 'Pedro (Bruterake)',
+          riotId: 'Bruterake#br1',
+          role: 'Selva (67%) / Suporte (29%)',
+          currentElo: 'Diamante 4 26 LP (SoloQ) • Esmeralda 1 66 LP (Flex)',
+          peakElo: 'Diamante 3 (SoloQ) • Diamante 2 89 LP (Flex) • Top 4.32% BR',
+          winrate: '60% Geral (54% SoloQ / 66% Flex em 96 jogos)',
+          kda: '4.12:1 (51% KP — 1º do grupo)',
+          dpmGpm: '675 DPM • 5.5 CS/m (1.60 Dano/Ouro na JG/Supp)',
+          visionChallenges: '1.60 VSPM (1º do grupo) • 12.515 pts Challenges (Master Fighter 0.1%)',
+          signature: 'Rek\'Sai, Hecarim (64% WR), Thresh (63% WR), Zyra (100% WR), Lillia (100% WR)',
+          summary: 'Maior eficiência cirúrgica do grupo: maior Winrate geral da temporada (60%), maior KDA (4.12), maior Participação em Abates (51%) e o maior Controle de Visão disparado (1.60 VSPM), mantendo Plat/Esmeralda/Diamante desde a S6.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/RekSai.png'
+        },
+        {
+          rank: 3,
+          tier: 'A+',
+          score: 85.8,
+          name: 'Felipe',
+          riotId: 'DIPSI#1337',
+          role: 'Mid (57%) / Top (15%) / ADC (13%)',
+          currentElo: 'Diamante 4 93 LP (SoloQ) • Platina 3 89 LP (Flex)',
+          peakElo: 'Diamante 3 14 LP (Top 3.52% BR • Diamante desde S2022)',
+          winrate: '56% Geral (246 jogos S2026)',
+          kda: '1.85:1 (43% KP)',
+          dpmGpm: '791 DPM • 6.5 CS/m (1.90 Dano/Ouro)',
+          visionChallenges: '1.20 VSPM • 15.160 pts Challenges (Diamond I - Top 3.9%)',
+          signature: 'Ahri (70% WR em 46 jogos • 647k pts), Ambessa (71% WR), Riven (219k)',
+          summary: 'Consistência histórica no Diamante, maior versatilidade de campeões do grupo (84 campeões jogados na S2026) e uma Ahri de 70% WR. Só fica atrás pelo alto número de mortes por jogo (7.7).',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Ahri.png'
+        },
+        {
+          rank: 4,
+          tier: 'A',
+          score: 78.4,
+          name: 'Luiz Henrique',
+          riotId: 'Completa Pra Mim#2012',
+          role: 'ADC / Mid (Semi-aposentado em S2026)',
+          currentElo: 'Sem fila S2026 (Esmeralda 4 em S2025)',
+          peakElo: 'Diamante 4 96 LP (SoloQ S24) • 2x Diamante 2 (Flex S23/S24)',
+          winrate: 'Histórico multi-season Platina Alto / Diamante (S6–S2025)',
+          kda: 'Carregador mecânico (8 Pentakills registrados)',
+          dpmGpm: '268x DPS Threat (>1800 DPM — GrandMaster)',
+          visionChallenges: '9.405 pts Challenges (Lightning Round Top 0.1%)',
+          signature: 'Yasuo (259k), Ezreal (186k), Vayne (170k), Tristana (155k)',
+          summary: 'Veterano desde a S6 com múltiplos picos de Diamante 4 (96 LP) na SoloQ e Diamante 2 na Flex. Nos desafios de mecânica e teamfight possui marcas GrandMaster.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Yasuo.png'
+        },
+        {
+          rank: 5,
+          tier: 'B+',
+          score: 75.0,
+          name: 'Gabriel',
+          riotId: 'vou sentir sdds #EUW',
+          role: 'Top Laner / Suporte (Aposentado • Europa)',
+          currentElo: 'Inativo (Servidor EUW)',
+          peakElo: 'Diamante 3 19 LP (Season 9) • 3x Platina 1 (S6, S2020, S2021)',
+          winrate: 'Consistência alta na era clássica (S6 a S2021)',
+          kda: 'Top Laner sólido de macro e side lane',
+          dpmGpm: 'Domínio de campeões de alta exigência mecânica (GP/Yasuo/Bardo)',
+          visionChallenges: 'Master Fighter Legacy (1.7%) & Master Yourself (2.8%)',
+          signature: 'Bardo (275k), Yasuo (157k), Thresh (154k), Gangplank (147k)',
+          summary: 'Pegou Diamante 3 na Season 9 (quando ainda não existia Esmeralda) e manteve Platina 1 por anos com fundamentos limpos de Top Lane.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Gangplank.png'
+        },
+        {
+          rank: 6,
+          tier: 'B+',
+          score: 72.5,
+          name: 'Kaic',
+          riotId: 'Gaick2001#br1',
+          role: 'Top (64%) / ADC (20%) / Selva (14%)',
+          currentElo: 'Platina 3 68 LP (SoloQ) • Ouro 3 65 LP (Flex)',
+          peakElo: 'Esmeralda 4 19 LP (Top 26.6% BR)',
+          winrate: '50% Geral (512 jogos na S2026)',
+          kda: '1.78:1 (39% KP — foco em Splitpush)',
+          dpmGpm: '823 DPM • 6.1 CS/m (1.98 Dano/Ouro — 2º maior do grupo)',
+          visionChallenges: '0.6 VSPM • 15.995 pts Challenges (Diamond I - 2º maior do grupo)',
+          signature: 'Sett (63% WR em 82 jogos • 361k), Volibear (212k), Mordekaiser (63% WR)',
+          summary: 'O maior grinder da temporada (512 partidas). Apesar do KDA/KP mais baixos pelo estilo de splitpush no Top, causa 823 DPM e tem quase 16 mil pontos de Desafios (Top Diff 0.2%).',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Sett.png'
+        },
+        {
+          rank: 7,
+          tier: 'B',
+          score: 69.0,
+          name: 'Heitor',
+          riotId: 'Aupaka#2756',
+          role: 'Flex Total: ADC (32%) / Top (28%) / Mid (26%) / JG (11%)',
+          currentElo: 'Platina 3 38 LP (Flex) • Sem fila SoloQ S2026',
+          peakElo: 'Platina 3 73 LP (Flex S26) • Platina 4 47 LP (SoloQ S23)',
+          winrate: '53% Geral (81 jogos S2026)',
+          kda: '2.98:1 (49% KP)',
+          dpmGpm: '960 DPM (1º do grupo em dano bruto) • 6.0 CS/m (2.17 Dano/Ouro)',
+          visionChallenges: '0.7 VSPM • 10.310 pts Challenges (29 Pentakills ARAM — GM 0.4%)',
+          signature: 'Ambessa (57% WR), Jinx (80% WR), Xin Zhao (1.347 DPM), Naafiri (75% WR)',
+          summary: 'Coringa capaz de jogar nas 4 rotas carregadoras entregando o maior DPM bruto do grupo (960 DPM) e 29 Pentakills registrados em desafios.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Jinx.png'
+        },
+        {
+          rank: 8,
+          tier: 'C+',
+          score: 62.5,
+          name: 'Luiz Gustavo',
+          riotId: 'Gügu#BR1',
+          role: 'ADC (68%) / Suporte (17%) / Top (12%)',
+          currentElo: 'Ouro 3 53 LP (SoloQ) • Platina 4 0 LP (Flex)',
+          peakElo: 'Ouro 2 36 LP (SoloQ) • Platina 4 11 LP (Flex)',
+          winrate: '50% Geral (46% SoloQ / 55% Flex em 170 jogos)',
+          kda: '2.05:1 (46% KP)',
+          dpmGpm: '658 DPM • 5.2 CS/m (1.65 Dano/Ouro)',
+          visionChallenges: '1.10 VSPM • 13.370 pts Challenges (Bot Diff 0.6% / Alcove Master)',
+          signature: 'Aphelios (182k), Miss Fortune (70% WR), Braum (78% WR), Jinx (83% WR)',
+          summary: 'Bom controle de visão (1.10 VSPM) e ótimo desempenho de Braum/MF na Flex, mas perde consistência na SoloQ pelo alto número de mortes (7.8/jogo) jogando de Varus e Aphelios.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aphelios.png'
+        },
+        {
+          rank: 9,
+          tier: 'C',
+          score: 54.0,
+          name: 'Rafael Chehab',
+          riotId: 'Pattati Pattata#br1',
+          role: 'ADC / Mid / Suporte (Inativo em S2026)',
+          currentElo: 'Inativo em S2025/S2026',
+          peakElo: 'Esmeralda 3 11 LP (SoloQ S24) • Platina 1 (Flex S24) • Platina 5 (S6)',
+          winrate: 'Histórico consistente de evolução por esforço (Ouro → Esmeralda)',
+          kda: 'Jogador versátil em múltiplas funções',
+          dpmGpm: '43x DPS Threat no ARAM (Master)',
+          visionChallenges: '8.220 pts Challenges (Especialista nas 4 Classes: ADC, Mago, Supp e Assassino)',
+          signature: 'Caitlyn (152k), Lux (128k), Ahri (122k), Diana (118k)',
+          summary: 'O mais esforçado do pelotão final: conquistou Esmeralda 3 na SoloQ e desbloqueou os títulos de Especialista nas 4 classes do jogo.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Caitlyn.png'
+        },
+        {
+          rank: 10,
+          tier: 'D+',
+          score: 48.5,
+          name: 'João Guilherme',
+          riotId: 'Frank Ocean mp3#br1',
+          role: 'Top Laner Tanque (Inativo em S2026)',
+          currentElo: 'Inativo (Esmeralda 4 em S2025 com 25% WR)',
+          peakElo: 'Diamante 3 17 LP (S2024 S2) • Diamante 4 (Flex S24)',
+          winrate: '25% WR na última season jogada (3W 9L em S2025)',
+          kda: '1.88:1 (Baixo impacto fora do meta de tanques)',
+          dpmGpm: '6.4 CS/m (Foco em absorver pressão de Mundo/Tahm Kench)',
+          visionChallenges: '9.720 pts Challenges (Top Diff 0.3% / Overwhelming Presence 1.8%)',
+          signature: 'Pantheon (104k), Tahm Kench (97k), Malphite (92k), Dr. Mundo',
+          summary: 'Vence o desempate técnico contra o Marcelo pelo pico de elo em 2024 (D3/E4) e pelos 9.720 pontos de desafios, embora dependesse do time carregando enquanto jogava de tanque.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png'
+        },
+        {
+          rank: 11,
+          tier: 'D',
+          score: 44.0,
+          name: 'Marcelo',
+          riotId: 'Tatu Melado#br1',
+          role: 'Suporte / ADC / Selva',
+          currentElo: 'Prata 2 60 LP (Flex S2026) • Sem fila SoloQ',
+          peakElo: 'Ouro 3 37 LP (Season 9) • Prata 1 a 4 (S6 a S2024)',
+          winrate: '20% WR na S2026 (1W 4L)',
+          kda: '1.80:1 (37% KP)',
+          dpmGpm: '5.9 CS/m',
+          visionChallenges: '6.780 pts Challenges (Arena Champion 2.1% / Mythic Epic Steal)',
+          signature: 'Thresh (180k), Kayn (94k), Pyke (92k), Caitlyn (89k)',
+          summary: 'Mandou bem nos desafios de Arena (Arena Champion 2.1%) e de Thresh, mas no Summoner\'s Rift ranqueado possui o menor pico histórico (Ouro 3 na S9, Prata nas demais) e 20% WR atual.',
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Thresh.png'
+        }
+      ],
+
+      // --- ABA 3: EXERCÍCIO (COM SEUS TEMPOS DE 32:58 E 01:31:28 MANTIDOS) ---
       running: [
         { sport: 'Corrida', dist: '5 km', bestTime: '32:58', rarity: 8.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
         { sport: 'Corrida', dist: '10 km', bestTime: '01:31:28', rarity: 3.2, status: 'unlocked', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
@@ -532,6 +748,8 @@
       ],
       bodySkills: [
         { category: 'Físicos', title: 'Ficar Acordado Direto por 1 Dia e Meio (36h)', status: 'unlocked', rarity: 19.5, date: '14/07/2018', desc: 'Superar 36 horas consecutivas acordado sem dormir.', img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=80' },
+        { category: 'Físicos', title: 'Andar de Patins', status: 'hunting', rarity: 11.0, date: 'Meta', desc: 'Patinar com equilíbrio, domínio de curvas e frenagem.', img: 'https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=600&q=80' },
+        { category: 'Físicos', title: 'Andar de Skate', status: 'hunting', rarity: 4.5, date: 'Meta', desc: 'Remar, equilibrar na base e dominar curvas e obstáculos no skate.', img: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=600&q=80' },
         { category: 'Físicos', title: 'Pistol Squat (Agachamento Unilateral)', status: 'unlocked', rarity: 1.8, date: '2026-04', desc: 'Agachamento completo equilibrando em apenas uma perna.', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
         { category: 'Físicos', title: '20 Barras Fixas Estritas (Pull-ups)', status: 'hunting', rarity: 0.8, date: 'Meta', desc: 'Completar 20 repetições limpas na barra fixa.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
         { category: 'Físicos', title: 'Muscle-Up na Barra Fixa', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Subir a barra fixa passando o tronco inteiro acima da linha da barra.', img: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80' },
@@ -550,7 +768,7 @@
         { name: 'Rosca Direta', group: 'Braços', oneRM: '46 kg', force4to6: '40 kg', hyper8to15: '32 kg', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80' }
       ],
 
-      // --- ABA 4: CONHECIMENTO (TITULAÇÕES + CERTIFICADOS C2/N1 + 40 IDIOMAS) ---
+      // --- ABA 4: CONHECIMENTO ---
       knowledgeCategories: [
         { id: 'all', name: 'Todos', icon: '🎓' },
         { id: 'Acadêmico', name: 'Formação Acadêmica', icon: '🏛️' },
@@ -558,14 +776,12 @@
         { id: 'Idiomas', name: 'Saber Falar Idiomas (39 Línguas)', icon: '🗣️' }
       ],
       knowledgeItems: [
-        // FORMAÇÃO ACADÊMICA
         { category: 'Acadêmico', title: 'Ensino Médio Técnico', status: 'hunting', rarity: 8.5, date: 'Titulação', desc: 'Formação técnica profissionalizante integrada ao ensino médio.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80' },
         { category: 'Acadêmico', title: 'Graduação (Farmácia - UnB)', status: 'unlocked', rarity: 0.08, date: '2025-12', desc: 'Graduação superior concluída em Farmácia (apenas 0,08% da pop. mundial; 12,5% considerando qualquer curso).', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80' },
         { category: 'Acadêmico', title: 'Pós-Graduação / Residência', status: 'unlocked', rarity: 0.18, date: '2026-03', desc: 'Programa de pós-graduação prática em regime de Residência em Saúde.', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80' },
         { category: 'Acadêmico', title: 'Mestrado (Master\'s Degree)', status: 'hunting', rarity: 2.8, date: 'Meta', desc: 'Título acadêmico de Mestre em programa stricto sensu.', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80' },
         { category: 'Acadêmico', title: 'Doutorado (PhD / Doctorate)', status: 'hunting', rarity: 0.45, date: 'Meta', desc: 'Grau máximo de titulação acadêmica e defesa de tese inédita.', img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&q=80' },
 
-        // CERTIFICAÇÕES MÁXIMAS
         { category: 'Certificações', title: 'Inglês: Cambridge C2 Proficiency (CPE)', status: 'hunting', rarity: 0.15, date: 'Meta C2', desc: 'Domínio pleno C2 (ou IELTS 8.5-9.0 / TOEFL iBT 114-120).', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80' },
         { category: 'Certificações', title: 'Espanhol: DELE C2 (Instituto Cervantes)', status: 'hunting', rarity: 0.08, date: 'Meta C2', desc: 'Grau máximo de competência oficial no idioma espanhol.', img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80' },
         { category: 'Certificações', title: 'Japonês: JLPT N1 (Fundação Japão)', status: 'hunting', rarity: 0.02, date: 'Meta N1', desc: 'Grau máximo N1 exigindo domínio de ~2.000 kanjis.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80' }
@@ -580,7 +796,6 @@
       ]
     };
 
-    // Lista compacta dos 39 Idiomas (Convertida automaticamente em cards na aba Conhecimento)
     const ALL_LANGUAGES_LIST = [
       ['Inglês (Intermediário+)', 18.2, 'unlocked', ' ~1,49 bilhão de falantes no mundo.'],
       ['Chinês (Mandarim)', 14.42, 'hunting', '~1,18 bilhão de falantes no mundo.'],
@@ -663,14 +878,14 @@
       const catObj = appData.lifeCategories.find(c => c.id === selectedLifeCat);
       renderStatsBanner('life-stats-banner', catObj ? catObj.name : 'Todas', categoryPool);
 
-      let list = categoryPool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      let list = categoryPool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
       list.sort((a, b) => {
         if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
         if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
         return (a.date || '').localeCompare(b.date || '');
       });
 
-      document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
+      document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
     }
 
     // ================= 2. RENDERIZAR ABA JOGOS =================
@@ -704,17 +919,78 @@
       const gameObj = appData.gameCatalog.find(g => g.id === selectedGameFilter);
       renderStatsBanner('games-stats-banner', gameObj ? gameObj.name : 'Todos', gamePool);
 
-      let list = gamePool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      let list = gamePool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
       list.sort((a, b) => {
         if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
         if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
         return (b.date || '').localeCompare(a.date || '');
       });
 
-      document.getElementById('games-grid').innerHTML = list.map(i => buildStandardCard(i, i.game)).join('');
+      document.getElementById('games-grid').innerHTML = list.map(i => buildStandardCard(i, i.game, 'dos jogadores')).join('');
     }
 
-    // ================= 3. RENDERIZAR ABA EXERCÍCIO =================
+    // ================= 3. RENDERIZAR ABA RANK (LOL LEADERBOARD) =================
+    function renderLolRank() {
+      const container = document.getElementById('lol-rank-container');
+      container.innerHTML = appData.lolFriendsRank.map(p => {
+        const medal = p.rank === 1 ? '🥇 #1' : p.rank === 2 ? '🥈 #2' : p.rank === 3 ? '🥉 #3' : `#${p.rank}`;
+        const borderHighlight = p.rank === 1 ? 'border-amber-300 bg-amber-50/20' : p.rank === 2 ? 'border-slate-300 bg-slate-50/40' : 'border-slate-200 bg-white';
+        return `
+          <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+              <div class="flex items-center gap-4">
+                <div class="px-3.5 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm whitespace-nowrap">
+                  ${medal}
+                </div>
+                <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 bg-slate-100" alt="${p.name}" />
+                <div>
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-lg font-bold text-slate-900">${p.name}</h3>
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">${p.riotId}</span>
+                    <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Tier ${p.tier}</span>
+                  </div>
+                  <p class="text-xs text-slate-500 mt-1"><strong>Função Principal:</strong> ${p.role} • <strong>Campeões Assinatura:</strong> ${p.signature}</p>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 self-start lg:self-center">
+                <div class="text-right">
+                  <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Nota Composta</span>
+                  <span class="text-2xl font-bold text-slate-900">${p.score} <span class="text-xs font-normal text-slate-400">/ 100</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase">Elo Atual & Pico</span>
+                <div class="font-bold text-slate-900 mt-1">${p.currentElo}</div>
+                <div class="text-slate-500 mt-0.5">Pico: ${p.peakElo}</div>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase">Winrate, KDA & KP%</span>
+                <div class="font-bold text-slate-900 mt-1">${p.winrate}</div>
+                <div class="text-slate-500 mt-0.5">KDA: ${p.kda}</div>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase">Conversão (DPM & CS/m)</span>
+                <div class="font-bold text-slate-900 mt-1">${p.dpmGpm}</div>
+              </div>
+              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
+                <span class="text-[11px] font-semibold text-slate-400 uppercase">Visão & Challenges</span>
+                <div class="font-bold text-slate-900 mt-1">${p.visionChallenges}</div>
+              </div>
+            </div>
+
+            <p class="text-xs text-slate-600 mt-3 pt-3 border-t border-slate-100 leading-relaxed">
+              <strong>Veredito Analítico:</strong> ${p.summary}
+            </p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ================= 4. RENDERIZAR ABA EXERCÍCIO =================
     let selectedEnduranceMode = 'all';
     let selectedBodyCat = 'all';
 
@@ -786,10 +1062,10 @@
       const sortBy = document.getElementById('body-skill-sort').value;
 
       let pool = appData.bodySkills.filter(i => selectedBodyCat === 'all' || i.category === selectedBodyCat);
-      let list = pool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      let list = pool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
 
       list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
-      document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
+      document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
     }
 
     let currentGymGroup = 'Todos';
@@ -833,7 +1109,7 @@
       `).join('');
     }
 
-    // ================= 4. RENDERIZAR ABA CONHECIMENTO =================
+    // ================= 5. RENDERIZAR ABA CONHECIMENTO =================
     let selectedKnowledgeCat = 'all';
 
     function renderKnowledgePills() {
@@ -861,13 +1137,13 @@
       const catObj = appData.knowledgeCategories.find(c => c.id === selectedKnowledgeCat);
       renderStatsBanner('knowledge-stats-banner', catObj ? catObj.name : 'Todos', pool);
 
-      let list = pool.filter(i => statusFilter === 'all' || i.status === statusFilter);
+      let list = pool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
       list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
 
-      document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category)).join('');
+      document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
     }
 
-    // ================= 5. RENDERIZAR ABA MAPA =================
+    // ================= 6. RENDERIZAR ABA MAPA =================
     const ALL_BRAZIL_UFS = [
       'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG',
       'PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'
@@ -925,6 +1201,7 @@
     renderLife();
     renderGamePills();
     renderGames();
+    renderLolRank();
     updateExerciseBanner();
     renderEnduranceRow('running', 'running-grid');
     renderEnduranceRow('swimming', 'swimming-grid');
