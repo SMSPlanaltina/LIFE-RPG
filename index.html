@@ -3,57 +3,105 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Conquistas & Marcos</title>
+  <title>Sala de Conquistas — Life RPG</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/echarts@5/dist/echarts.min.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     body {
       font-family: 'Inter', sans-serif;
-      background-color: #F8FAFC;
-      color: #0F172A;
+      background-color: #FAF9F6;
+      color: #1C1917;
     }
 
     .theme-card {
       background: #FFFFFF;
-      border: 1px solid #E2E8F0;
+      border: 1px solid #E7E5E4;
       border-radius: 16px;
       overflow: hidden;
       transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
     }
     .theme-card:hover {
       transform: translateY(-2px);
-      box-shadow: 0 10px 20px -6px rgba(15, 23, 42, 0.06);
-      border-color: #CBD5E1;
+      box-shadow: 0 12px 24px -8px rgba(180, 83, 9, 0.10);
+      border-color: #FCD34D;
     }
 
-    /* Imagem limpa SEM FADE mantendo a formatação exata */
     .card-img-header {
       position: relative;
-      height: 150px;
+      height: 156px;
       width: 100%;
-      background-size: cover;
-      background-position: center;
-      background-color: #E2E8F0;
-      border-bottom: 1px solid #F1F5F9;
+      overflow: hidden;
+      background-color: #F5F5F4;
+      border-bottom: 1px solid #F5F5F4;
     }
 
     .tab-btn {
-      padding: 10px 18px;
+      padding: 9px 16px;
       border-radius: 9999px;
       font-size: 0.875rem;
       font-weight: 500;
-      color: #475569;
+      color: #57534E;
       background: transparent;
-      transition: all 0.15s ease;
+      border: 1px solid transparent;
+      transition: all 0.18s ease;
       white-space: nowrap;
+      cursor: pointer;
     }
     .tab-btn:hover {
-      color: #0F172A;
-      background: #F1F5F9;
+      color: #92400E;
+      background: #FFFBEB;
+      border-color: #FDE68A;
     }
     .tab-btn.active {
-      background: #0F172A;
-      color: #FFFFFF;
+      background: linear-gradient(135deg, #FFFDF7 0%, #FEF3C7 100%);
+      color: #92400E;
+      border: 1px solid #F59E0B;
+      font-weight: 600;
+      box-shadow: 0 2px 10px -2px rgba(217, 119, 6, 0.22);
+    }
+
+    .gold-pill-btn {
+      transition: all 0.18s ease;
+      cursor: pointer;
+    }
+    .gold-pill-active {
+      background: linear-gradient(135deg, #FFFDF7 0%, #FEF3C7 100%) !important;
+      color: #92400E !important;
+      border-color: #F59E0B !important;
+      font-weight: 600 !important;
+      box-shadow: 0 2px 8px -2px rgba(217, 119, 6, 0.20) !important;
+    }
+    .gold-pill-inactive {
+      background: #FFFFFF;
+      color: #57534E;
+      border-color: #E7E5E4;
+    }
+    .gold-pill-inactive:hover {
+      background: #FFFBEB;
+      color: #92400E;
+      border-color: #FCD34D;
+    }
+
+    .gold-select {
+      background-color: #FFFFFF;
+      border: 1px solid #E7E5E4;
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-size: 0.875rem;
+      color: #44403C;
+      font-weight: 500;
+      outline: none;
+      cursor: pointer;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    }
+    .gold-select:hover, .gold-select:focus {
+      border-color: #F59E0B;
+      box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
+    }
+
+    .gold-progress-fill {
+      background: linear-gradient(90deg, #D97706 0%, #F59E0B 60%, #FBBF24 100%);
     }
 
     .tab-panel { display: none; }
@@ -62,18 +110,20 @@
 </head>
 <body class="min-h-screen pb-20">
 
-  <!-- CABEÇALHO PRINCIPAL LIMPO -->
-  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm">
-    <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-      <div class="flex items-center gap-2.5">
-        <span class="text-2xl">🏆</span>
+  <!-- CABEÇALHO BRANCO & DOURADO -->
+  <header class="sticky top-0 z-30 bg-white/95 backdrop-blur-md border-b border-amber-200/70 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-3.5 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-50 to-amber-100 border border-amber-300 text-amber-700 flex items-center justify-center text-xl shadow-sm">
+          🏆
+        </div>
         <div>
-          <h1 class="text-xl font-bold tracking-tight text-slate-900">Sala de Conquistas</h1>
-          <p class="text-xs text-slate-500">Arquivo Pessoal de Desafios, Recordes & Marcos</p>
+          <h1 class="text-xl font-bold tracking-tight text-stone-900">Sala de Conquistas</h1>
+          <p class="text-xs text-stone-500">Arquivo Pessoal de Desafios, Recordes & Marcos</p>
         </div>
       </div>
 
-      <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 bg-slate-100/80 p-1.5 rounded-2xl border border-slate-200/80">
+      <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 bg-stone-100/80 p-1.5 rounded-2xl border border-stone-200/90">
         <button class="tab-btn active flex items-center gap-2" onclick="switchTab('conquistas', this)">
           <span>🏆</span><span>Conquistas</span>
         </button>
@@ -102,19 +152,18 @@
     <section id="tab-conquistas" class="tab-panel active space-y-6">
       <div id="life-stats-banner"></div>
 
-      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div id="life-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
 
-        <div class="flex items-center gap-2">
-          <select id="life-status-filter" onchange="renderLife()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="life-status-filter" onchange="renderLife()" class="gold-select">
             <option value="all">Status: Todos</option>
-            <option value="unlocked">✓ Concluído</option>
-            <option value="hunting">🎯 Quero Conseguir</option>
+            <option value="unlocked">Status: Concluídos</option>
+            <option value="hunting">Status: Quero Conseguir</option>
           </select>
 
-          <select id="life-sort-select" onchange="renderLife()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+          <select id="life-sort-select" onchange="renderLife()" class="gold-select">
             <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
-            <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
             <option value="date">Ordenar: Data</option>
           </select>
         </div>
@@ -123,23 +172,22 @@
       <div id="life-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ================= ABA 2: JOGOS (LOL, WILD RIFT, SABER JOGAR) ================= -->
+    <!-- ================= ABA 2: JOGOS ================= -->
     <section id="tab-jogos" class="tab-panel space-y-6">
       <div id="games-stats-banner"></div>
 
-      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
 
-        <div class="flex items-center gap-2">
-          <select id="game-status-filter" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="game-status-filter" onchange="renderGames()" class="gold-select">
             <option value="all">Status: Todos</option>
-            <option value="unlocked">✓ Concluído</option>
-            <option value="hunting">🎯 Quero Conseguir</option>
+            <option value="unlocked">Status: Concluídos</option>
+            <option value="hunting">Status: Quero Conseguir</option>
           </select>
 
-          <select id="game-sort-select" onchange="renderGames()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
-            <option value="rarity_asc">Ordenar: Menor %</option>
-            <option value="rarity_desc">Ordenar: Maior %</option>
+          <select id="game-sort-select" onchange="renderGames()" class="gold-select">
+            <option value="rarity_asc">Ordenar: Menor % de Jogadores</option>
             <option value="recent">Ordenar: Mais Recentes</option>
           </select>
         </div>
@@ -148,42 +196,51 @@
       <div id="games-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ================= ABA NOVA: RANK (RANKING OFICIAL DOS AMIGOS NO LOL) ================= -->
+    <!-- ================= ABA 3: RANK (LOL TODOS OS TEMPOS + POR ANO) ================= -->
     <section id="tab-rank" class="tab-panel space-y-6">
-      <div class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm space-y-4">
+      <div class="bg-white border border-stone-200 rounded-2xl p-6 shadow-sm space-y-5">
         <div class="flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10" class="w-10 h-10 rounded-xl border border-slate-200 object-cover" alt="LoL" />
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10" class="w-11 h-11 rounded-xl border border-amber-200 object-cover shadow-sm" alt="LoL" />
             <div>
-              <h2 class="text-lg font-bold text-slate-900">Ranking Oficial dos Amigos — League of Legends</h2>
-              <p class="text-xs text-slate-500">Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico de Temporadas</p>
+              <h2 class="text-lg font-bold text-stone-900">Ranking Oficial dos Amigos — League of Legends</h2>
+              <p id="lol-rank-subtitle" class="text-xs text-stone-500">Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico de Temporadas</p>
             </div>
           </div>
-          <span class="px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs font-bold text-slate-800">
-            12 Jogadores Analisados • Patch 16.22 (S2026)
+          <span id="lol-rank-counter" class="px-3.5 py-1.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-bold text-amber-800">
+            12 Jogadores Analisados • Todos os Tempos
           </span>
         </div>
 
-        <div class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-2">
-          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-slate-400 uppercase">1. Elo & Pico (30 pts)</span>
-            <p class="text-xs text-slate-700 mt-1">SoloQ, Flex, Top % BR e consistência multi-season.</p>
+        <!-- Seletor Todos os Tempos vs Por Ano -->
+        <div class="pt-3 border-t border-stone-100 space-y-2.5">
+          <div class="flex flex-wrap items-center justify-between gap-2">
+            <span class="text-xs font-bold uppercase tracking-wider text-amber-800">✦ Seletor de Período (Todos os Tempos ou Por Ano)</span>
+            <span class="text-[11px] text-stone-400">Anos com múltiplos splits (2023 e 2024) consolidados pelo pico anual</span>
           </div>
-          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-slate-400 uppercase">2. Impacto (25 pts)</span>
-            <p class="text-xs text-slate-700 mt-1">Winrate real, KDA e Participação em Abates (KP%).</p>
+          <div id="lol-year-selector" class="flex flex-wrap items-center gap-1.5"></div>
+        </div>
+
+        <div id="lol-pillars-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
+          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-amber-800 uppercase">1. Elo & Pico (30 pts)</span>
+            <p class="text-xs text-stone-600 mt-1">SoloQ, Flex, Top % BR e consistência multi-ano.</p>
           </div>
-          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-slate-400 uppercase">3. Conversão (20 pts)</span>
-            <p class="text-xs text-slate-700 mt-1">Dano por Minuto (DPM), DPM/Ouro e Farm (CS/m).</p>
+          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-amber-800 uppercase">2. Impacto (25 pts)</span>
+            <p class="text-xs text-stone-600 mt-1">Winrate real, KDA e Participação em Abates (KP%).</p>
           </div>
-          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-slate-400 uppercase">4. Macro/Visão (15 pts)</span>
-            <p class="text-xs text-slate-700 mt-1">Placar de Visão/min (VSPM) e pressão de rota.</p>
+          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-amber-800 uppercase">3. Conversão (20 pts)</span>
+            <p class="text-xs text-stone-600 mt-1">Dano por Minuto (DPM), DPM/Ouro e Farm (CS/m).</p>
           </div>
-          <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-3 col-span-2 sm:col-span-1">
-            <span class="text-[11px] font-bold text-slate-400 uppercase">5. Pool & Feitos (10 pts)</span>
-            <p class="text-xs text-slate-700 mt-1">Versatilidade de campeões e pontos em Challenges.</p>
+          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
+            <span class="text-[11px] font-bold text-amber-800 uppercase">4. Macro/Visão (15 pts)</span>
+            <p class="text-xs text-stone-600 mt-1">Placar de Visão/min (VSPM) e pressão de rota.</p>
+          </div>
+          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3 col-span-2 sm:col-span-1">
+            <span class="text-[11px] font-bold text-amber-800 uppercase">5. Pool & Feitos (10 pts)</span>
+            <p class="text-xs text-stone-600 mt-1">Versatilidade de campeões e pontos em Challenges.</p>
           </div>
         </div>
       </div>
@@ -191,58 +248,59 @@
       <div id="lol-rank-container" class="space-y-4"></div>
     </section>
 
-    <!-- ================= ABA 3: EXERCÍCIO (CORRIDA/NATAÇÃO/CICLISMO + FÍSICOS & DANÇA + ACADEMIA) ================= -->
+    <!-- ================= ABA 4: EXERCÍCIO ================= -->
     <section id="tab-exercicio" class="tab-panel space-y-10">
       <div id="exercise-stats-banner"></div>
 
       <!-- BLOCO 1: Modalidades de Tempo & Distância -->
       <div class="space-y-6">
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+        <div class="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <span class="text-2xl">⏱️</span>
             <div>
-              <h2 class="text-base font-bold text-slate-900">Recordes de Tempo & Resistência</h2>
-              <p class="text-xs text-slate-500">Corrida, Natação e Ciclismo com melhor tempo e raridade populacional.</p>
+              <h2 class="text-base font-bold text-stone-900">Recordes de Tempo & Resistência</h2>
+              <p class="text-xs text-stone-500">Corrida, Natação e Ciclismo com melhor tempo e raridade populacional.</p>
             </div>
           </div>
-          <div class="flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl border border-slate-200">
-            <button onclick="filterEndurance('all')" id="endurance-btn-all" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white">Todas as Linhas</button>
-            <button onclick="filterEndurance('corrida')" id="endurance-btn-corrida" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🏃 Corrida</button>
-            <button onclick="filterEndurance('natacao')" id="endurance-btn-natacao" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🏊 Natação</button>
-            <button onclick="filterEndurance('ciclismo')" id="endurance-btn-ciclismo" class="px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white">🚴 Ciclismo</button>
+
+          <div class="flex flex-wrap items-center gap-1.5 bg-stone-100/80 p-1 rounded-xl border border-stone-200">
+            <button onclick="filterEndurance('all')" id="endurance-btn-all" class="gold-pill-btn gold-pill-active px-3 py-1.5 rounded-lg text-xs border">Todas as Linhas</button>
+            <button onclick="filterEndurance('corrida')" id="endurance-btn-corrida" class="gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-lg text-xs border border-transparent">🏃 Corrida</button>
+            <button onclick="filterEndurance('natacao')" id="endurance-btn-natacao" class="gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-lg text-xs border border-transparent">🏊 Natação</button>
+            <button onclick="filterEndurance('ciclismo')" id="endurance-btn-ciclismo" class="gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-lg text-xs border border-transparent">🚴 Ciclismo</button>
           </div>
         </div>
 
         <div id="row-corrida" class="space-y-3">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🏃 Linha de Corrida (5k • 10k • 15k • 21k • Maratona 42k)</h3>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-stone-700">🏃 Linha de Corrida (5k • 10k • 15k • 21k • Maratona 42k)</h3>
           <div id="running-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
 
         <div id="row-natacao" class="space-y-3">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🏊 Linha de Natação (100m • 200m • 400m • 800m • 1.500m)</h3>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-stone-700">🏊 Linha de Natação (100m • 200m • 400m • 800m • 1.500m)</h3>
           <div id="swimming-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
 
         <div id="row-ciclismo" class="space-y-3">
-          <h3 class="text-sm font-bold uppercase tracking-wider text-slate-700">🚴 Linha de Ciclismo (10 km • 25 km • 50 km • 100 km • 160 km)</h3>
+          <h3 class="text-sm font-bold uppercase tracking-wider text-stone-700">🚴 Linha de Ciclismo (10 km • 25 km • 50 km • 100 km • 160 km)</h3>
           <div id="cycling-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4"></div>
         </div>
       </div>
 
       <!-- BLOCO 2: Desafios Físicos, Calistenia & Dança -->
-      <div class="space-y-4 pt-4 border-t border-slate-200">
-        <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="space-y-4 pt-4 border-t border-stone-200">
+        <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
           <div id="body-filter-pills" class="flex items-center gap-2 overflow-x-auto"></div>
 
-          <div class="flex items-center gap-2">
-            <select id="body-skill-status" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
+          <div class="flex flex-wrap items-center gap-2">
+            <select id="body-skill-status" onchange="renderBodySkills()" class="gold-select text-xs">
               <option value="all">Status: Todos</option>
-              <option value="unlocked">✓ Concluído</option>
-              <option value="hunting">🎯 Quero Conseguir</option>
+              <option value="unlocked">Status: Concluídos</option>
+              <option value="hunting">Status: Quero Conseguir</option>
             </select>
-            <select id="body-skill-sort" onchange="renderBodySkills()" class="bg-white border border-slate-200 rounded-xl px-3 py-2 text-xs font-medium text-slate-700">
+            <select id="body-skill-sort" onchange="renderBodySkills()" class="gold-select text-xs">
               <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
-              <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
+              <option value="date">Ordenar: Data</option>
             </select>
           </div>
         </div>
@@ -251,23 +309,23 @@
       </div>
 
       <!-- BLOCO 3: Pesos Máximos na Academia -->
-      <div class="space-y-4 pt-4 border-t border-slate-200">
-        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div class="space-y-4 pt-4 border-t border-stone-200">
+        <div class="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div class="flex items-center gap-3">
             <span class="text-2xl">🏋️</span>
             <div>
-              <h2 class="text-base font-bold text-slate-900">Pesos Máximos na Academia (PRs por Equipamento)</h2>
-              <p class="text-xs text-slate-500">1 Repetição Máxima (1RM), Força (4 a 6 reps) e Hipertrofia (8 a 15 reps).</p>
+              <h2 class="text-base font-bold text-stone-900">Pesos Máximos na Academia (PRs por Equipamento)</h2>
+              <p class="text-xs text-stone-500">1 Repetição Máxima (1RM), Força (4 a 6 reps) e Hipertrofia (8 a 15 reps).</p>
             </div>
           </div>
 
           <div class="flex items-center gap-1.5 overflow-x-auto">
-            <button onclick="filterGym('Todos')" class="gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium">Todos</button>
-            <button onclick="filterGym('Peito')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Peito</button>
-            <button onclick="filterGym('Costas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Costas</button>
-            <button onclick="filterGym('Pernas')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Pernas</button>
-            <button onclick="filterGym('Ombros')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Ombros</button>
-            <button onclick="filterGym('Braços')" class="gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium">Braços</button>
+            <button onclick="filterGym('Todos')" class="gym-pill gold-pill-btn gold-pill-active px-3 py-1.5 rounded-xl text-xs border">Todos</button>
+            <button onclick="filterGym('Peito')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Peito</button>
+            <button onclick="filterGym('Costas')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Costas</button>
+            <button onclick="filterGym('Pernas')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Pernas</button>
+            <button onclick="filterGym('Ombros')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Ombros</button>
+            <button onclick="filterGym('Braços')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Braços</button>
           </div>
         </div>
 
@@ -275,23 +333,23 @@
       </div>
     </section>
 
-    <!-- ================= ABA 4: CONHECIMENTO (TITULAÇÕES ACADÊMICAS + CERTIFICADOS C2/N1 + 40 IDIOMAS) ================= -->
+    <!-- ================= ABA 5: CONHECIMENTO ================= -->
     <section id="tab-conhecimento" class="tab-panel space-y-6">
       <div id="knowledge-stats-banner"></div>
 
-      <div class="bg-white border border-slate-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
+      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div id="knowledge-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
 
-        <div class="flex items-center gap-2">
-          <select id="knowledge-status-filter" onchange="renderKnowledge()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+        <div class="flex flex-wrap items-center gap-2">
+          <select id="knowledge-status-filter" onchange="renderKnowledge()" class="gold-select">
             <option value="all">Status: Todos</option>
-            <option value="unlocked">✓ Concluído</option>
-            <option value="hunting">🎯 Quero Conseguir</option>
+            <option value="unlocked">Status: Concluídos</option>
+            <option value="hunting">Status: Quero Conseguir</option>
           </select>
 
-          <select id="knowledge-sort-select" onchange="renderKnowledge()" class="bg-white border border-slate-200 rounded-xl px-3.5 py-2 text-sm text-slate-700 font-medium focus:outline-none">
+          <select id="knowledge-sort-select" onchange="renderKnowledge()" class="gold-select">
             <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
-            <option value="rarity_desc">Ordenar: Mais Comuns (Maior %)</option>
+            <option value="alpha">Ordenar: Nome (A–Z)</option>
           </select>
         </div>
       </div>
@@ -299,40 +357,82 @@
       <div id="knowledge-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
     </section>
 
-    <!-- ================= ABA 5: MAPA ================= -->
+    <!-- ================= ABA 6: MAPA INTERATIVO (BRASIL & MUNDO) ================= -->
     <section id="tab-mapa" class="tab-panel space-y-6">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm">
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
           <div class="flex items-center justify-between mb-2">
-            <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🇧🇷 Estados Visitados no Brasil (27 UFs)</span>
-            <span id="br-progress-text" class="text-sm font-bold text-slate-900"></span>
+            <span class="text-xs font-semibold uppercase tracking-wider text-amber-800">🇧🇷 Estados Visitados no Brasil (27 UFs)</span>
+            <span id="br-progress-text" class="text-sm font-bold text-amber-800"></span>
           </div>
-          <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-            <div id="br-progress-bar" class="h-full bg-slate-900 transition-all duration-300"></div>
+          <div class="w-full h-2.5 bg-amber-100/80 rounded-full overflow-hidden">
+            <div id="br-progress-bar" class="h-full gold-progress-fill transition-all duration-300"></div>
           </div>
           <div id="br-uf-buttons" class="flex flex-wrap gap-1.5 mt-4"></div>
         </div>
 
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm flex flex-col justify-between">
           <div>
             <div class="flex items-center justify-between mb-2">
-              <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">🌎 Países do Mundo Visitados</span>
-              <span id="world-progress-text" class="text-sm font-bold text-slate-900"></span>
+              <span class="text-xs font-semibold uppercase tracking-wider text-amber-800">🌎 Países do Mundo Visitados</span>
+              <span id="world-progress-text" class="text-sm font-bold text-amber-800"></span>
             </div>
-            <div class="w-full h-2.5 bg-slate-100 rounded-full overflow-hidden">
-              <div id="world-progress-bar" class="h-full bg-slate-900 transition-all duration-300"></div>
+            <div class="w-full h-2.5 bg-amber-100/80 rounded-full overflow-hidden">
+              <div id="world-progress-bar" class="h-full gold-progress-fill transition-all duration-300"></div>
             </div>
-            <p class="text-xs text-slate-500 mt-3">Progresso de estados e países visitados registrados no código.</p>
+            <p class="text-xs text-stone-500 mt-3 leading-relaxed">
+              Estados e países visitados destacados em <strong class="text-amber-700">Dourado</strong> no mapa interativo abaixo. Passe o mouse para detalhes ou clique em um estado visitado para filtrar a galeria.
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-stone-100 text-xs">
+            <span class="inline-flex items-center gap-1.5 text-stone-700 font-medium">
+              <span class="w-3 h-3 rounded-sm bg-amber-500 border border-amber-600 inline-block"></span>Visitado
+            </span>
+            <span class="inline-flex items-center gap-1.5 text-stone-500">
+              <span class="w-3 h-3 rounded-sm bg-stone-100 border border-stone-300 inline-block"></span>Ainda não visitado
+            </span>
           </div>
         </div>
       </div>
 
-      <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <h3 class="text-sm font-bold text-slate-900">📸 Galeria de Lugares Visitados</h3>
+      <!-- Mapas Interativos Estilo Eleições (Brasil por Estado + Mundo por País) -->
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div>
+              <h3 class="text-sm font-bold text-stone-900">🇧🇷 Mapa Interativo do Brasil (por Estado)</h3>
+              <p class="text-[11px] text-stone-500">Clique ou passe o cursor sobre qualquer UF</p>
+            </div>
+            <button onclick="selectStateFromMap(null)" id="br-map-clear-btn" class="hidden px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100">
+              Limpar filtro
+            </button>
+          </div>
+          <div id="brazil-echarts-map" class="w-full h-[360px] rounded-xl bg-stone-50/50 border border-stone-100"></div>
+        </div>
+
+        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
+          <div class="flex items-center justify-between gap-2 mb-3">
+            <div>
+              <h3 class="text-sm font-bold text-stone-900">🌎 Mapa Interativo do Mundo (por País)</h3>
+              <p class="text-[11px] text-stone-500">Arraste ou dê zoom para explorar os países visitados</p>
+            </div>
+            <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
+              América do Sul
+            </span>
+          </div>
+          <div id="world-echarts-map" class="w-full h-[360px] rounded-xl bg-stone-50/50 border border-stone-100"></div>
+        </div>
+      </div>
+
+      <div class="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
         <div class="flex items-center gap-2">
-          <button onclick="setMapGalleryFilter('todos')" id="map-tab-todos" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white">Todos</button>
-          <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Estados (BR)</button>
-          <button onclick="setMapGalleryFilter('mundo')" id="map-tab-mundo" class="px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700">Países</button>
+          <h3 class="text-sm font-bold text-stone-900">📸 Galeria de Lugares Visitados</h3>
+          <span id="map-active-uf-badge" class="hidden px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300"></span>
+        </div>
+        <div class="flex items-center gap-2">
+          <button onclick="setMapGalleryFilter('todos')" id="map-tab-todos" class="gold-pill-btn gold-pill-active px-3.5 py-1.5 rounded-full text-xs border">Todos</button>
+          <button onclick="setMapGalleryFilter('brasil')" id="map-tab-brasil" class="gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-full text-xs border">Estados (BR)</button>
+          <button onclick="setMapGalleryFilter('mundo')" id="map-tab-mundo" class="gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-full text-xs border">Países</button>
         </div>
       </div>
 
@@ -349,59 +449,114 @@
       document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
       document.getElementById('tab-' + tabId).classList.add('active');
       btnElement.classList.add('active');
+
+      if (tabId === 'mapa') {
+        setTimeout(() => {
+          if (brChartInstance) brChartInstance.resize();
+          if (worldChartInstance) worldChartInstance.resize();
+        }, 60);
+      }
     }
 
     // Badge de Status ("✓ Concluído" ou "🎯 Quero Conseguir")
     function renderStatusBadge(status) {
       if (String(status).toLowerCase() === 'unlocked') {
-        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-sm"><span>✓</span><span>Concluído</span></span>`;
+        return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50/95 text-emerald-700 border border-emerald-200 shadow-sm"><span>✓</span><span>Concluído</span></span>`;
       }
-      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-700 border border-amber-200 shadow-sm"><span>🎯</span><span>Quero Conseguir</span></span>`;
+      return `<span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50/95 text-amber-800 border border-amber-300 shadow-sm"><span>🎯</span><span>Quero Conseguir</span></span>`;
     }
 
-    // Painel de Contagem Dinâmica no Topo de Cada Aba (Caixa de % corrigida sem estourar)
+    // Painel de Progresso Circular Dourado (Donut SVG + Barra Dourada)
     function renderStatsBanner(containerId, label, items) {
       const total = items.length;
       const done = items.filter(i => String(i.status).toLowerCase() === 'unlocked').length;
       const todo = total - done;
-      const pct = total > 0 ? ((done / total) * 100).toFixed(1) : '0.0';
+      const pctNum = total > 0 ? (done / total) * 100 : 0;
+      const pct = pctNum.toFixed(1);
+      const radius = 27;
+      const circumference = 2 * Math.PI * radius;
+      const dashOffset = circumference * (1 - pctNum / 100);
+      const gradId = 'goldGrad-' + containerId;
 
       document.getElementById(containerId).innerHTML = `
-        <div class="bg-white border border-slate-200 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-6">
+        <div class="bg-white border border-amber-200/80 rounded-2xl p-5 shadow-sm flex flex-wrap items-center justify-between gap-6">
           <div class="flex items-center gap-4">
-            <div class="px-4 py-2.5 rounded-2xl bg-slate-100 border border-slate-200 text-slate-900 text-lg font-bold whitespace-nowrap">
-              ${pct}%
+            <div class="relative w-16 h-16 shrink-0 flex items-center justify-center">
+              <svg class="w-16 h-16 -rotate-90" viewBox="0 0 64 64">
+                <defs>
+                  <linearGradient id="${gradId}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#D97706" />
+                    <stop offset="100%" stop-color="#FBBF24" />
+                  </linearGradient>
+                </defs>
+                <circle cx="32" cy="32" r="${radius}" fill="#FFFDF7" stroke="#FEF3C7" stroke-width="6" />
+                <circle cx="32" cy="32" r="${radius}" fill="none" stroke="url(#${gradId})" stroke-width="6"
+                        stroke-linecap="round"
+                        stroke-dasharray="${circumference.toFixed(2)}"
+                        stroke-dashoffset="${dashOffset.toFixed(2)}" />
+              </svg>
+              <span class="absolute text-xs font-extrabold text-amber-900">${pct}%</span>
             </div>
-            <div>
-              <span class="text-xs font-semibold text-slate-400 uppercase tracking-wider">Filtro Ativo: ${label}</span>
-              <div class="text-lg font-bold text-slate-900 mt-0.5">${done} de ${total} Desafios Concluídos</div>
+
+            <div class="space-y-1.5">
+              <span class="inline-block text-[11px] font-bold text-amber-700 uppercase tracking-wider">✦ Filtro Ativo: ${label}</span>
+              <div class="text-lg font-bold text-stone-900 leading-tight">${done} de ${total} Desafios Concluídos</div>
+              <div class="w-56 sm:w-64 h-2 bg-amber-100/80 rounded-full overflow-hidden">
+                <div class="h-full gold-progress-fill rounded-full transition-all duration-300" style="width: ${pct}%"></div>
+              </div>
             </div>
           </div>
 
-          <div class="flex items-center gap-6">
-            <div>
-              <span class="text-xs font-semibold text-emerald-600 uppercase tracking-wider">✓ Concluídos</span>
-              <div class="text-2xl font-bold text-slate-900 mt-0.5">${done}</div>
+          <div class="flex items-center gap-3">
+            <div class="px-4 py-2.5 rounded-xl bg-emerald-50/70 border border-emerald-200/80 min-w-[115px]">
+              <span class="block text-[11px] font-semibold text-emerald-700 uppercase tracking-wider">✓ Concluídos</span>
+              <div class="text-2xl font-bold text-stone-900 mt-0.5">${done}</div>
             </div>
-            <div class="h-9 w-px bg-slate-200"></div>
-            <div>
-              <span class="text-xs font-semibold text-amber-600 uppercase tracking-wider">🎯 Quero Conseguir</span>
-              <div class="text-2xl font-bold text-slate-900 mt-0.5">${todo}</div>
+            <div class="px-4 py-2.5 rounded-xl bg-amber-50/80 border border-amber-200 min-w-[130px]">
+              <span class="block text-[11px] font-semibold text-amber-800 uppercase tracking-wider">🎯 Quero Conseguir</span>
+              <div class="text-2xl font-bold text-stone-900 mt-0.5">${todo}</div>
             </div>
           </div>
         </div>
       `;
     }
 
-    // Card Padrão Limpo (diferencia "% dos jogadores" para LoL/Wild Rift e "% da população" para o resto)
+    // Fallback SVG elegante caso alguma imagem externa falhe
+    function fallbackSvgDataUri(title) {
+      const safe = String(title || '').replace(/[<>&'"]/g, '');
+      const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="600" height="300" viewBox="0 0 600 300"><rect width="600" height="300" fill="#FFFBEB"/><rect x="12" y="12" width="576" height="276" rx="16" fill="none" stroke="#F59E0B" stroke-width="2" stroke-opacity="0.4"/><text x="300" y="155" text-anchor="middle" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#92400E">${safe}</text></svg>`;
+      return 'data:image/svg+xml;charset=UTF-8,' + encodeURIComponent(svg);
+    }
+
+    function parseSortDate(d) {
+      if (!d) return 99999999;
+      const str = String(d).trim();
+      const br = str.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
+      if (br) return Number(br[3]) * 10000 + Number(br[2]) * 100 + Number(br[1]);
+      const ym = str.match(/^(\d{4})-(\d{2})$/);
+      if (ym) return Number(ym[1]) * 10000 + Number(ym[2]) * 100 + 1;
+      const yr = str.match(/^(\d{4})$/);
+      if (yr) return Number(yr[1]) * 10000 + 101;
+      if (str.toLowerCase() === 'concluído') return 19000101;
+      if (str.toLowerCase() === 'meta') return 99990101;
+      return 99999900;
+    }
+
+    // Card Padrão Branco & Dourado
     function buildStandardCard(item, categoryLabel, defaultSuffix = 'da população') {
       const suffix = item.rarityUnit || defaultSuffix;
+      const imgClass = item.imgContain
+        ? 'w-full h-full object-contain p-2 bg-white'
+        : 'w-full h-full object-cover';
+      const cleanTitle = String(item.title || '').replace(/['"<>]/g, '');
       return `
         <div class="theme-card flex flex-col justify-between">
           <div>
-            <div class="card-img-header" style="background-image: url('${item.img}')">
+            <div class="card-img-header ${item.imgContain ? 'bg-white' : ''}">
+              <img src="${item.img}" alt="${cleanTitle}" loading="lazy" class="${imgClass}"
+                   onerror="this.onerror=null; this.src=fallbackSvgDataUri('${cleanTitle}');" />
               <div class="absolute top-3 left-3 z-10">
-                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-slate-800 border border-slate-200 shadow-sm">
+                <span class="px-2.5 py-1 rounded-full text-xs font-semibold bg-white/95 text-stone-800 border border-amber-200/80 shadow-sm">
                   ${categoryLabel}
                 </span>
               </div>
@@ -409,20 +564,22 @@
                 ${renderStatusBadge(item.status)}
               </div>
             </div>
-            <div class="p-5 pt-3">
-              <h3 class="text-base font-bold text-slate-900">${item.title}</h3>
-              <p class="text-sm text-slate-600 mt-1.5">${item.desc}</p>
+            <div class="p-5 pt-3.5">
+              <h3 class="text-base font-bold text-stone-900">${item.title}</h3>
+              <p class="text-sm text-stone-600 mt-1.5 leading-relaxed">${item.desc}</p>
             </div>
           </div>
-          <div class="px-5 pb-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
-            <span>Raridade: <strong class="text-slate-800">${item.rarity}% ${suffix}</strong></span>
-            <span>${item.date || ''}</span>
+          <div class="px-5 pb-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+            <span>Raridade: <strong class="text-amber-900">${item.rarity}% ${suffix}</strong></span>
+            <span class="font-medium text-stone-500">${item.date || ''}</span>
           </div>
         </div>
       `;
     }
 
-    // ================= DADOS FIXOS NO CÓDIGO (COM TODAS AS SUAS EDIÇÕES MANTIDAS) =================
+    // ================= DADOS DO SITE =================
+    const POWER_BI_IMG = 'data:image/jpeg;base64,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MZx05/pQXWoVfaSlSX2Uvx/yPNfi1b+LIotAuvEt/pju14BFb2MJUxnjJ3nkjpXf/GXWJrLwomlWT/8AEw1mVbSFR1Ib7x/Lj8ap6h8KLfUo7Z9R8S6ne3kEoYXNwQ52D+AA8AZ5zUh03UNf+Li317ZSx6RoMG22eVCFlmP8S+uP/ZRQc/sq0OdWa57Ja3fm38jR13w41l8Jrvw5YKXkh08ooUcuw+Y/mc/nWZ8Gb+01n4bx6RHP5VzbJJbTKhw6bicNj/gXX1Fek159rnwt0i91d9X0nUL3Qb2Qku1i+1WJ6nHb8KDtq0JwqRqUley5WttPI4e98PT+EPiZ4TsYde1K+iu5g7i4mOOGxjGeRWlHPH4d+P1zLqbCC31WDEEz8KSwXHP1Uium0P4X6fYa7b65qOs6lrF9bMHie5k4BHTPr+ddB4y8IaN4tslttVhbfHzFPEdskZ9j6e1M444OqouUVZqSaV77K1rm3eXVvZ2st3dTJDBCpd5HOAoHevJvgTHJeat4p8QpGVtL262wkjG75mY/kCKvf8Kht50jttR8V6ze2EZ+W1eQBQPTvXoukaZY6Pp8OnabbJbWsIwkaD9fc+9I61CrWrRqVI8qjfre7ZcooooPRCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAydK8N6HpV7PfWGmxQXVwSZJuWY5OTyScDPYVrUUUExjGKtFWCiiigoKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKTd6AmgBaKTJ/umjJ/umgBaKTJ/umjJ/umgBaKTJ/umjJ/umgBaKTJ/umjJ/umgBaKTJ/umjJ/umgBaKTJ/umjJ/umgBaKTJ/umjcf7poAWigcjNFABRRRQAUUUUAFFFBIHWgAopNwo3CgBaKTcKNwoAWik3CjcKAFopNwo3CgBaKTcKNwoAWik3CjcKAFopNwo3CgBaKAQelFABRRRQAUUU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q+M45oorkbbd2WFFFFIAooooAKKKKACiiigAqO5d4reWSOPzHRCypnG4gcDPapKq6tbRXumXVrNb/aY5YmVod5TzOPu5HTPrQBzPg/WvE1/rF3Za7YW9skUKyxtDC6j5sYG5mIfgnp0I5612FedfC37T9qukm8NNpXkReUZmSVejfLGvmE5AGckcZHvXotABRRRQAUUUUActqGieItWvJ1vNf+w6aXxHBp6bZGT/AGpDyD9K0NF8M6HoxL2NhGJj96eT55G+rHmtmiumWKqyhyJ2j2Wn323+ZzRw1KMudq77vX7r7fIKKKK5jpCiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigBHVXUq6hlPUEZBpaKKACiiigAooooAKKKKACiiigAooooAKKKKACkRFQYRQoznAGKWigDitc+IOnaPL4igubWQz6MsTJGG5uvMAwE47E4Pp1qZfGthHr2qWl3d2kVnYWwlZl3mRWGC4PG043LwvI79aual4M0TUrm+uruFpLi73YlJG6HMYjOzjjKgdc81WXwJo8d/qd7BJNDJqMbLJtWM7WYAMwJUnnaOCSvXigDf0e+s9S0+O9sVdYJckB4WiOc85VgDV2svw1ott4f0mPTLSSWSJGZt0rAkljk8AAAc8AAAVqUAFN8uPzPM2L5mMbsc4+tOooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigArE8Z263Xhy7t20WXW94A+xQzCFnOezlhtx1zmtuigDgfhXpV/pcV3HqOi3FhI2PKaZ0k2x9o96uxcjruIH4131FFAFG51OC3vorR0lJk2gygDYhYkKGOc5JBAwDV6qdxp1vPeJdO0m5SpKBvlYqSVJHsSauYH5UAGR60Um0egqK5nitwjSkAO2M/gT/IUATZHrRWbDrOkTPbxx3kTPcj90uCC3X8uh61pYHpQAZHrRketJgegpcD0FABketGR60YHoKQhQCcDFAC5HrRketY1n4k0e6jjkFysXmFtgkGCwDbc+2T0zzWtE8UqbomV1BK5HTIOCPzoAfketGR60YHpSbRjGBQAtGR60YHpSbV9BQAtGR61nS6zpUd6bOS8jW4DqpQ5zuPQfy/MUR6xpUk4t0u4zKZTCEwc7+pGMfr0oA0cj1oyKMD0FGB6CgAyPWikwPQUuB6UAGR60ZHrUN3Pb2ls9xcMEijGWbGcD8Kz01/SDJMrXSIYV3kt0KkA7ge/Ue9AGtketGRTYykkaunKMoI47GnYHXHvQAZHrRkUm0egpcD0FABketGR60mB6Cs2HXNHnmMMV7E8g3ZUA/w9e3+cGgDTyKMj1qlYajZX5/0SVZVKbww9CSOnUcg9au4HoKADIoyPWjA9BSYHoKAFyPWjI9aMDriqt3eWto8SXDrGJcgFiB6cfqKALWR60ZHrVIappxvEsxdRm4kyVTucZB/Hg/kaubR6CgBaKMCigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKpalYm+MSPJshQksFyGOVI4Pbqau0UAZVnoGn2kKxRK+1XVxlu6uXH6k1q0UUAFFFFABRRRQBjr4b0pZxOIT5nlGIsTkkc9zzkZOMVp2lvFa20VtCCI4lCrk5P4nualooAKKKKACiiigCjLpVnI8jMr5kYs3zHrlT/wCyiq2n+H9PsL1r2ASmdiSWd85yMfjWvRQAUm5cE5GB15pa8i1Xw54qmuPEC24lXS73V1u3jBPmNsaLAQd0cDJ/3D60AerxXVtNcT20VxFJNb4EsauC0eRkbh2yKmryiJfGcN54quTC9pPK+Int7PeWUS4UqwXn93nP3iCc47V6B4Smv5/DljLqkE8F40f71LggyA5PXAHUYPQe9AF7UrKHULRrWcuI2IJ2Ng8HP5e1Z8fhzTkVUHnGNQNsZkO1SABkD1wAK2aKACiiigAooooAKzG0SxMKwgSqqjAKyEEcMOv/AANq06KAM3SNFsdKz9kVxuUqdzZ/iLfzY1pUUUAFFFFABWbqmlJqU8LTyEQxKwCpw244wc9sYrSooAzodGs4jGR5rMkgk3O5JLDdyf8Avo1o0UUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAFFFFABRRRQAUUUUAf//Z';
+
     const appData = {
       // --- ABA 1: CONQUISTAS ---
       lifeCategories: [
@@ -436,7 +593,7 @@
       ],
       lifeAchievements: [
         // CASAMENTO (Base: 08/11/2026) & FILHOS
-        { category: 'Casamento', title: 'Casamento Oficial', status: 'hunting', rarity: 50.0, date: '08/11/2026', desc: 'Celebração do casamento e início oficial da vida a dois.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
+        { category: 'Casamento', title: 'Casamento Oficial', status: 'unlocked', rarity: 50.0, date: '08/11/2026', desc: 'Celebração do casamento e início oficial da vida a dois.', img: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600&q=80' },
         { category: 'Casamento', title: '1 Ano: Bodas de Papel', status: 'hunting', rarity: 46.0, date: '08/11/2027', desc: 'Representa o início frágil e flexível do primeiro ano de casados.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
         { category: 'Casamento', title: '2 Anos: Bodas de Algodão', status: 'hunting', rarity: 44.2, date: '08/11/2028', desc: 'Segundo aniversário de casamento.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
         { category: 'Casamento', title: '3 Anos: Bodas de Trigo ou Couro', status: 'hunting', rarity: 42.5, date: '08/11/2029', desc: 'Terceiro aniversário de casamento.', img: 'https://images.unsplash.com/photo-1511285560929-80b456fea0bc?w=600&q=80' },
@@ -461,7 +618,7 @@
 
         // PRODUÇÃO
         { category: 'Produção', title: 'Fazer um Site', status: 'unlocked', rarity: 1.8, date: '2026-10', desc: 'Construir e publicar um site próprio funcional na internet.', img: 'https://images.unsplash.com/photo-1461749280684-dccba630e2f6?w=600&q=80' },
-        { category: 'Produção', title: 'Fazer um Painel no Power BI', status: 'unlocked', rarity: 0.35, date: '2026-10', desc: 'Criar um dashboard analítico interativo estruturado no Power BI.', img: 'https://prnt.sc/__pe9jLQp2_b' },
+        { category: 'Produção', title: 'Fazer um Painel no Power BI', status: 'unlocked', rarity: 0.35, date: '2026-10', desc: 'Dashboard real criado no Power BI: Sala de Situação de Saúde — Planaltina/GO (SINASC).', img: POWER_BI_IMG, imgContain: true },
         { category: 'Produção', title: 'Fazer um Aplicativo de Celular', status: 'hunting', rarity: 0.22, date: 'Meta', desc: 'Desenvolver e compilar um aplicativo mobile funcional.', img: 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&q=80' },
         { category: 'Produção', title: 'Fazer um Jogo', status: 'hunting', rarity: 0.18, date: 'Meta', desc: 'Programar e estruturar um jogo digital completo jogável.', img: 'https://images.unsplash.com/photo-1556438064-2d7646166914?w=600&q=80' },
 
@@ -474,10 +631,10 @@
         { category: 'Utilidades', title: 'Trocar Óleo de um Carro Sozinho', status: 'unlocked', rarity: 7.8, date: '2024', desc: 'Drenar o óleo antigo, substituir o filtro e abastecer o óleo novo.', img: 'https://images.unsplash.com/photo-1487754180451-c456f719a1fc?w=600&q=80' },
         { category: 'Utilidades', title: 'Montar um Computador', status: 'hunting', rarity: 2.4, date: 'Meta', desc: 'Montar placa-mãe, processador, RAM, armazenamento, fonte e gabinete do zero.', img: 'https://images.unsplash.com/photo-1587202372775-e229f172b9d7?w=600&q=80' },
 
-        // HABILIDADES & VIVÊNCIAS (OS NOVOS ITENS PEDIDOS)
-        { category: 'Habilidades', title: 'Digitar sem Ver (Touch Typing)', status: 'unlocked', rarity: 8.5, date: 'Concluído', desc: 'Digitar em alta velocidade usando todos os dedos sem olhar para o teclado.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80' },
+        // HABILIDADES & VIVÊNCIAS
+        { category: 'Habilidades', title: 'Digitar sem Ver (Touch Typing)', status: 'hunting', rarity: 8.5, date: 'Meta', desc: 'Digitar em alta velocidade usando todos os dedos sem olhar para o teclado.', img: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=600&q=80' },
         { category: 'Habilidades', title: 'Pen Spinning (Girar Caneta)', status: 'hunting', rarity: 1.2, date: 'Meta', desc: 'Dominar manobras e giros contínuos de caneta entre os dedos (ThumbAround, Sonic, Charge).', img: 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&q=80' },
-        { category: 'Habilidades', title: 'Ler Tarô (78 Arcanos)', status: 'hunting', rarity: 0.40, date: 'Meta', desc: 'Dominar a simbologia dos 22 Arcanos Maiores e 56 Menores e realizar tiragens completas.', img: 'https://images.unsplash.com/photo-1607604276583-eef5d076aa5f?w=600&q=80' },
+        { category: 'Habilidades', title: 'Ler Tarô (78 Arcanos)', status: 'hunting', rarity: 0.40, date: 'Meta', desc: 'Dominar a simbologia dos 22 Arcanos Maiores e 56 Menores e realizar tiragens completas.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Tarot_cards_-_3_card_spread.jpg?width=800' },
         { category: 'Habilidades', title: 'Participar dos Maiores Festivais do Mundo', status: 'hunting', rarity: 0.35, date: 'Meta', desc: 'Estar presencialmente nos maiores mega-festivais globais (Tomorrowland, Rock in Rio, Coachella, Lollapalooza).', img: 'https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=600&q=80' },
 
         // TOCAR & CANTAR
@@ -486,13 +643,13 @@
         { category: 'Tocar', title: 'Tocar Piano', status: 'hunting', rarity: 3.6, date: 'Meta', desc: 'Tocar peças com independência das duas mãos no piano/teclado.', img: 'https://images.unsplash.com/photo-1520523839897-bd0b52f945a0?w=600&q=80' },
         { category: 'Tocar', title: 'Tocar Guitarra', status: 'hunting', rarity: 2.8, date: 'Meta', desc: 'Dominar bases, riffs e solos na guitarra elétrica.', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80' },
         { category: 'Tocar', title: 'Tocar Bateria', status: 'hunting', rarity: 1.4, date: 'Meta', desc: 'Manter grooves e viradas coordenando os quatro membros.', img: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80' },
-        { category: 'Tocar', title: 'Tocar Triângulo', status: 'hunting', rarity: 1.2, date: 'Meta', desc: 'Executar a levada rítmica contínua com abertura e abafamento.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Triângulo', status: 'hunting', rarity: 1.2, date: 'Meta', desc: 'Executar a levada rítmica contínua com abertura e abafamento.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Triangle_001.jpg?width=800' },
         { category: 'Tocar', title: 'Tocar Ukulele', status: 'hunting', rarity: 1.1, date: 'Meta', desc: 'Tocar repertório de acordes e batidas no ukulele.', img: 'https://images.unsplash.com/photo-1541689592655-f5f52825a3b8?w=600&q=80' },
         { category: 'Tocar', title: 'Tocar Violino', status: 'hunting', rarity: 0.65, date: 'Meta', desc: 'Dominar postura de arco e afinação no violino.', img: 'https://images.unsplash.com/photo-1465847899084-d164df4dedc6?w=600&q=80' },
-        { category: 'Tocar', title: 'Tocar Pandeiro', status: 'hunting', rarity: 0.35, date: 'Meta', desc: 'Fazer a levada tradicional de samba/choro no pandeiro.', img: 'https://images.unsplash.com/photo-1519892300165-cb5542fb47c7?w=600&q=80' },
-        { category: 'Tocar', title: 'Tocar Sanfona', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Coordenar fole, baixos e teclado no acordeão/sanfona.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
-        { category: 'Tocar', title: 'Tocar Saxofone', status: 'hunting', rarity: 0.22, date: 'Meta', desc: 'Dominar embocadura e escala melódica no saxofone.', img: 'https://images.unsplash.com/photo-1511192336575-5a79af67a629?w=600&q=80' },
-        { category: 'Tocar', title: 'Tocar Berimbau', status: 'hunting', rarity: 0.04, date: 'Meta', desc: 'Executar os toques tradicionais de capoeira no berimbau.', img: 'https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?w=600&q=80' },
+        { category: 'Tocar', title: 'Tocar Pandeiro', status: 'hunting', rarity: 0.35, date: 'Meta', desc: 'Fazer a levada tradicional de samba/choro no pandeiro.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Pandeiro.jpg?width=800' },
+        { category: 'Tocar', title: 'Tocar Sanfona', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Coordenar fole, baixos e teclado no acordeão/sanfona.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Accordion.JPG?width=800' },
+        { category: 'Tocar', title: 'Tocar Saxofone', status: 'hunting', rarity: 0.22, date: 'Meta', desc: 'Dominar embocadura e escala melódica no saxofone.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/A_Saxophone.jpg?width=800' },
+        { category: 'Tocar', title: 'Tocar Berimbau', status: 'hunting', rarity: 0.04, date: 'Meta', desc: 'Executar os toques tradicionais de capoeira no berimbau.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Berimbau_1.jpg?width=800' },
 
         // DIREÇÃO & PILOTAGEM
         { category: 'Direção', title: 'Saber Dirigir Automático', status: 'unlocked', rarity: 31.0, date: '2026', desc: 'Habilitado e conduzindo veículo regularmente no trânsito.', img: 'https://images.unsplash.com/photo-1549399542-7e3f8b79c341?w=600&q=80' },
@@ -502,10 +659,10 @@
         { category: 'Direção', title: 'Dirigir Caminhão', status: 'hunting', rarity: 1.8, date: 'Meta', desc: 'Conduzir veículo pesado de carga.', img: 'https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=600&q=80' },
         { category: 'Direção', title: 'Pilotar Lancha', status: 'hunting', rarity: 1.4, date: 'Meta', desc: 'Navegar e manobrar embarcação a motor.', img: 'https://images.unsplash.com/photo-1567899378494-47b22a2ae96a?w=600&q=80' },
         { category: 'Direção', title: 'Dirigir Ônibus', status: 'hunting', rarity: 0.65, date: 'Meta', desc: 'Conduzir veículo de grande porte para transporte de passageiros.', img: 'https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=600&q=80' },
-        { category: 'Direção', title: 'Pilotar Planador', status: 'hunting', rarity: 0.004, date: 'Meta', desc: 'Voo a vela em aeronave sem motor.', img: 'https://images.unsplash.com/photo-1508614589041-895b88991e3e?w=600&q=80' }
+        { category: 'Direção', title: 'Pilotar Planador', status: 'hunting', rarity: 0.004, date: 'Meta', desc: 'Voo a vela em aeronave sem motor.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Glider_(sailplane).jpg?width=800' }
       ],
 
-      // --- ABA 2: JOGOS (LOL, WILD RIFT, SABER JOGAR) ---
+      // --- ABA 2: JOGOS ---
       gameCatalog: [
         { id: 'all', name: 'Todos', icon: '🎮' },
         { id: 'League of Legends', name: 'League of Legends', imgIcon: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSo6qWVOmfeqZ_cPQ8w46kRat-vFeS5pzNt4dimW8IpBw&s=10' },
@@ -515,12 +672,11 @@
       gameAchievements: [
         { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, rarityUnit: 'dos jogadores', date: '2026', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg' },
         { game: 'League of Legends', title: 'Arena God (Deus da Arena)', status: 'hunting', rarity: 0.1, rarityUnit: 'dos jogadores', date: '2026', desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.', img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL' },
-        { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 9, rarityUnit: 'dos jogadores', date: '2024', desc: 'Vencer o Doom bots Maldição do Veigar', img: 'https://wiki.leagueoflegends.com/en-us/images/thumb/Doom_Bots_2025_Promo.jpg/500px-Doom_Bots_2025_Promo.jpg?12f9b' },
+        { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 9, rarityUnit: 'dos jogadores', date: '2024', desc: 'Vencer o Doom bots Maldição do Veigar.', img: 'https://wiki.leagueoflegends.com/en-us/images/thumb/Doom_Bots_2025_Promo.jpg/500px-Doom_Bots_2025_Promo.jpg?12f9b' },
         { game: 'League of Legends', title: 'Odisseia: Extração (Modo Mais Difícil)', status: 'unlocked', rarity: 2.9, rarityUnit: 'dos jogadores', date: '2018', desc: 'Completar o nível máximo de dificuldade do evento Odisseia.', img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244' },
         { game: 'Wild Rift', title: 'Monarca no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo da fila normal Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcSX4F1G09X8VqkaWgFapfEWj4p5SLS2sG0fV-37lQTqxIqH_0FONpvkM&s=10' },
         { game: 'Wild Rift', title: 'Lenda no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo na fila lendária do Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sZGuw2qcyHOxeVjM5Jfj27EOJapmZFKJ7h3urtmQH3kg2ZE0Myd4QD0&s=10' },
 
-        // SABER JOGAR (JOGOS REAIS)
         { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, rarityUnit: 'da população', date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
         { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'hunting', rarity: 15.0, rarityUnit: 'da população', date: 'Meta', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
         { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, rarityUnit: 'da população', date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
@@ -528,14 +684,24 @@
         { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, rarityUnit: 'da população', date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
       ],
 
-      // --- ABA NOVA: RANKING DOS AMIGOS NO LOL ---
+      // --- ABA 3: RANKING LOL (TODOS OS TEMPOS + HISTÓRICO POR ANO) ---
+      lolYears: [
+        { id: 'all', label: '🏆 Todos os Tempos' },
+        { id: '2026', label: '2026' },
+        { id: '2025', label: '2025' },
+        { id: '2024', label: '2024' },
+        { id: '2023', label: '2023' },
+        { id: '2022', label: '2022' },
+        { id: '2021', label: '2021' },
+        { id: '2020', label: '2020' },
+        { id: '2019', label: '2019 (S9)' },
+        { id: '2018', label: '2018 (S8)' },
+        { id: '2017', label: '2017 (S7)' },
+        { id: '2016', label: '2016 (S6)' }
+      ],
       lolFriendsRank: [
         {
-          rank: 1,
-          tier: 'S+',
-          score: 94.5,
-          name: 'Lurdes',
-          riotId: 'joyboy#00007',
+          rank: 1, tier: 'S+', score: 94.5, name: 'Lurdes', riotId: 'joyboy#00007',
           role: 'Mid (54%) / ADC (36%)',
           currentElo: 'Mestre 132 LP (SoloQ) • Diamante 4 (Flex)',
           peakElo: 'Mestre 162 LP (Top 0.60% BR)',
@@ -545,14 +711,22 @@
           visionChallenges: '0.8 VSPM • 16.500 pts Challenges (Diamond I - Top 3.9%)',
           signature: 'Fizz (#1.572 Mundial • 424k), Orianna (381k), Jinx (64% WR)',
           summary: 'Líder em elo absoluto (Mestre 162 LP) e volume no High Elo. Tem farm de nível semi-profissional (8.4 CS/min de média geral em quase 600 jogos) e altíssima conversão de dano por ouro (908 DPM).',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Fizz.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Fizz.png',
+          yearly: {
+            '2026': { solo: 'Mestre 132 LP (Pico 162 LP)', flex: 'Diamante 4 43 LP', score: 7162, wr: '52% (583 jogos)', note: 'Top 0.60% BR na Solo/Duo com 8.4 CS/m e 908 DPM.' },
+            '2025': { solo: 'Esmeralda 3 8 LP', flex: 'Esmeralda 2 81 LP', score: 5208, wr: 'Temporada regular', note: 'Manteve Esmeralda sólido em ambas as filas.' },
+            '2024': { solo: 'Diamante 2 3 LP (S1)', flex: 'Diamante 3 96 LP (S1)', score: 6303, wr: 'S1 D2 • S2 D4 • S3 E3', note: 'Consolidado 2024: Pico anual de Diamante 2 na SoloQ e Diamante 3 na Flex.' },
+            '2023': { solo: 'Esmeralda 2 36 LP (S2)', flex: 'Esmeralda 1 0 LP (S2)', score: 5336, wr: 'S1 Ouro 2 • S2 Esmeralda 2', note: 'Deu o salto do Ouro/Platina para o Esmeralda alto em 2023.' },
+            '2022': { solo: 'Ouro 3 61 LP', flex: '—', score: 3261, wr: 'SoloQ', note: 'Temporada no Ouro 3.' },
+            '2021': { solo: 'Platina 4 29 LP', flex: '—', score: 4129, wr: 'SoloQ', note: 'Consolidou-se no Platina 4.' },
+            '2020': { solo: 'Platina 2 3 LP', flex: '—', score: 4303, wr: 'SoloQ', note: 'Pico clássico no Platina 2.' },
+            '2019': { solo: 'Platina 4 75 LP', flex: '—', score: 4175, wr: 'SoloQ (S9)', note: 'Primeira temporada terminando no Platina.' },
+            '2018': { solo: 'Ouro 3 23 LP', flex: '—', score: 3223, wr: 'SoloQ (S8)', note: 'Subida constante no Ouro.' },
+            '2017': { solo: 'Ouro 5 0 LP', flex: '—', score: 3000, wr: 'SoloQ (S7)', note: 'Início no Ouro 5.' }
+          }
         },
         {
-          rank: 2,
-          tier: 'S',
-          score: 89.2,
-          name: 'Pedro (Bruterake)',
-          riotId: 'Bruterake#br1',
+          rank: 2, tier: 'S', score: 89.2, name: 'Pedro (Bruterake)', riotId: 'Bruterake#br1',
           role: 'Selva (67%) / Suporte (29%)',
           currentElo: 'Diamante 4 26 LP (SoloQ) • Esmeralda 1 66 LP (Flex)',
           peakElo: 'Diamante 3 (SoloQ) • Diamante 2 89 LP (Flex) • Top 4.32% BR',
@@ -562,14 +736,23 @@
           visionChallenges: '1.60 VSPM (1º do grupo) • 12.515 pts Challenges (Master Fighter 0.1%)',
           signature: 'Rek\'Sai, Hecarim (64% WR), Thresh (63% WR), Zyra (100% WR), Lillia (100% WR)',
           summary: 'Maior eficiência cirúrgica do grupo: maior Winrate geral da temporada (60%), maior KDA (4.12), maior Participação em Abates (51%) e o maior Controle de Visão disparado (1.60 VSPM), mantendo Plat/Esmeralda/Diamante desde a S6.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/RekSai.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/RekSai.png',
+          yearly: {
+            '2026': { solo: 'Diamante 4 26 LP', flex: 'Esmeralda 1 66 LP', score: 6126, wr: '60% Geral (96 jogos)', note: '60% WR, 4.12 KDA e 1.60 VSPM — maior eficiência do grupo.' },
+            '2025': { solo: 'Esmeralda 2 64 LP', flex: 'Platina 2 77 LP', score: 5364, wr: 'Temporada regular', note: 'Top 2 do grupo em 2025 no Esmeralda 2.' },
+            '2024': { solo: 'Esmeralda 1 50 LP (S1)', flex: 'Diamante 4 0 LP (S1)', score: 5450, wr: 'S1 E1 • S2 E2 • S3 E4', note: 'Consolidado 2024: Esmeralda 1 na SoloQ e Diamante 4 na Flex.' },
+            '2023': { solo: 'Diamante 3 35 LP (S2)', flex: 'Diamante 2 89 LP (S2)', score: 6235, wr: 'S1 D4 • S2 D3', note: 'Melhor ano de pico: Diamante 3 SoloQ e Diamante 2 (89 LP) na Flex.' },
+            '2022': { solo: 'Platina 2 25 LP', flex: '—', score: 4325, wr: 'SoloQ', note: 'Platina 2 antes da criação do Esmeralda.' },
+            '2021': { solo: 'Platina 1 62 LP', flex: '—', score: 4462, wr: 'SoloQ', note: 'Platina 1 consistente na S2021.' },
+            '2020': { solo: 'Platina 3 14 LP', flex: '—', score: 4214, wr: 'SoloQ', note: 'Platina 3 sólido.' },
+            '2019': { solo: 'Platina 4 32 LP', flex: '—', score: 4132, wr: 'SoloQ (S9)', note: 'Platina 4 na Season 9.' },
+            '2018': { solo: 'Platina 4 100 LP', flex: '—', score: 4200, wr: 'SoloQ (S8)', note: 'Platina 4 com 100 LP.' },
+            '2017': { solo: 'Ouro 3 100 LP', flex: '—', score: 3300, wr: 'SoloQ (S7)', note: 'Ouro 3 com 100 LP.' },
+            '2016': { solo: 'Platina 4 73 LP', flex: '—', score: 4173, wr: 'SoloQ (S6)', note: 'Já era Platina desde a Season 6.' }
+          }
         },
         {
-          rank: 3,
-          tier: 'A+',
-          score: 85.8,
-          name: 'Felipe',
-          riotId: 'DIPSI#1337',
+          rank: 3, tier: 'A+', score: 85.8, name: 'Felipe', riotId: 'DIPSI#1337',
           role: 'Mid (57%) / Top (15%) / ADC (13%)',
           currentElo: 'Diamante 4 93 LP (SoloQ) • Platina 3 89 LP (Flex)',
           peakElo: 'Diamante 3 14 LP (Top 3.52% BR • Diamante desde S2022)',
@@ -579,14 +762,21 @@
           visionChallenges: '1.20 VSPM • 15.160 pts Challenges (Diamond I - Top 3.9%)',
           signature: 'Ahri (70% WR em 46 jogos • 647k pts), Ambessa (71% WR), Riven (219k)',
           summary: 'Consistência histórica no Diamante, maior versatilidade de campeões do grupo (84 campeões jogados na S2026) e uma Ahri de 70% WR. Só fica atrás pelo alto número de mortes por jogo (7.7).',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Ahri.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Ahri.png',
+          yearly: {
+            '2026': { solo: 'Diamante 4 93 LP (Pico D3 14 LP)', flex: 'Platina 3 89 LP', score: 6214, wr: '56% (246 jogos)', note: 'Top 3.52% BR na SoloQ com 70% WR de Ahri.' },
+            '2025': { solo: 'Platina 3 7 LP', flex: 'Ouro 2 94 LP', score: 4207, wr: 'Temporada regular', note: 'Ano mais tranquilo no Platina 3.' },
+            '2024': { solo: 'Diamante 4 35 LP (S1)', flex: 'Esmeralda 4 68 LP (S1)', score: 6135, wr: 'S1 D4 • S2 E3 • S3 P3', note: 'Consolidado 2024: Bateu Diamante 4 no S1.' },
+            '2023': { solo: 'Diamante 4 61 LP (S2)', flex: 'Platina 1 20 LP (S2)', score: 6161, wr: 'S1 D4 58 LP • S2 D4 61 LP', note: 'Manteve Diamante nos dois splits de 2023.' },
+            '2022': { solo: 'Diamante 4 35 LP', flex: '—', score: 5135, wr: 'SoloQ', note: 'Chegou ao Diamante 4 ainda antes do Esmeralda existir.' },
+            '2021': { solo: 'Platina 2 15 LP', flex: '—', score: 4315, wr: 'SoloQ', note: 'Platina 2 consistente.' },
+            '2020': { solo: 'Platina 4 8 LP', flex: '—', score: 4108, wr: 'SoloQ', note: 'Platina 4.' },
+            '2019': { solo: 'Platina 4 0 LP', flex: '—', score: 4100, wr: 'SoloQ (S9)', note: 'Primeiro Platina na S9.' },
+            '2018': { solo: 'Ouro 5 49 LP', flex: '—', score: 3049, wr: 'SoloQ (S8)', note: 'Início no Ouro 5.' }
+          }
         },
         {
-          rank: 4,
-          tier: 'A',
-          score: 78.4,
-          name: 'Luiz Henrique',
-          riotId: 'Completa Pra Mim#2012',
+          rank: 4, tier: 'A', score: 78.4, name: 'Luiz Henrique', riotId: 'Completa Pra Mim#2012',
           role: 'ADC / Mid (Semi-aposentado em S2026)',
           currentElo: 'Sem fila S2026 (Esmeralda 4 em S2025)',
           peakElo: 'Diamante 4 96 LP (SoloQ S24) • 2x Diamante 2 (Flex S23/S24)',
@@ -596,14 +786,20 @@
           visionChallenges: '9.405 pts Challenges (Lightning Round Top 0.1%)',
           signature: 'Yasuo (259k), Ezreal (186k), Vayne (170k), Tristana (155k)',
           summary: 'Veterano desde a S6 com múltiplos picos de Diamante 4 (96 LP) na SoloQ e Diamante 2 na Flex. Nos desafios de mecânica e teamfight possui marcas GrandMaster.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Yasuo.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Yasuo.png',
+          yearly: {
+            '2025': { solo: 'Esmeralda 4 30 LP', flex: '—', score: 5130, wr: 'Último ano ativo', note: 'Terminou no Esmeralda 4 antes de pausar em 2026.' },
+            '2024': { solo: 'Diamante 4 96 LP (S2)', flex: 'Diamante 2 23 LP (S3)', score: 6196, wr: 'S2 D4 96 LP • S3 D4 0 LP', note: 'Consolidado 2024: Bateu 96 LP no D4 SoloQ e Diamante 2 na Flex.' },
+            '2023': { solo: 'Diamante 4 2 LP (S2)', flex: 'Diamante 2 30 LP (S2)', score: 6102, wr: 'S1 P2 • S2 D4', note: 'Diamante 4 SoloQ e Diamante 2 Flex em 2023.' },
+            '2020': { solo: 'Platina 2 0 LP', flex: '—', score: 4300, wr: 'SoloQ', note: 'Platina 2 na temporada 2020.' },
+            '2019': { solo: 'Platina 2 100 LP', flex: '—', score: 4400, wr: 'SoloQ (S9)', note: 'Platina 2 (100 LP) na MD3 para Platina 1.' },
+            '2018': { solo: 'Platina 4 97 LP', flex: '—', score: 4197, wr: 'SoloQ (S8)', note: 'Platina 4 com 97 LP.' },
+            '2017': { solo: 'Ouro 1 100 LP', flex: '—', score: 3500, wr: 'SoloQ (S7)', note: 'Ouro 1 na MD5 do Platina.' },
+            '2016': { solo: 'Platina 1 41 LP', flex: '—', score: 4441, wr: 'SoloQ (S6)', note: 'Maior elo do grupo na Season 6 (Platina 1 41 LP).' }
+          }
         },
         {
-          rank: 5,
-          tier: 'B+',
-          score: 75.0,
-          name: 'Gabriel',
-          riotId: 'vou sentir sdds #EUW',
+          rank: 5, tier: 'B+', score: 75.0, name: 'Gabriel', riotId: 'vou sentir sdds #EUW',
           role: 'Top Laner / Suporte (Aposentado • Europa)',
           currentElo: 'Inativo (Servidor EUW)',
           peakElo: 'Diamante 3 19 LP (Season 9) • 3x Platina 1 (S6, S2020, S2021)',
@@ -613,14 +809,18 @@
           visionChallenges: 'Master Fighter Legacy (1.7%) & Master Yourself (2.8%)',
           signature: 'Bardo (275k), Yasuo (157k), Thresh (154k), Gangplank (147k)',
           summary: 'Pegou Diamante 3 na Season 9 (quando ainda não existia Esmeralda) e manteve Platina 1 por anos com fundamentos limpos de Top Lane.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Gangplank.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Gangplank.png',
+          yearly: {
+            '2021': { solo: 'Platina 1 75 LP', flex: '—', score: 4475, wr: 'Último ano antes de aposentar', note: 'Liderou o grupo em 2021 no Platina 1 75 LP.' },
+            '2020': { solo: 'Platina 1 76 LP', flex: '—', score: 4476, wr: 'SoloQ', note: 'Liderou o grupo em 2020 no Platina 1 76 LP.' },
+            '2019': { solo: 'Diamante 3 19 LP', flex: '—', score: 5219, wr: 'SoloQ (S9)', note: '#1 do grupo em 2019 com Diamante 3 na era clássica.' },
+            '2018': { solo: 'Platina 5 0 LP', flex: '—', score: 4000, wr: 'SoloQ (S8)', note: 'Platina 5 sólido.' },
+            '2017': { solo: 'Platina 5 0 LP', flex: '—', score: 4000, wr: 'SoloQ (S7)', note: '#1 do grupo na Season 7 (Platina 5).' },
+            '2016': { solo: 'Platina 1 13 LP', flex: '—', score: 4413, wr: 'SoloQ (S6)', note: 'Platina 1 logo na Season 6.' }
+          }
         },
         {
-          rank: 6,
-          tier: 'B+',
-          score: 73.8,
-          name: 'Marcos Henrique',
-          riotId: 'Bjay#bjay1',
+          rank: 6, tier: 'B+', score: 73.8, name: 'Marcos Henrique', riotId: 'Bjay#bjay1',
           role: 'Mid (67%) / Selva (23%) / Top (9%)',
           currentElo: 'Platina 4 82 LP (SoloQ) • Esmeralda 4 81 LP (Flex)',
           peakElo: 'Platina 1 1 LP (SoloQ S26) • Esmeralda 4 81 LP (Flex S26)',
@@ -630,14 +830,22 @@
           visionChallenges: '1.00 VSPM • 16.580 pts Challenges (1º do grupo — 5x Diamond I)',
           signature: 'Diana (251j 55% WR • 306k), Jayce (60% WR • 645k), Fiddlesticks (#12.241 • 356k), Malphite (384k)',
           summary: 'Maior evolução da S2026 (saltou do Ouro histórico para Platina 1 na SoloQ e Esmeralda 4 81 LP na Flex). É o #1 do grupo em pontos de Challenges (16.580 pts), tem quase 5 milhões de maestria total e entrega 858 DPM.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Diana.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Diana.png',
+          yearly: {
+            '2026': { solo: 'Platina 4 82 LP (Pico P1 1 LP)', flex: 'Esmeralda 4 81 LP', score: 4862, wr: '51% (549 jogos • 70% últimos 20j)', note: 'Pico Esmeralda 4 na Flex e Platina 1 na SoloQ; 16.580 pts Challenges.' },
+            '2025': { solo: 'Ouro 2 20 LP', flex: 'Platina 3 64 LP', score: 3960, wr: 'Temporada regular', note: 'Começou a subir forte na Flex (Platina 3).' },
+            '2024': { solo: 'Ouro 4 8 LP (S2)', flex: 'Platina 3 0 LP (S1)', score: 3820, wr: 'S1 Prata 1 • S2 Ouro 4 • S3 Prata 4', note: 'Consolidado 2024: Pico Ouro 4 na SoloQ e Platina 3 na Flex.' },
+            '2023': { solo: 'Ouro 4 30 LP (S1)', flex: 'Ouro 1 0 LP (S2)', score: 3130, wr: 'S1 Ouro 4 • S2 Prata 1', note: 'Alternou entre Prata 1 e Ouro.' },
+            '2022': { solo: 'Prata 1 22 LP', flex: '—', score: 2422, wr: 'SoloQ', note: 'Quase Ouro na S2022.' },
+            '2021': { solo: 'Ouro 2 9 LP', flex: '—', score: 3309, wr: 'SoloQ', note: 'Bom ano no Ouro 2.' },
+            '2020': { solo: 'Ouro 3 44 LP', flex: '—', score: 3244, wr: 'SoloQ', note: 'Ouro 3.' },
+            '2019': { solo: 'Ouro 1 0 LP', flex: '—', score: 3400, wr: 'SoloQ (S9)', note: 'Pico antigo no Ouro 1 na S9.' },
+            '2018': { solo: 'Prata 2 72 LP', flex: '—', score: 2372, wr: 'SoloQ (S8)', note: 'Prata 2.' },
+            '2017': { solo: 'Prata 4 59 LP', flex: '—', score: 2159, wr: 'SoloQ (S7)', note: 'Prata 4.' }
+          }
         },
         {
-          rank: 7,
-          tier: 'B+',
-          score: 72.5,
-          name: 'Kaic',
-          riotId: 'Gaick2001#br1',
+          rank: 7, tier: 'B+', score: 72.5, name: 'Kaic', riotId: 'Gaick2001#br1',
           role: 'Top (64%) / ADC (20%) / Selva (14%)',
           currentElo: 'Platina 3 68 LP (SoloQ) • Ouro 3 65 LP (Flex)',
           peakElo: 'Esmeralda 4 19 LP (Top 26.6% BR)',
@@ -647,14 +855,16 @@
           visionChallenges: '0.6 VSPM • 15.995 pts Challenges (Diamond I - Top 3.9%)',
           signature: 'Sett (63% WR em 82 jogos • 361k), Volibear (212k), Mordekaiser (63% WR)',
           summary: 'Grande grinder da temporada (512 partidas). Apesar do KDA/KP mais baixos pelo estilo de splitpush no Top, causa 823 DPM e tem quase 16 mil pontos de Desafios (Top Diff 0.2%).',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Sett.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Sett.png',
+          yearly: {
+            '2026': { solo: 'Platina 3 68 LP (Pico Esmeralda 4 19 LP)', flex: 'Ouro 3 65 LP', score: 5119, wr: '50% (512 jogos)', note: 'Maior grinder do grupo; bateu Esmeralda 4 na SoloQ em 2026.' },
+            '2025': { solo: 'Platina 2 47 LP', flex: 'Prata 3 83 LP', score: 4347, wr: 'Temporada regular', note: 'Platina 2 na SoloQ.' },
+            '2024': { solo: 'Platina 2 75 LP (S3)', flex: 'Prata 2 77 LP (S1)', score: 4375, wr: 'S1 O1 • S2 P3 • S3 P2', note: 'Consolidado 2024: Subiu de Ouro 1 até Platina 2.' },
+            '2023': { solo: 'Platina 3 0 LP (S2)', flex: 'Bronze 1 70 LP (S2)', score: 4200, wr: 'S2 Platina 3', note: 'Platina 3 na SoloQ (histórico anterior recolhido no OP.GG).' }
+          }
         },
         {
-          rank: 8,
-          tier: 'B',
-          score: 69.0,
-          name: 'Heitor',
-          riotId: 'Aupaka#2756',
+          rank: 8, tier: 'B', score: 69.0, name: 'Heitor', riotId: 'Aupaka#2756',
           role: 'Flex Total: ADC (32%) / Top (28%) / Mid (26%) / JG (11%)',
           currentElo: 'Platina 3 38 LP (Flex) • Sem fila SoloQ S2026',
           peakElo: 'Platina 3 73 LP (Flex S26) • Platina 4 47 LP (SoloQ S23)',
@@ -664,14 +874,21 @@
           visionChallenges: '0.7 VSPM • 10.310 pts Challenges (29 Pentakills ARAM — GM 0.4%)',
           signature: 'Ambessa (57% WR), Jinx (80% WR), Xin Zhao (1.347 DPM), Naafiri (75% WR)',
           summary: 'Coringa capaz de jogar nas 4 rotas carregadoras entregando o maior DPM bruto do grupo (960 DPM) e 29 Pentakills registrados em desafios.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Jinx.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Jinx.png',
+          yearly: {
+            '2026': { solo: 'Sem classificação', flex: 'Platina 3 38 LP (Pico P3 73 LP)', score: 4018, wr: '53% (81 jogos)', note: 'Maior DPM do grupo na Flex (960 DPM).' },
+            '2025': { solo: 'Sem classificação', flex: 'Ouro 4 84 LP', score: 2990, wr: 'Flex apenas', note: 'Jogou apenas Flex no Ouro 4.' },
+            '2024': { solo: 'Prata 1 27 LP (S3)', flex: 'Platina 4 3 LP (S1)', score: 3860, wr: 'S1 P4 Flex • S3 Prata 1 SoloQ', note: 'Consolidado 2024: Platina 4 na Flex e Prata 1 na SoloQ.' },
+            '2023': { solo: 'Platina 4 47 LP (S2)', flex: 'Platina 3 0 LP (S2)', score: 4147, wr: 'S1 O3 • S2 P4', note: 'Pico histórico de SoloQ no Platina 4.' },
+            '2022': { solo: 'Ouro 2 31 LP', flex: '—', score: 3331, wr: 'SoloQ', note: 'Ouro 2.' },
+            '2021': { solo: 'Ouro 4 1 LP', flex: '—', score: 3101, wr: 'SoloQ', note: 'Ouro 4.' },
+            '2018': { solo: 'Ouro 4 67 LP', flex: '—', score: 3167, wr: 'SoloQ (S8)', note: 'Ouro 4 na S8.' },
+            '2017': { solo: 'Prata 5 59 LP', flex: '—', score: 2059, wr: 'SoloQ (S7)', note: 'Prata 5.' },
+            '2016': { solo: 'Bronze 3 100 LP', flex: '—', score: 1300, wr: 'SoloQ (S6)', note: 'Início no Bronze 3.' }
+          }
         },
         {
-          rank: 9,
-          tier: 'C+',
-          score: 62.5,
-          name: 'Luiz Gustavo',
-          riotId: 'Gügu#BR1',
+          rank: 9, tier: 'C+', score: 62.5, name: 'Luiz Gustavo', riotId: 'Gügu#BR1',
           role: 'ADC (68%) / Suporte (17%) / Top (12%)',
           currentElo: 'Ouro 3 53 LP (SoloQ) • Platina 4 0 LP (Flex)',
           peakElo: 'Ouro 2 36 LP (SoloQ) • Platina 4 11 LP (Flex)',
@@ -681,14 +898,16 @@
           visionChallenges: '1.10 VSPM • 13.370 pts Challenges (Bot Diff 0.6% / Alcove Master)',
           signature: 'Aphelios (182k), Miss Fortune (70% WR), Braum (78% WR), Jinx (83% WR)',
           summary: 'Bom controle de visão (1.10 VSPM) e ótimo desempenho de Braum/MF na Flex, mas perde consistência na SoloQ pelo alto número de mortes (7.8/jogo) jogando de Varus e Aphelios.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aphelios.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aphelios.png',
+          yearly: {
+            '2026': { solo: 'Ouro 3 53 LP (Pico O2 36 LP)', flex: 'Platina 4 0 LP (Pico P4 11 LP)', score: 3336, wr: '50% (170 jogos)', note: '55% WR na Flex (Platina 4) e 46% na SoloQ (Ouro 3).' },
+            '2025': { solo: 'Sem classificação', flex: 'Prata 4 66 LP', score: 2030, wr: 'Flex apenas', note: 'Prata 4 na Flex.' },
+            '2024': { solo: 'Prata 1 45 LP (S2)', flex: 'Ouro 4 1 LP (S1/S2)', score: 2915, wr: 'S1/S2 Prata 1 • S3 Prata 3', note: 'Consolidado 2024: Prata 1 SoloQ e Ouro 4 na Flex.' },
+            '2023': { solo: 'Ouro 3 60 LP (S2)', flex: 'Prata 3 38 LP (S2)', score: 3260, wr: 'S1 O3 29 LP • S2 O3 60 LP', note: 'Ouro 3 constante em 2023 (histórico anterior recolhido no OP.GG).' }
+          }
         },
         {
-          rank: 10,
-          tier: 'C',
-          score: 54.0,
-          name: 'Rafael Chehab',
-          riotId: 'Pattati Pattata#br1',
+          rank: 10, tier: 'C', score: 54.0, name: 'Rafael Chehab', riotId: 'Pattati Pattata#br1',
           role: 'ADC / Mid / Suporte (Inativo em S2026)',
           currentElo: 'Inativo em S2025/S2026',
           peakElo: 'Esmeralda 3 11 LP (SoloQ S24) • Platina 1 (Flex S24) • Platina 5 (S6)',
@@ -698,14 +917,18 @@
           visionChallenges: '8.220 pts Challenges (Especialista nas 4 Classes: ADC, Mago, Supp e Assassino)',
           signature: 'Caitlyn (152k), Lux (128k), Ahri (122k), Diana (118k)',
           summary: 'O mais esforçado do pelotão final: conquistou Esmeralda 3 na SoloQ e desbloqueou os títulos de Especialista nas 4 classes do jogo.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Caitlyn.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Caitlyn.png',
+          yearly: {
+            '2024': { solo: 'Esmeralda 3 11 LP (S1)', flex: 'Platina 1 6 LP (S1)', score: 5211, wr: 'S1 E3 • S2 Flex P3', note: 'Consolidado 2024: Seu melhor pico histórico (Esmeralda 3 SoloQ / Platina 1 Flex).' },
+            '2023': { solo: 'Esmeralda 4 1 LP (S2)', flex: 'Esmeralda 4 67 LP (S2)', score: 5101, wr: 'S2 Esmeralda 4', note: 'Pegou Esmeralda 4 em ambas as filas.' },
+            '2022': { solo: 'Ouro 3 37 LP', flex: '—', score: 3237, wr: 'SoloQ', note: 'Ouro 3.' },
+            '2018': { solo: 'Ouro 1 75 LP', flex: '—', score: 3475, wr: 'SoloQ (S8)', note: 'Ouro 1 quase Platina.' },
+            '2017': { solo: 'Ouro 1 57 LP', flex: '—', score: 3457, wr: 'SoloQ (S7)', note: 'Ouro 1.' },
+            '2016': { solo: 'Platina 5 10 LP', flex: '—', score: 4010, wr: 'SoloQ (S6)', note: 'Começou no Platina 5 na S6.' }
+          }
         },
         {
-          rank: 11,
-          tier: 'D+',
-          score: 48.5,
-          name: 'João Guilherme',
-          riotId: 'Frank Ocean mp3#br1',
+          rank: 11, tier: 'D+', score: 48.5, name: 'João Guilherme', riotId: 'Frank Ocean mp3#br1',
           role: 'Top Laner Tanque (Inativo em S2026)',
           currentElo: 'Inativo (Esmeralda 4 em S2025 com 25% WR)',
           peakElo: 'Diamante 3 17 LP (S2024 S2) • Diamante 4 (Flex S24)',
@@ -715,14 +938,18 @@
           visionChallenges: '9.720 pts Challenges (Top Diff 0.3% / Overwhelming Presence 1.8%)',
           signature: 'Pantheon (104k), Tahm Kench (97k), Malphite (92k), Dr. Mundo',
           summary: 'Vence o desempate técnico contra o Marcelo pelo pico de elo em 2024 (D3/E4) e pelos 9.720 pontos de desafios, embora dependesse do time carregando enquanto jogava de tanque.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/TahmKench.png',
+          yearly: {
+            '2025': { solo: 'Esmeralda 4 60 LP', flex: '—', score: 5160, wr: '25% (12 jogos)', note: 'Jogou pouco (3W 9L) de tanque no Esmeralda 4.' },
+            '2024': { solo: 'Diamante 3 17 LP (S2)', flex: 'Diamante 4 0 LP (S1)', score: 6217, wr: 'S1 E3 • S2 D3 • S3 D4', note: 'Consolidado 2024: Pico máximo da carreira no Diamante 3.' },
+            '2023': { solo: 'Esmeralda 1 21 LP (S2)', flex: 'Esmeralda 2 79 LP (S2)', score: 5421, wr: 'S1 Ouro 3 • S2 Esmeralda 1', note: 'Subiu forte com o meta de tanques.' },
+            '2018': { solo: 'Ouro 4 64 LP', flex: '—', score: 3164, wr: 'SoloQ (S8)', note: 'Ouro 4.' },
+            '2017': { solo: 'Ouro 5 26 LP', flex: '—', score: 3026, wr: 'SoloQ (S7)', note: 'Ouro 5.' },
+            '2016': { solo: 'Ouro 2 14 LP', flex: '—', score: 3314, wr: 'SoloQ (S6)', note: 'Ouro 2 na S6.' }
+          }
         },
         {
-          rank: 12,
-          tier: 'D',
-          score: 44.0,
-          name: 'Marcelo',
-          riotId: 'Tatu Melado#br1',
+          rank: 12, tier: 'D', score: 44.0, name: 'Marcelo', riotId: 'Tatu Melado#br1',
           role: 'Suporte / ADC / Selva',
           currentElo: 'Prata 2 60 LP (Flex S2026) • Sem fila SoloQ',
           peakElo: 'Ouro 3 37 LP (Season 9) • Prata 1 a 4 (S6 a S2024)',
@@ -732,11 +959,21 @@
           visionChallenges: '6.780 pts Challenges (Arena Champion 2.1% / Mythic Epic Steal)',
           signature: 'Thresh (180k), Kayn (94k), Pyke (92k), Caitlyn (89k)',
           summary: 'Mandou bem nos desafios de Arena (Arena Champion 2.1%) e de Thresh, mas no Summoner\'s Rift ranqueado possui o menor pico histórico (Ouro 3 na S9, Prata nas demais) e 20% WR atual.',
-          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Thresh.png'
+          avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Thresh.png',
+          yearly: {
+            '2026': { solo: 'Sem fila SoloQ', flex: 'Prata 2 60 LP', score: 2210, wr: '20% (5 jogos)', note: '1W 4L na Flex S2026.' },
+            '2024': { solo: 'Prata 4 34 LP (S1)', flex: '—', score: 2134, wr: 'S1 Prata 4', note: 'Jogou apenas o S1 em 2024.' },
+            '2022': { solo: 'Prata 1 0 LP', flex: '—', score: 2400, wr: 'SoloQ', note: 'Prata 1.' },
+            '2020': { solo: 'Prata 1 55 LP', flex: '—', score: 2455, wr: 'SoloQ', note: 'Prata 1.' },
+            '2019': { solo: 'Ouro 3 37 LP', flex: '—', score: 3237, wr: 'SoloQ (S9)', note: 'Seu melhor ano histórico: Ouro 3 na Season 9.' },
+            '2018': { solo: 'Ouro 5 0 LP', flex: '—', score: 3000, wr: 'SoloQ (S8)', note: 'Ouro 5 na S8.' },
+            '2017': { solo: 'Prata 2 7 LP', flex: '—', score: 2307, wr: 'SoloQ (S7)', note: 'Prata 2.' },
+            '2016': { solo: 'Prata 1 46 LP', flex: '—', score: 2446, wr: 'SoloQ (S6)', note: 'Prata 1 na S6.' }
+          }
         }
       ],
 
-      // --- ABA 3: EXERCÍCIO (COM SEUS TEMPOS DE 32:58 E 01:31:28 MANTIDOS) ---
+      // --- ABA 4: EXERCÍCIO ---
       running: [
         { sport: 'Corrida', dist: '5 km', bestTime: '32:58', rarity: 8.5, status: 'unlocked', img: 'https://images.unsplash.com/photo-1552674605-db6ffd4facb5?w=600&q=80' },
         { sport: 'Corrida', dist: '10 km', bestTime: '01:31:28', rarity: 3.2, status: 'unlocked', img: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?w=600&q=80' },
@@ -764,16 +1001,15 @@
         { id: 'Dança', name: 'Dança', icon: '💃' }
       ],
       bodySkills: [
-        { category: 'Físicos', title: 'Ficar Acordado Direto por 1 Dia e Meio (36h)', status: 'unlocked', rarity: 19.5, date: '14/07/2018', desc: 'Superar 36 horas consecutivas acordado sem dormir.', img: 'https://images.unsplash.com/photo-1509198397868-475647b2a1e5?w=600&q=80' },
-        { category: 'Físicos', title: 'Andar de Patins', status: 'hunting', rarity: 11.0, date: 'Meta', desc: 'Patinar com equilíbrio, domínio de curvas e frenagem.', img: 'https://images.unsplash.com/photo-1547447134-cd3f5c716030?w=600&q=80' },
+        { category: 'Físicos', title: 'Ficar Acordado Direto por 1 Dia e Meio (36h)', status: 'unlocked', rarity: 19.5, date: '14/07/2018', desc: 'Superar 36 horas consecutivas acordado sem dormir.', img: 'https://images.unsplash.com/photo-1501139083538-0139583c060f?w=600&q=80' },
+        { category: 'Físicos', title: 'Andar de Patins', status: 'hunting', rarity: 11.0, date: 'Meta', desc: 'Patinar com equilíbrio, domínio de curvas e frenagem.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Roller_Skates.jpg?width=800' },
         { category: 'Físicos', title: 'Andar de Skate', status: 'hunting', rarity: 4.5, date: 'Meta', desc: 'Remar, equilibrar na base e dominar curvas e obstáculos no skate.', img: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?w=600&q=80' },
         { category: 'Físicos', title: 'Pistol Squat (Agachamento Unilateral)', status: 'unlocked', rarity: 1.8, date: '2026-04', desc: 'Agachamento completo equilibrando em apenas uma perna.', img: 'https://images.unsplash.com/photo-1517838277536-f5f99be501cd?w=600&q=80' },
         { category: 'Físicos', title: '20 Barras Fixas Estritas (Pull-ups)', status: 'hunting', rarity: 0.8, date: 'Meta', desc: 'Completar 20 repetições limpas na barra fixa.', img: 'https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=600&q=80' },
         { category: 'Físicos', title: 'Muscle-Up na Barra Fixa', status: 'hunting', rarity: 0.25, date: 'Meta', desc: 'Subir a barra fixa passando o tronco inteiro acima da linha da barra.', img: 'https://images.unsplash.com/photo-1598971639058-fab3c3109a00?w=600&q=80' },
         { category: 'Físicos', title: 'Human Flag (Bandeira Humana)', status: 'hunting', rarity: 0.01, date: 'Meta', desc: 'Sustentar o corpo na horizontal segurando em uma barra vertical.', img: 'https://images.unsplash.com/photo-1526506118085-60ce8714f8c5?w=600&q=80' },
-        // DANÇA
-        { category: 'Dança', title: 'Dançar Valsa', status: 'hunting', rarity: 6.5, date: 'Meta', desc: 'Dominar a condução e o passo base ternário da valsa.', img: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=600&q=80' },
-        { category: 'Dança', title: 'Dançar Forró', status: 'hunting', rarity: 1.1, date: 'Meta', desc: 'Saber conduzir, girar e marcar o compasso no forró.', img: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=600&q=80' },
+        { category: 'Dança', title: 'Dançar Valsa', status: 'hunting', rarity: 6.5, date: 'Meta', desc: 'Dominar a condução e o passo base ternário da valsa.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Michael_Foskett_%26_Nika_Vlasenko.JPG?width=800' },
+        { category: 'Dança', title: 'Dançar Forró', status: 'hunting', rarity: 1.1, date: 'Meta', desc: 'Saber conduzir, girar e marcar o compasso no forró.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Show_de_forr%C3%B3.jpg?width=800' },
         { category: 'Dança', title: 'Sarrada e Passinho do RJ (Funk)', status: 'hunting', rarity: 0.45, date: 'Meta', desc: 'Mandar o passinho de funk carioca com coordenação e ritmo.', img: 'https://images.unsplash.com/photo-1547153760-18fc86324498?w=600&q=80' }
       ],
       gym: [
@@ -785,7 +1021,7 @@
         { name: 'Rosca Direta', group: 'Braços', oneRM: '46 kg', force4to6: '40 kg', hyper8to15: '32 kg', img: 'https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=600&q=80' }
       ],
 
-      // --- ABA 4: CONHECIMENTO ---
+      // --- ABA 5: CONHECIMENTO ---
       knowledgeCategories: [
         { id: 'all', name: 'Todos', icon: '🎓' },
         { id: 'Acadêmico', name: 'Formação Acadêmica', icon: '🏛️' },
@@ -794,68 +1030,73 @@
       ],
       knowledgeItems: [
         { category: 'Acadêmico', title: 'Ensino Médio Técnico', status: 'hunting', rarity: 8.5, date: 'Titulação', desc: 'Formação técnica profissionalizante integrada ao ensino médio.', img: 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=600&q=80' },
-        { category: 'Acadêmico', title: 'Graduação (Farmácia - UnB)', status: 'unlocked', rarity: 0.08, date: '2025-12', desc: 'Graduação superior concluída em Farmácia (apenas 0,08% da pop. mundial; 12,5% considerando qualquer curso).', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80' },
-        { category: 'Acadêmico', title: 'Pós-Graduação / Residência', status: 'unlocked', rarity: 0.18, date: '2026-03', desc: 'Programa de pós-graduação prática em regime de Residência em Saúde.', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Graduação (Farmácia - UnB)', status: 'unlocked', rarity: 12.5, date: '2025-12', desc: 'Graduação superior concluída em Farmácia pela Universidade de Brasília (UnB).', img: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&q=80' },
+        { category: 'Acadêmico', title: 'Pós-Graduação / Residência', status: 'hunting', rarity: 0.18, date: 'Conclusão 2028', desc: 'Programa de pós-graduação prática em regime de Residência em Saúde (previsão de conclusão em 2028).', img: 'https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600&q=80' },
         { category: 'Acadêmico', title: 'Mestrado (Master\'s Degree)', status: 'hunting', rarity: 2.8, date: 'Meta', desc: 'Título acadêmico de Mestre em programa stricto sensu.', img: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=600&q=80' },
         { category: 'Acadêmico', title: 'Doutorado (PhD / Doctorate)', status: 'hunting', rarity: 0.45, date: 'Meta', desc: 'Grau máximo de titulação acadêmica e defesa de tese inédita.', img: 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=600&q=80' },
 
-        { category: 'Certificações', title: 'Inglês: Cambridge C2 Proficiency (CPE)', status: 'hunting', rarity: 0.15, date: 'Meta C2', desc: 'Domínio pleno C2 (ou IELTS 8.5-9.0 / TOEFL iBT 114-120).', img: 'https://images.unsplash.com/photo-1513635269975-59663e0ac1ad?w=600&q=80' },
-        { category: 'Certificações', title: 'Espanhol: DELE C2 (Instituto Cervantes)', status: 'hunting', rarity: 0.08, date: 'Meta C2', desc: 'Grau máximo de competência oficial no idioma espanhol.', img: 'https://images.unsplash.com/photo-1543783207-ec64e4d95325?w=600&q=80' },
-        { category: 'Certificações', title: 'Japonês: JLPT N1 (Fundação Japão)', status: 'hunting', rarity: 0.02, date: 'Meta N1', desc: 'Grau máximo N1 exigindo domínio de ~2.000 kanjis.', img: 'https://images.unsplash.com/photo-1493976040374-85c8e12f0c0e?w=600&q=80' }
+        { category: 'Certificações', title: 'Inglês: Cambridge C2 Proficiency (CPE)', status: 'hunting', rarity: 0.15, date: 'Meta C2', desc: 'Domínio pleno C2 (ou IELTS 8.5-9.0 / TOEFL iBT 114-120).', img: 'https://flagcdn.com/w640/gb.png', imgContain: false },
+        { category: 'Certificações', title: 'Espanhol: DELE C2 (Instituto Cervantes)', status: 'hunting', rarity: 0.08, date: 'Meta C2', desc: 'Grau máximo de competência oficial no idioma espanhol.', img: 'https://flagcdn.com/w640/es.png', imgContain: false },
+        { category: 'Certificações', title: 'Japonês: JLPT N1 (Fundação Japão)', status: 'hunting', rarity: 0.02, date: 'Meta N1', desc: 'Grau máximo N1 exigindo domínio de ~2.000 kanjis.', img: 'https://flagcdn.com/w640/jp.png', imgContain: false }
       ],
 
-      // --- ABA 5: MAPA ---
+      // --- ABA 6: MAPA (ESTADOS VISITADOS + PONTOS TURÍSTICOS) ---
       mapPlaces: [
-        { type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília.', img: 'https://images.unsplash.com/photo-1598981457915-aea220950616?w=600&q=80' },
-        { type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Planaltina e viagens no estado.', img: 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80' },
-        { type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Região dos Lagos e Capital.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
-        { type: 'mundo', code: 'BR', name: 'Brasil', date: 'País Natal', notes: 'Exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
+        { type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília — Catedral Metropolitana e Esplanada dos Ministérios.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Catedral_Metropolitana_de_Brasilia.jpg?width=800' },
+        { type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Planaltina e Chapada dos Veadeiros.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Chapada_dos_Veadeiros_18.jpg?width=800' },
+        { type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Cristo Redentor, Pão de Açúcar e Região dos Lagos.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
+        { type: 'brasil', code: 'BA', name: 'Bahia', date: 'Viagem', notes: 'Salvador — Elevador Lacerda, Pelourinho e litoral baiano.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elevador_Lacerda_-_Salvador_-_Bahia.jpg?width=800' },
+        { type: 'brasil', code: 'CE', name: 'Ceará', date: 'Viagem', notes: 'Fortaleza — Praia de Iracema e Beira-Mar.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beira_Mar_-_Praia_de_Iracema_-_Fortaleza.jpg?width=800' },
+        { type: 'brasil', code: 'PE', name: 'Pernambuco', date: 'Viagem', notes: 'Recife — Marco Zero e Recife Antigo.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marco_Zero_Recife.jpg?width=800' },
+        { type: 'brasil', code: 'RN', name: 'Rio Grande do Norte', date: 'Viagem', notes: 'Natal — Morro do Careca e Praia de Ponta Negra.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Careca_-_Natal.jpg?width=800' },
+        { type: 'mundo', code: 'BR', worldName: 'Brazil', name: 'Brasil', date: 'País Natal', notes: 'Cristo Redentor e exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
       ]
     };
 
+    // Bandeira de país/nação para cada um dos 39 idiomas
     const ALL_LANGUAGES_LIST = [
-      ['Inglês (Intermediário+)', 18.2, 'unlocked', ' ~1,49 bilhão de falantes no mundo.'],
-      ['Chinês (Mandarim)', 14.42, 'hunting', '~1,18 bilhão de falantes no mundo.'],
-      ['Hindi', 7.45, 'hunting', '~611 milhões de falantes no mundo.'],
-      ['Espanhol', 6.84, 'hunting', '~561 milhões de falantes no mundo.'],
-      ['Árabe (Arabic)', 4.60, 'hunting', '~375 milhões de falantes no mundo.'],
-      ['Francês', 3.80, 'hunting', '~312 milhões de falantes no mundo.'],
-      ['Indonésio (Indonesian)', 3.11, 'hunting', '~255 milhões de falantes no mundo.'],
-      ['Russo', 2.56, 'hunting', '~210 milhões de falantes no mundo.'],
-      ['Alemão', 1.62, 'hunting', '~133 milhões de falantes no mundo.'],
-      ['Japonês', 1.54, 'hunting', '~126 milhões de falantes no mundo.'],
-      ['Turco (Turkish)', 1.10, 'hunting', '~90 milhões de falantes no mundo.'],
-      ['Vietnamita (Vietnamese)', 1.05, 'hunting', '~86 milhões de falantes no mundo.'],
-      ['Suaíli (Swahili)', 1.05, 'hunting', '~85 milhões de falantes no mundo.'],
-      ['Coreano', 1.00, 'hunting', '~82 milhões de falantes no mundo.'],
-      ['Italiano', 0.83, 'hunting', '~68 milhões de falantes no mundo.'],
-      ['Polonês (Polish)', 0.52, 'hunting', '~43 milhões de falantes no mundo.'],
-      ['Ucraniano (Ukrainian)', 0.43, 'hunting', '~35 milhões de falantes no mundo.'],
-      ['Zulu', 0.34, 'hunting', '~28 milhões de falantes no mundo.'],
-      ['Holandês (Dutch)', 0.30, 'hunting', '~25 milhões de falantes no mundo.'],
-      ['Romeno (Romanian)', 0.29, 'hunting', '~24 milhões de falantes no mundo.'],
-      ['Grego (Greek)', 0.16, 'hunting', '~13,5 milhões de falantes no mundo.'],
-      ['Sueco (Swedish)', 0.16, 'hunting', '~13 milhões de falantes no mundo.'],
-      ['Húngaro (Hungarian)', 0.16, 'hunting', '~13 milhões de falantes no mundo.'],
-      ['Crioulo Haitiano (Haitian Creole)', 0.15, 'hunting', '~12 milhões de falantes no mundo.'],
-      ['Tcheco (Czech)', 0.13, 'hunting', '~10,7 milhões de falantes no mundo.'],
-      ['Hebraico (Hebrew)', 0.12, 'hunting', '~9,5 milhões de falantes no mundo.'],
-      ['Dinamarquês (Danish)', 0.07, 'hunting', '~6 milhões de falantes no mundo.'],
-      ['Finlandês (Finnish)', 0.07, 'hunting', '~5,8 milhões de falantes no mundo.'],
-      ['Norueguês (Norwegian)', 0.067, 'hunting', '~5,5 milhões de falantes no mundo.'],
-      ['Irlandês (Irish)', 0.022, 'hunting', '~1,8 milhão de falantes no mundo.'],
-      ['Iídiche (Yiddish)', 0.012, 'hunting', '~1 milhão de falantes no mundo.'],
-      ['Latim (Latin)', 0.012, 'hunting', '~1 milhão de estudiosos capazes de ler/traduzir.'],
-      ['Galês (Welsh)', 0.010, 'hunting', '~850 mil falantes no mundo.'],
-      ['Esperanto', 0.006, 'hunting', '~500 mil falantes ativos no mundo.'],
-      ['Navajo', 0.002, 'hunting', '~170 mil falantes no mundo.'],
-      ['Havaiano (Hawaiian)', 0.001, 'hunting', '~80 mil falantes no mundo.'],
-      ['Gaélico Escocês (Scottish Gaelic)', 0.001, 'hunting', '~70 mil falantes no mundo.'],
-      ['Alto Valiriano (High Valyrian)', 0.0003, 'hunting', '~25 mil pessoas com domínio conversacional.'],
-      ['Klingon', 0.00005, 'hunting', '~4 mil estudiosos fluentes no mundo.']
+      ['Inglês (Intermediário+)', 18.2, 'unlocked', '~1,49 bilhão de falantes no mundo.', 'https://flagcdn.com/w640/gb.png', false],
+      ['Chinês (Mandarim)', 14.42, 'hunting', '~1,18 bilhão de falantes no mundo.', 'https://flagcdn.com/w640/cn.png', false],
+      ['Hindi', 7.45, 'hunting', '~611 milhões de falantes no mundo.', 'https://flagcdn.com/w640/in.png', false],
+      ['Espanhol', 6.84, 'hunting', '~561 milhões de falantes no mundo.', 'https://flagcdn.com/w640/es.png', false],
+      ['Árabe (Arabic)', 4.60, 'hunting', '~375 milhões de falantes no mundo.', 'https://flagcdn.com/w640/sa.png', false],
+      ['Francês', 3.80, 'hunting', '~312 milhões de falantes no mundo.', 'https://flagcdn.com/w640/fr.png', false],
+      ['Indonésio (Indonesian)', 3.11, 'hunting', '~255 milhões de falantes no mundo.', 'https://flagcdn.com/w640/id.png', false],
+      ['Russo', 2.56, 'hunting', '~210 milhões de falantes no mundo.', 'https://flagcdn.com/w640/ru.png', false],
+      ['Alemão', 1.62, 'hunting', '~133 milhões de falantes no mundo.', 'https://flagcdn.com/w640/de.png', false],
+      ['Japonês', 1.54, 'hunting', '~126 milhões de falantes no mundo.', 'https://flagcdn.com/w640/jp.png', true],
+      ['Turco (Turkish)', 1.10, 'hunting', '~90 milhões de falantes no mundo.', 'https://flagcdn.com/w640/tr.png', false],
+      ['Vietnamita (Vietnamese)', 1.05, 'hunting', '~86 milhões de falantes no mundo.', 'https://flagcdn.com/w640/vn.png', false],
+      ['Suaíli (Swahili)', 1.05, 'hunting', '~85 milhões de falantes no mundo.', 'https://flagcdn.com/w640/tz.png', false],
+      ['Coreano', 1.00, 'hunting', '~82 milhões de falantes no mundo.', 'https://flagcdn.com/w640/kr.png', true],
+      ['Italiano', 0.83, 'hunting', '~68 milhões de falantes no mundo.', 'https://flagcdn.com/w640/it.png', false],
+      ['Polonês (Polish)', 0.52, 'hunting', '~43 milhões de falantes no mundo.', 'https://flagcdn.com/w640/pl.png', false],
+      ['Ucraniano (Ukrainian)', 0.43, 'hunting', '~35 milhões de falantes no mundo.', 'https://flagcdn.com/w640/ua.png', false],
+      ['Zulu', 0.34, 'hunting', '~28 milhões de falantes no mundo.', 'https://flagcdn.com/w640/za.png', false],
+      ['Holandês (Dutch)', 0.30, 'hunting', '~25 milhões de falantes no mundo.', 'https://flagcdn.com/w640/nl.png', false],
+      ['Romeno (Romanian)', 0.29, 'hunting', '~24 milhões de falantes no mundo.', 'https://flagcdn.com/w640/ro.png', false],
+      ['Grego (Greek)', 0.16, 'hunting', '~13,5 milhões de falantes no mundo.', 'https://flagcdn.com/w640/gr.png', false],
+      ['Sueco (Swedish)', 0.16, 'hunting', '~13 milhões de falantes no mundo.', 'https://flagcdn.com/w640/se.png', false],
+      ['Húngaro (Hungarian)', 0.16, 'hunting', '~13 milhões de falantes no mundo.', 'https://flagcdn.com/w640/hu.png', false],
+      ['Crioulo Haitiano (Haitian Creole)', 0.15, 'hunting', '~12 milhões de falantes no mundo.', 'https://flagcdn.com/w640/ht.png', false],
+      ['Tcheco (Czech)', 0.13, 'hunting', '~10,7 milhões de falantes no mundo.', 'https://flagcdn.com/w640/cz.png', false],
+      ['Hebraico (Hebrew)', 0.12, 'hunting', '~9,5 milhões de falantes no mundo.', 'https://flagcdn.com/w640/il.png', true],
+      ['Dinamarquês (Danish)', 0.07, 'hunting', '~6 milhões de falantes no mundo.', 'https://flagcdn.com/w640/dk.png', false],
+      ['Finlandês (Finnish)', 0.07, 'hunting', '~5,8 milhões de falantes no mundo.', 'https://flagcdn.com/w640/fi.png', false],
+      ['Norueguês (Norwegian)', 0.067, 'hunting', '~5,5 milhões de falantes no mundo.', 'https://flagcdn.com/w640/no.png', false],
+      ['Irlandês (Irish)', 0.022, 'hunting', '~1,8 milhão de falantes no mundo.', 'https://flagcdn.com/w640/ie.png', false],
+      ['Iídiche (Yiddish)', 0.012, 'hunting', '~1 milhão de falantes no mundo.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Yiddish_Flag.svg', true],
+      ['Latim (Latin)', 0.012, 'hunting', '~1 milhão de estudiosos capazes de ler/traduzir.', 'https://flagcdn.com/w640/va.png', true],
+      ['Galês (Welsh)', 0.010, 'hunting', '~850 mil falantes no mundo.', 'https://flagcdn.com/w640/gb-wls.png', false],
+      ['Esperanto', 0.006, 'hunting', '~500 mil falantes ativos no mundo.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Esperanto.svg', false],
+      ['Navajo', 0.002, 'hunting', '~170 mil falantes no mundo.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Navajo_flag.svg', true],
+      ['Havaiano (Hawaiian)', 0.001, 'hunting', '~80 mil falantes no mundo.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_Hawaii.svg', false],
+      ['Gaélico Escocês (Scottish Gaelic)', 0.001, 'hunting', '~70 mil falantes no mundo.', 'https://flagcdn.com/w640/gb-sct.png', false],
+      ['Alto Valiriano (High Valyrian)', 0.0003, 'hunting', '~25 mil pessoas com domínio conversacional.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Flag_of_High_Valyrian.svg', true],
+      ['Klingon', 0.00005, 'hunting', '~4 mil estudiosos fluentes no mundo.', 'https://commons.wikimedia.org/wiki/Special:FilePath/Klingon_Flag.svg', true]
     ];
 
-    ALL_LANGUAGES_LIST.forEach(([langName, rarityPct, st, info]) => {
+    ALL_LANGUAGES_LIST.forEach(([langName, rarityPct, st, info, flagImg, containFlag]) => {
       appData.knowledgeItems.push({
         category: 'Idiomas',
         title: `Falar ${langName}`,
@@ -863,7 +1104,8 @@
         rarity: rarityPct,
         date: 'Idioma',
         desc: `Capacidade de comunicação no idioma (${info})`,
-        img: 'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?w=600&q=80'
+        img: flagImg,
+        imgContain: containFlag
       });
     });
 
@@ -874,7 +1116,7 @@
       document.getElementById('life-filter-pills').innerHTML = appData.lifeCategories.map(c => {
         const active = selectedLifeCat === c.id;
         return `
-          <button onclick="selectLifeCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+          <button onclick="selectLifeCat('${c.id}')" class="gold-pill-btn flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium whitespace-nowrap ${active ? 'gold-pill-active' : 'gold-pill-inactive'}">
             <span>${c.icon}</span><span>${c.name}</span>
           </button>
         `;
@@ -898,8 +1140,7 @@
       let list = categoryPool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
       list.sort((a, b) => {
         if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
-        if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
-        return (a.date || '').localeCompare(b.date || '');
+        return parseSortDate(a.date) - parseSortDate(b.date);
       });
 
       document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
@@ -915,7 +1156,7 @@
           ? `<img src="${g.imgIcon}" class="w-5 h-5 rounded-md object-cover" alt="${g.name}" />`
           : `<span>${g.icon || '🎮'}</span>`;
         return `
-          <button onclick="selectGameFilter('${g.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+          <button onclick="selectGameFilter('${g.id}')" class="gold-pill-btn flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium whitespace-nowrap ${active ? 'gold-pill-active' : 'gold-pill-inactive'}">
             ${iconHtml}<span>${g.name}</span>
           </button>
         `;
@@ -939,72 +1180,200 @@
       let list = gamePool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
       list.sort((a, b) => {
         if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
-        if (sortBy === 'rarity_desc') return b.rarity - a.rarity;
-        return (b.date || '').localeCompare(a.date || '');
+        const da = parseSortDate(a.date);
+        const db = parseSortDate(b.date);
+        const rankA = da >= 99990000 ? -1 : da;
+        const rankB = db >= 99990000 ? -1 : db;
+        return rankB - rankA;
       });
 
       document.getElementById('games-grid').innerHTML = list.map(i => buildStandardCard(i, i.game, 'dos jogadores')).join('');
     }
 
-    // ================= 3. RENDERIZAR ABA RANK (LOL LEADERBOARD) =================
+    // ================= 3. RENDERIZAR ABA RANK (TODOS OS TEMPOS + POR ANO) =================
+    let selectedLolYear = 'all';
+
+    function renderLolYearSelector() {
+      document.getElementById('lol-year-selector').innerHTML = appData.lolYears.map(y => {
+        const active = selectedLolYear === y.id;
+        return `
+          <button onclick="selectLolYear('${y.id}')" class="gold-pill-btn px-3 py-1.5 rounded-xl border text-xs font-medium whitespace-nowrap ${active ? 'gold-pill-active' : 'gold-pill-inactive'}">
+            ${y.label}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function selectLolYear(yearId) {
+      selectedLolYear = yearId;
+      renderLolYearSelector();
+      renderLolRank();
+    }
+
+    function getRankMedalBadge(pos, inactive = false) {
+      if (inactive) {
+        return `<div class="px-3 py-2 rounded-xl bg-stone-100 text-stone-400 border border-stone-200 font-semibold text-xs whitespace-nowrap">Sem fila</div>`;
+      }
+      if (pos === 1) {
+        return `<div class="px-3.5 py-2 rounded-xl bg-gradient-to-br from-amber-100 to-amber-200 text-amber-900 border border-amber-400 font-bold text-sm shadow-sm whitespace-nowrap">🥇 #1</div>`;
+      }
+      if (pos === 2) {
+        return `<div class="px-3.5 py-2 rounded-xl bg-stone-100 text-stone-700 border border-stone-300 font-bold text-sm whitespace-nowrap">🥈 #2</div>`;
+      }
+      if (pos === 3) {
+        return `<div class="px-3.5 py-2 rounded-xl bg-orange-50 text-orange-800 border border-orange-200 font-bold text-sm whitespace-nowrap">🥉 #3</div>`;
+      }
+      return `<div class="px-3.5 py-2 rounded-xl bg-white text-stone-700 border border-stone-200 font-bold text-sm whitespace-nowrap">#${pos}</div>`;
+    }
+
     function renderLolRank() {
       const container = document.getElementById('lol-rank-container');
-      container.innerHTML = appData.lolFriendsRank.map(p => {
-        const medal = p.rank === 1 ? '🥇 #1' : p.rank === 2 ? '🥈 #2' : p.rank === 3 ? '🥉 #3' : `#${p.rank}`;
-        const borderHighlight = p.rank === 1 ? 'border-amber-300 bg-amber-50/20' : p.rank === 2 ? 'border-slate-300 bg-slate-50/40' : 'border-slate-200 bg-white';
+      const subtitle = document.getElementById('lol-rank-subtitle');
+      const counter = document.getElementById('lol-rank-counter');
+      const pillarsGrid = document.getElementById('lol-pillars-grid');
+
+      if (selectedLolYear === 'all') {
+        subtitle.textContent = 'Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico Completo';
+        counter.textContent = '12 Jogadores Analisados • Todos os Tempos';
+        pillarsGrid.style.display = 'grid';
+
+        container.innerHTML = appData.lolFriendsRank.map(p => {
+          const borderHighlight = p.rank === 1
+            ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+            : p.rank <= 3
+              ? 'border-amber-200/70 bg-white'
+              : 'border-stone-200 bg-white';
+          return `
+            <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
+              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-100">
+                <div class="flex items-center gap-4">
+                  ${getRankMedalBadge(p.rank)}
+                  <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-amber-200 bg-stone-100" alt="${p.name}" />
+                  <div>
+                    <div class="flex flex-wrap items-center gap-2">
+                      <h3 class="text-lg font-bold text-stone-900">${p.name}</h3>
+                      <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">${p.riotId}</span>
+                      <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Tier ${p.tier}</span>
+                    </div>
+                    <p class="text-xs text-stone-500 mt-1"><strong>Função Principal:</strong> ${p.role} • <strong>Campeões Assinatura:</strong> ${p.signature}</p>
+                  </div>
+                </div>
+
+                <div class="flex items-center gap-3 self-start lg:self-center">
+                  <div class="text-right bg-amber-50/60 border border-amber-200/70 px-4 py-2 rounded-xl">
+                    <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-800">Nota Composta</span>
+                    <span class="text-2xl font-bold text-stone-900">${p.score} <span class="text-xs font-normal text-stone-400">/ 100</span></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
+                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Elo Atual & Pico</span>
+                  <div class="font-bold text-stone-900 mt-1">${p.currentElo}</div>
+                  <div class="text-stone-500 mt-0.5">Pico: ${p.peakElo}</div>
+                </div>
+                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Winrate, KDA & KP%</span>
+                  <div class="font-bold text-stone-900 mt-1">${p.winrate}</div>
+                  <div class="text-stone-500 mt-0.5">KDA: ${p.kda}</div>
+                </div>
+                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Conversão (DPM & CS/m)</span>
+                  <div class="font-bold text-stone-900 mt-1">${p.dpmGpm}</div>
+                </div>
+                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Visão & Challenges</span>
+                  <div class="font-bold text-stone-900 mt-1">${p.visionChallenges}</div>
+                </div>
+              </div>
+
+              <p class="text-xs text-stone-600 mt-3 pt-3 border-t border-stone-100 leading-relaxed">
+                <strong>Veredito Analítico:</strong> ${p.summary}
+              </p>
+            </div>
+          `;
+        }).join('');
+        return;
+      }
+
+      // Modo Por Ano
+      const yearObj = appData.lolYears.find(y => y.id === selectedLolYear);
+      const yearLabel = yearObj ? yearObj.label : selectedLolYear;
+      const activePlayers = [];
+      const inactivePlayers = [];
+
+      appData.lolFriendsRank.forEach(p => {
+        const yData = p.yearly && p.yearly[selectedLolYear];
+        if (yData) {
+          activePlayers.push({ player: p, yData });
+        } else {
+          inactivePlayers.push(p);
+        }
+      });
+
+      activePlayers.sort((a, b) => b.yData.score - a.yData.score);
+
+      subtitle.textContent = `Classificação anual consolidada em ${yearLabel} (ordenado pelo maior Elo alcançado no ano)`;
+      counter.textContent = `${activePlayers.length} Ativos em ${yearLabel}`;
+      pillarsGrid.style.display = 'none';
+
+      const activeCards = activePlayers.map((entry, idx) => {
+        const pos = idx + 1;
+        const p = entry.player;
+        const y = entry.yData;
+        const borderHighlight = pos === 1
+          ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+          : 'border-stone-200 bg-white';
         return `
           <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
-            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-100">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-3 border-b border-stone-100">
               <div class="flex items-center gap-4">
-                <div class="px-3.5 py-2 rounded-xl bg-slate-900 text-white font-bold text-sm whitespace-nowrap">
-                  ${medal}
-                </div>
-                <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-slate-200 bg-slate-100" alt="${p.name}" />
+                ${getRankMedalBadge(pos)}
+                <img src="${p.avatar}" class="w-12 h-12 rounded-2xl object-cover border border-amber-200 bg-stone-100" alt="${p.name}" />
                 <div>
                   <div class="flex flex-wrap items-center gap-2">
-                    <h3 class="text-lg font-bold text-slate-900">${p.name}</h3>
-                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700 border border-slate-200">${p.riotId}</span>
-                    <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Tier ${p.tier}</span>
+                    <h3 class="text-base font-bold text-stone-900">${p.name}</h3>
+                    <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">${p.riotId}</span>
                   </div>
-                  <p class="text-xs text-slate-500 mt-1"><strong>Função Principal:</strong> ${p.role} • <strong>Campeões Assinatura:</strong> ${p.signature}</p>
+                  <p class="text-xs text-stone-500 mt-0.5">${y.wr}</p>
                 </div>
               </div>
 
-              <div class="flex items-center gap-3 self-start lg:self-center">
-                <div class="text-right">
-                  <span class="block text-[11px] font-semibold uppercase tracking-wider text-slate-400">Nota Composta</span>
-                  <span class="text-2xl font-bold text-slate-900">${p.score} <span class="text-xs font-normal text-slate-400">/ 100</span></span>
+              <div class="flex flex-wrap items-center gap-2">
+                <div class="px-3.5 py-2 rounded-xl bg-amber-50/80 border border-amber-200 text-xs">
+                  <span class="block text-[10px] font-bold uppercase text-amber-700">Solo/Duo (${selectedLolYear})</span>
+                  <strong class="text-stone-900">${y.solo}</strong>
+                </div>
+                <div class="px-3.5 py-2 rounded-xl bg-stone-50 border border-stone-200 text-xs">
+                  <span class="block text-[10px] font-bold uppercase text-stone-500">Flex (${selectedLolYear})</span>
+                  <strong class="text-stone-800">${y.flex}</strong>
                 </div>
               </div>
             </div>
-
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
-              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
-                <span class="text-[11px] font-semibold text-slate-400 uppercase">Elo Atual & Pico</span>
-                <div class="font-bold text-slate-900 mt-1">${p.currentElo}</div>
-                <div class="text-slate-500 mt-0.5">Pico: ${p.peakElo}</div>
-              </div>
-              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
-                <span class="text-[11px] font-semibold text-slate-400 uppercase">Winrate, KDA & KP%</span>
-                <div class="font-bold text-slate-900 mt-1">${p.winrate}</div>
-                <div class="text-slate-500 mt-0.5">KDA: ${p.kda}</div>
-              </div>
-              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
-                <span class="text-[11px] font-semibold text-slate-400 uppercase">Conversão (DPM & CS/m)</span>
-                <div class="font-bold text-slate-900 mt-1">${p.dpmGpm}</div>
-              </div>
-              <div class="bg-slate-50 rounded-xl p-3 border border-slate-200/60">
-                <span class="text-[11px] font-semibold text-slate-400 uppercase">Visão & Challenges</span>
-                <div class="font-bold text-slate-900 mt-1">${p.visionChallenges}</div>
-              </div>
-            </div>
-
-            <p class="text-xs text-slate-600 mt-3 pt-3 border-t border-slate-100 leading-relaxed">
-              <strong>Veredito Analítico:</strong> ${p.summary}
+            <p class="text-xs text-stone-600 mt-3 leading-relaxed">
+              <strong>Resumo em ${yearLabel}:</strong> ${y.note}
             </p>
           </div>
         `;
       }).join('');
+
+      const inactiveHtml = inactivePlayers.length > 0 ? `
+        <div class="bg-stone-50/70 border border-stone-200/80 rounded-2xl p-4 mt-4">
+          <span class="text-xs font-bold uppercase tracking-wider text-stone-400">Sem classificação registrada em ${yearLabel}</span>
+          <div class="flex flex-wrap gap-2 mt-2.5">
+            ${inactivePlayers.map(p => `
+              <div class="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-white border border-stone-200 text-xs text-stone-500">
+                <img src="${p.avatar}" class="w-5 h-5 rounded-full object-cover opacity-70" alt="${p.name}" />
+                <span class="font-medium text-stone-700">${p.name}</span>
+                <span class="text-[11px] text-stone-400">(${p.riotId})</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      ` : '';
+
+      container.innerHTML = activeCards + inactiveHtml;
     }
 
     // ================= 4. RENDERIZAR ABA EXERCÍCIO =================
@@ -1026,8 +1395,8 @@
       ['all', 'corrida', 'natacao', 'ciclismo'].forEach(m => {
         const btn = document.getElementById('endurance-btn-' + m);
         btn.className = (m === mode)
-          ? 'px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900 text-white'
-          : 'px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-700 hover:bg-white';
+          ? 'gold-pill-btn gold-pill-active px-3 py-1.5 rounded-lg text-xs border'
+          : 'gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-lg text-xs border border-transparent';
       });
       document.getElementById('row-corrida').style.display = (mode === 'all' || mode === 'corrida') ? 'block' : 'none';
       document.getElementById('row-natacao').style.display = (mode === 'all' || mode === 'natacao') ? 'block' : 'none';
@@ -1037,20 +1406,21 @@
     function renderEnduranceRow(arrayKey, gridId) {
       document.getElementById(gridId).innerHTML = appData[arrayKey].map(item => `
         <div class="theme-card flex flex-col justify-between">
-          <div class="card-img-header" style="background-image: url('${item.img}'); height: 120px;">
-            <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200 shadow-sm">
+          <div class="card-img-header" style="height: 124px;">
+            <img src="${item.img}" alt="${item.sport} ${item.dist}" loading="lazy" class="w-full h-full object-cover" />
+            <span class="absolute top-2.5 left-2.5 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-stone-900 border border-amber-200/80 shadow-sm">
               ${item.dist}
             </span>
             <div class="absolute top-2.5 right-2.5 z-10">
               ${renderStatusBadge(item.status)}
             </div>
           </div>
-          <div class="p-4 pt-2">
-            <span class="text-[11px] font-medium uppercase tracking-wider text-slate-400">Melhor Tempo (Recorde)</span>
-            <div class="text-2xl font-bold text-slate-900 mt-0.5">${item.bestTime}</div>
-            <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center justify-between text-xs text-slate-500">
+          <div class="p-4 pt-2.5">
+            <span class="text-[11px] font-medium uppercase tracking-wider text-stone-400">Melhor Tempo (Recorde)</span>
+            <div class="text-2xl font-bold text-stone-900 mt-0.5">${item.bestTime}</div>
+            <div class="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
               <span>Raridade:</span>
-              <strong class="text-slate-800">${item.rarity}% da pop.</strong>
+              <strong class="text-amber-900">${item.rarity}% da pop.</strong>
             </div>
           </div>
         </div>
@@ -1061,7 +1431,7 @@
       document.getElementById('body-filter-pills').innerHTML = appData.bodyCategories.map(c => {
         const active = selectedBodyCat === c.id;
         return `
-          <button onclick="selectBodyCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+          <button onclick="selectBodyCat('${c.id}')" class="gold-pill-btn flex items-center gap-2 px-3.5 py-2 rounded-xl border text-xs font-semibold whitespace-nowrap ${active ? 'gold-pill-active' : 'gold-pill-inactive'}">
             <span>${c.icon}</span><span>${c.name}</span>
           </button>
         `;
@@ -1081,7 +1451,10 @@
       let pool = appData.bodySkills.filter(i => selectedBodyCat === 'all' || i.category === selectedBodyCat);
       let list = pool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
 
-      list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
+      list.sort((a, b) => {
+        if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
+        return parseSortDate(a.date) - parseSortDate(b.date);
+      });
       document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
     }
 
@@ -1090,8 +1463,8 @@
       currentGymGroup = group;
       document.querySelectorAll('.gym-pill').forEach(btn => {
         btn.className = (btn.textContent === group)
-          ? 'gym-pill bg-slate-900 text-white px-3 py-1.5 rounded-xl text-xs font-medium'
-          : 'gym-pill bg-slate-100 text-slate-700 px-3 py-1.5 rounded-xl text-xs font-medium';
+          ? 'gym-pill gold-pill-btn gold-pill-active px-3 py-1.5 rounded-xl text-xs border'
+          : 'gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border';
       });
       renderGym();
     }
@@ -1100,25 +1473,26 @@
       const list = appData.gym.filter(x => currentGymGroup === 'Todos' || x.group === currentGymGroup);
       document.getElementById('gym-grid').innerHTML = list.map(item => `
         <div class="theme-card">
-          <div class="card-img-header" style="background-image: url('${item.img}'); height: 120px;">
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-slate-700 border border-slate-200">
+          <div class="card-img-header" style="height: 124px;">
+            <img src="${item.img}" alt="${item.name}" loading="lazy" class="w-full h-full object-cover" />
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-white/95 text-stone-700 border border-amber-200/80 shadow-sm">
               ${item.group}
             </span>
           </div>
-          <div class="p-5 pt-3">
-            <h3 class="text-base font-bold text-slate-900">${item.name}</h3>
+          <div class="p-5 pt-3.5">
+            <h3 class="text-base font-bold text-stone-900">${item.name}</h3>
             <div class="grid grid-cols-3 gap-2 mt-4 text-center">
-              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
-                <span class="block text-[11px] font-medium text-slate-400">1 RM</span>
-                <strong class="text-sm font-bold text-slate-900">${item.oneRM}</strong>
+              <div class="bg-amber-50/40 border border-amber-200/70 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-amber-800">1 RM</span>
+                <strong class="text-sm font-bold text-stone-900">${item.oneRM}</strong>
               </div>
-              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
-                <span class="block text-[11px] font-medium text-slate-400">Força (4-6)</span>
-                <strong class="text-sm font-bold text-slate-900">${item.force4to6}</strong>
+              <div class="bg-stone-50 border border-stone-200/80 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-stone-400">Força (4-6)</span>
+                <strong class="text-sm font-bold text-stone-900">${item.force4to6}</strong>
               </div>
-              <div class="bg-slate-50 border border-slate-200/80 rounded-xl p-2.5">
-                <span class="block text-[11px] font-medium text-slate-400">Hiper (8-15)</span>
-                <strong class="text-sm font-bold text-slate-900">${item.hyper8to15}</strong>
+              <div class="bg-stone-50 border border-stone-200/80 rounded-xl p-2.5">
+                <span class="block text-[11px] font-medium text-stone-400">Hiper (8-15)</span>
+                <strong class="text-sm font-bold text-stone-900">${item.hyper8to15}</strong>
               </div>
             </div>
           </div>
@@ -1133,7 +1507,7 @@
       document.getElementById('knowledge-filter-pills').innerHTML = appData.knowledgeCategories.map(c => {
         const active = selectedKnowledgeCat === c.id;
         return `
-          <button onclick="selectKnowledgeCat('${c.id}')" class="flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium transition whitespace-nowrap ${active ? 'bg-slate-900 text-white border-slate-900 shadow-sm' : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-50'}">
+          <button onclick="selectKnowledgeCat('${c.id}')" class="gold-pill-btn flex items-center gap-2 px-3.5 py-2 rounded-xl border text-sm font-medium whitespace-nowrap ${active ? 'gold-pill-active' : 'gold-pill-inactive'}">
             <span>${c.icon}</span><span>${c.name}</span>
           </button>
         `;
@@ -1155,26 +1529,47 @@
       renderStatsBanner('knowledge-stats-banner', catObj ? catObj.name : 'Todos', pool);
 
       let list = pool.filter(i => statusFilter === 'all' || String(i.status).toLowerCase() === statusFilter);
-      list.sort((a, b) => sortBy === 'rarity_asc' ? a.rarity - b.rarity : b.rarity - a.rarity);
+      list.sort((a, b) => {
+        if (sortBy === 'alpha') return a.title.localeCompare(b.title);
+        return a.rarity - b.rarity;
+      });
 
       document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
     }
 
-    // ================= 6. RENDERIZAR ABA MAPA =================
+    // ================= 6. RENDERIZAR ABA MAPA (ELEIÇÕES BRASIL & MUNDO) =================
     const ALL_BRAZIL_UFS = [
       'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG',
       'PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'
     ];
     let mapGalleryFilter = 'todos';
+    let selectedMapUf = null;
+    let brChartInstance = null;
+    let worldChartInstance = null;
 
     function setMapGalleryFilter(filter) {
       mapGalleryFilter = filter;
+      if (filter === 'mundo') selectedMapUf = null;
       ['todos', 'brasil', 'mundo'].forEach(f => {
         const btn = document.getElementById('map-tab-' + f);
         btn.className = (f === filter)
-          ? 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-slate-900 text-white'
-          : 'px-3.5 py-1.5 rounded-full text-xs font-medium bg-white border border-slate-200 text-slate-700';
+          ? 'gold-pill-btn gold-pill-active px-3.5 py-1.5 rounded-full text-xs border'
+          : 'gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-full text-xs border';
       });
+      renderMapSection();
+    }
+
+    function selectStateFromMap(ufCode) {
+      selectedMapUf = (selectedMapUf === ufCode) ? null : ufCode;
+      if (selectedMapUf) {
+        mapGalleryFilter = 'brasil';
+        ['todos', 'brasil', 'mundo'].forEach(f => {
+          const btn = document.getElementById('map-tab-' + f);
+          btn.className = (f === 'brasil')
+            ? 'gold-pill-btn gold-pill-active px-3.5 py-1.5 rounded-full text-xs border'
+            : 'gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-full text-xs border';
+        });
+      }
       renderMapSection();
     }
 
@@ -1187,30 +1582,243 @@
       document.getElementById('br-progress-text').textContent = `${visitedBr.length} / 27 (${brPct}%)`;
       document.getElementById('br-progress-bar').style.width = `${brPct}%`;
       document.getElementById('world-progress-text').textContent = `${visitedWorld.length} / 195 (${worldPct}%)`;
-      document.getElementById('world-progress-bar').style.width = `${Math.max(1, worldPct)}%`;
+      document.getElementById('world-progress-bar').style.width = `${Math.max(1.5, worldPct)}%`;
 
       document.getElementById('br-uf-buttons').innerHTML = ALL_BRAZIL_UFS.map(uf => {
         const isVisited = visitedBr.some(p => p.code === uf);
-        return `<span class="px-2.5 py-1 rounded-lg text-xs font-semibold border ${isVisited ? 'bg-slate-900 text-white border-slate-900' : 'bg-slate-50 text-slate-400 border-slate-200'}">${uf}</span>`;
+        const isSelected = selectedMapUf === uf;
+        const baseClass = isSelected
+          ? 'bg-amber-500 text-white border-amber-600 shadow-sm'
+          : isVisited
+            ? 'bg-amber-50 text-amber-900 border-amber-300 hover:bg-amber-100 font-bold'
+            : 'bg-stone-50 text-stone-400 border-stone-200';
+        return `<button onclick="${isVisited ? `selectStateFromMap('${uf}')` : ''}" class="px-2.5 py-1 rounded-lg text-xs font-semibold border transition ${isVisited ? 'cursor-pointer' : 'cursor-default'} ${baseClass}">${uf}</button>`;
       }).join('');
 
-      const filtered = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
+      const clearBtn = document.getElementById('br-map-clear-btn');
+      const ufBadge = document.getElementById('map-active-uf-badge');
+      if (selectedMapUf) {
+        clearBtn.classList.remove('hidden');
+        ufBadge.textContent = 'Estado selecionado: ' + selectedMapUf;
+        ufBadge.classList.remove('hidden');
+      } else {
+        clearBtn.classList.add('hidden');
+        ufBadge.classList.add('hidden');
+      }
+
+      let filtered = appData.mapPlaces.filter(p => mapGalleryFilter === 'todos' || p.type === mapGalleryFilter);
+      if (selectedMapUf) {
+        filtered = filtered.filter(p => p.type === 'brasil' && p.code === selectedMapUf);
+      }
+
       document.getElementById('map-places-grid').innerHTML = filtered.map(place => `
         <div class="theme-card">
-          <div class="card-img-header" style="background-image: url('${place.img}'); height: 150px;">
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-slate-900 border border-slate-200">
+          <div class="card-img-header" style="height: 156px;">
+            <img src="${place.img}" alt="${place.name}" loading="lazy" class="w-full h-full object-cover"
+                 onerror="this.onerror=null; this.src=fallbackSvgDataUri('${place.name.replace(/'/g, '')}');" />
+            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-stone-900 border border-amber-200 shadow-sm">
               ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
             </span>
-            <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-medium bg-slate-900/80 text-white">
+            <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50/95 text-amber-900 border border-amber-300 shadow-sm">
               ${place.date}
             </span>
           </div>
           <div class="p-4 pt-3">
-            <h4 class="text-base font-bold text-slate-900">${place.name}</h4>
-            <p class="text-xs text-slate-500 mt-1">${place.notes}</p>
+            <h4 class="text-base font-bold text-stone-900">${place.name}</h4>
+            <p class="text-xs text-stone-500 mt-1 leading-relaxed">${place.notes}</p>
           </div>
         </div>
       `).join('');
+    }
+
+    async function initInteractiveMaps() {
+      const brDom = document.getElementById('brazil-echarts-map');
+      const worldDom = document.getElementById('world-echarts-map');
+      if (typeof echarts === 'undefined') {
+        brDom.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-stone-500 p-4 text-center">Biblioteca de mapas indisponível offline. Use os botões de UF acima.</div>';
+        worldDom.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-stone-500 p-4 text-center">Biblioteca de mapas indisponível offline.</div>';
+        return;
+      }
+
+      const visitedBrMap = {};
+      appData.mapPlaces.filter(p => p.type === 'brasil').forEach(p => { visitedBrMap[p.code] = p; });
+
+      // Carregar GeoJSON do Brasil (27 UFs)
+      try {
+        const brUrls = [
+          'https://raw.githubusercontent.com/codeforgermany/click_that_hood/main/public/data/brazil-states.geojson',
+          'https://raw.githubusercontent.com/codeforamerica/click_that_hood/master/public/data/brazil-states.geojson'
+        ];
+        let brGeo = null;
+        for (const u of brUrls) {
+          try {
+            const res = await fetch(u);
+            if (res.ok) { brGeo = await res.json(); break; }
+          } catch (_) {}
+        }
+
+        if (brGeo && brGeo.features) {
+          echarts.registerMap('brazil', brGeo);
+          brChartInstance = echarts.init(brDom);
+
+          const brSeriesData = brGeo.features.map(f => {
+            const name = f.properties.name;
+            const sigla = f.properties.sigla;
+            const visited = visitedBrMap[sigla];
+            return {
+              name: name,
+              sigla: sigla,
+              value: visited ? 1 : 0,
+              visitedInfo: visited || null,
+              itemStyle: visited
+                ? { areaColor: '#F59E0B', borderColor: '#B45309', borderWidth: 1.2 }
+                : { areaColor: '#F5F5F4', borderColor: '#D6D3D1', borderWidth: 0.9 }
+            };
+          });
+
+          brChartInstance.setOption({
+            tooltip: {
+              trigger: 'item',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#F59E0B',
+              borderWidth: 1,
+              textStyle: { color: '#1C1917', fontSize: 12 },
+              formatter: (params) => {
+                const d = params.data || {};
+                if (d.visitedInfo) {
+                  return `<div style="font-weight:700;color:#92400E;">🇧🇷 ${d.name} (${d.sigla})</div>
+                          <div style="color:#047857;font-weight:600;margin-top:2px;">✓ Estado Visitado</div>
+                          <div style="color:#57534E;font-size:11px;margin-top:2px;">${d.visitedInfo.notes}</div>`;
+                }
+                return `<div style="font-weight:600;color:#44403C;">${params.name} ${d.sigla ? '(' + d.sigla + ')' : ''}</div>
+                        <div style="color:#78716C;font-size:11px;margin-top:2px;">🎯 Ainda não visitado</div>`;
+              }
+            },
+            series: [{
+              name: 'Brasil',
+              type: 'map',
+              map: 'brazil',
+              roam: false,
+              selectedMode: false,
+              emphasis: {
+                label: { show: true, color: '#78350F', fontWeight: 'bold', fontSize: 11 },
+                itemStyle: { areaColor: '#FDE68A', borderColor: '#D97706', borderWidth: 1.5 }
+              },
+              data: brSeriesData
+            }]
+          });
+
+          brChartInstance.on('click', (params) => {
+            if (params.data && params.data.visitedInfo) {
+              selectStateFromMap(params.data.sigla);
+            }
+          });
+        } else {
+          renderBrazilTileGridFallback(brDom, visitedBrMap);
+        }
+      } catch (e) {
+        renderBrazilTileGridFallback(brDom, visitedBrMap);
+      }
+
+      // Carregar GeoJSON do Mundo
+      try {
+        const worldUrls = [
+          'https://cdn.jsdelivr.net/npm/echarts-map@3.0.1/world.json',
+          'https://raw.githubusercontent.com/apache/echarts/master/test/data/map/json/world.json'
+        ];
+        let worldGeo = null;
+        for (const u of worldUrls) {
+          try {
+            const res = await fetch(u);
+            if (res.ok) { worldGeo = await res.json(); break; }
+          } catch (_) {}
+        }
+
+        if (worldGeo) {
+          echarts.registerMap('world', worldGeo);
+          worldChartInstance = echarts.init(worldDom);
+
+          const visitedCountries = {};
+          appData.mapPlaces.filter(p => p.type === 'mundo').forEach(p => {
+            visitedCountries[p.worldName || p.name] = p;
+          });
+
+          const worldSeriesData = Object.keys(visitedCountries).map(countryKey => ({
+            name: countryKey,
+            value: 1,
+            visitedInfo: visitedCountries[countryKey],
+            itemStyle: { areaColor: '#F59E0B', borderColor: '#B45309', borderWidth: 1 }
+          }));
+
+          worldChartInstance.setOption({
+            tooltip: {
+              trigger: 'item',
+              backgroundColor: '#FFFFFF',
+              borderColor: '#F59E0B',
+              borderWidth: 1,
+              textStyle: { color: '#1C1917', fontSize: 12 },
+              formatter: (params) => {
+                const info = params.data && params.data.visitedInfo;
+                if (info) {
+                  return `<div style="font-weight:700;color:#92400E;">🌎 ${info.name}</div>
+                          <div style="color:#047857;font-weight:600;margin-top:2px;">✓ País Visitado (${info.date})</div>`;
+                }
+                return `<div style="font-weight:600;color:#44403C;">${params.name}</div>
+                        <div style="color:#78716C;font-size:11px;margin-top:2px;">🎯 Ainda não visitado</div>`;
+              }
+            },
+            series: [{
+              name: 'Mundo',
+              type: 'map',
+              map: 'world',
+              roam: true,
+              selectedMode: false,
+              itemStyle: {
+                areaColor: '#F5F5F4',
+                borderColor: '#D6D3D1',
+                borderWidth: 0.6
+              },
+              emphasis: {
+                label: { show: false },
+                itemStyle: { areaColor: '#FDE68A', borderColor: '#D97706' }
+              },
+              data: worldSeriesData
+            }]
+          });
+        } else {
+          worldDom.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-stone-500 p-4">Mapa mundial requer conexão com a internet para carregar o GeoJSON.</div>';
+        }
+      } catch (e) {
+        worldDom.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-stone-500 p-4">Não foi possível carregar o mapa mundial.</div>';
+      }
+
+      window.addEventListener('resize', () => {
+        if (brChartInstance) brChartInstance.resize();
+        if (worldChartInstance) worldChartInstance.resize();
+      });
+    }
+
+    function renderBrazilTileGridFallback(container, visitedBrMap) {
+      const tileMap = [
+        ['RR',1,0],['AP',3,0],
+        ['AM',0,1],['PA',2,1],['MA',3,1],['CE',4,1],['RN',5,1],
+        ['AC',0,2],['RO',1,2],['TO',2,2],['PI',3,2],['PB',5,2],
+        ['MT',1,3],['GO',2,3],['BA',4,3],['PE',5,3],
+        ['MS',1,4],['DF',2,4],['MG',3,4],['SE',5,4],['AL',6,4],
+        ['SP',2,5],['ES',4,5],['RJ',3,5],
+        ['PR',2,6],['SC',2,7],['RS',1,8]
+      ];
+      const rects = tileMap.map(([uf, x, y]) => {
+        const v = visitedBrMap[uf];
+        const fill = v ? '#F59E0B' : '#F5F5F4';
+        const stroke = v ? '#B45309' : '#D6D3D1';
+        const txt = v ? '#FFFFFF' : '#78716C';
+        const px = 28 + x * 46;
+        const py = 12 + y * 36;
+        const click = v ? `onclick="selectStateFromMap('${uf}')" style="cursor:pointer"` : '';
+        return `<g ${click}><rect x="${px}" y="${py}" width="40" height="30" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="1.2"/><text x="${px+20}" y="${py+19}" text-anchor="middle" font-size="11" font-weight="700" fill="${txt}">${uf}</text></g>`;
+      }).join('');
+      container.innerHTML = `<svg viewBox="0 0 380 345" class="w-full h-full">${rects}</svg>`;
     }
 
     // Inicialização Geral
@@ -1218,6 +1826,7 @@
     renderLife();
     renderGamePills();
     renderGames();
+    renderLolYearSelector();
     renderLolRank();
     updateExerciseBanner();
     renderEnduranceRow('running', 'running-grid');
@@ -1229,6 +1838,7 @@
     renderKnowledgePills();
     renderKnowledge();
     renderMapSection();
+    initInteractiveMaps();
   </script>
 </body>
 </html>
