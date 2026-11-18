@@ -1226,6 +1226,65 @@
       return `<div class="px-3.5 py-2 rounded-xl bg-white text-stone-700 border border-stone-200 font-bold text-sm whitespace-nowrap">#${pos}</div>`;
     }
 
+    function buildFullLolCard(p, posOverride = null) {
+      const pos = posOverride !== null ? posOverride : p.rank;
+      const borderHighlight = pos === 1
+        ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+        : pos <= 3
+          ? 'border-amber-200/70 bg-white'
+          : 'border-stone-200 bg-white';
+      return `
+        <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-100">
+            <div class="flex items-center gap-4">
+              ${getRankMedalBadge(pos)}
+              <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-amber-200 bg-stone-100" alt="${p.name}" />
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="text-lg font-bold text-stone-900">${p.name}</h3>
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">${p.riotId}</span>
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Tier ${p.tier}</span>
+                </div>
+                <p class="text-xs text-stone-500 mt-1"><strong>Função Principal:</strong> ${p.role} • <strong>Campeões Assinatura:</strong> ${p.signature}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 self-start lg:self-center">
+              <div class="text-right bg-amber-50/60 border border-amber-200/70 px-4 py-2 rounded-xl">
+                <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-800">Nota Composta</span>
+                <span class="text-2xl font-bold text-stone-900">${p.score} <span class="text-xs font-normal text-stone-400">/ 100</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Elo Atual & Pico</span>
+              <div class="font-bold text-stone-900 mt-1">${p.currentElo}</div>
+              <div class="text-stone-500 mt-0.5">Pico: ${p.peakElo}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Winrate, KDA & KP%</span>
+              <div class="font-bold text-stone-900 mt-1">${p.winrate}</div>
+              <div class="text-stone-500 mt-0.5">KDA: ${p.kda}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Conversão (DPM & CS/m)</span>
+              <div class="font-bold text-stone-900 mt-1">${p.dpmGpm}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Visão & Challenges</span>
+              <div class="font-bold text-stone-900 mt-1">${p.visionChallenges}</div>
+            </div>
+          </div>
+
+          <p class="text-xs text-stone-600 mt-3 pt-3 border-t border-stone-100 leading-relaxed">
+            <strong>Veredito Analítico:</strong> ${p.summary}
+          </p>
+        </div>
+      `;
+    }
+
     function renderLolRank() {
       const container = document.getElementById('lol-rank-container');
       const subtitle = document.getElementById('lol-rank-subtitle');
@@ -1236,64 +1295,7 @@
         subtitle.textContent = 'Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico Completo';
         counter.textContent = '12 Jogadores Analisados • Todos os Tempos';
         pillarsGrid.style.display = 'grid';
-
-        container.innerHTML = appData.lolFriendsRank.map(p => {
-          const borderHighlight = p.rank === 1
-            ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
-            : p.rank <= 3
-              ? 'border-amber-200/70 bg-white'
-              : 'border-stone-200 bg-white';
-          return `
-            <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
-              <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-100">
-                <div class="flex items-center gap-4">
-                  ${getRankMedalBadge(p.rank)}
-                  <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-amber-200 bg-stone-100" alt="${p.name}" />
-                  <div>
-                    <div class="flex flex-wrap items-center gap-2">
-                      <h3 class="text-lg font-bold text-stone-900">${p.name}</h3>
-                      <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">${p.riotId}</span>
-                      <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Tier ${p.tier}</span>
-                    </div>
-                    <p class="text-xs text-stone-500 mt-1"><strong>Função Principal:</strong> ${p.role} • <strong>Campeões Assinatura:</strong> ${p.signature}</p>
-                  </div>
-                </div>
-
-                <div class="flex items-center gap-3 self-start lg:self-center">
-                  <div class="text-right bg-amber-50/60 border border-amber-200/70 px-4 py-2 rounded-xl">
-                    <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-800">Nota Composta</span>
-                    <span class="text-2xl font-bold text-stone-900">${p.score} <span class="text-xs font-normal text-stone-400">/ 100</span></span>
-                  </div>
-                </div>
-              </div>
-
-              <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
-                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
-                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Elo Atual & Pico</span>
-                  <div class="font-bold text-stone-900 mt-1">${p.currentElo}</div>
-                  <div class="text-stone-500 mt-0.5">Pico: ${p.peakElo}</div>
-                </div>
-                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
-                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Winrate, KDA & KP%</span>
-                  <div class="font-bold text-stone-900 mt-1">${p.winrate}</div>
-                  <div class="text-stone-500 mt-0.5">KDA: ${p.kda}</div>
-                </div>
-                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
-                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Conversão (DPM & CS/m)</span>
-                  <div class="font-bold text-stone-900 mt-1">${p.dpmGpm}</div>
-                </div>
-                <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
-                  <span class="text-[11px] font-semibold text-amber-800 uppercase">Visão & Challenges</span>
-                  <div class="font-bold text-stone-900 mt-1">${p.visionChallenges}</div>
-                </div>
-              </div>
-
-              <p class="text-xs text-stone-600 mt-3 pt-3 border-t border-stone-100 leading-relaxed">
-                <strong>Veredito Analítico:</strong> ${p.summary}
-              </p>
-            </div>
-          `;
-        }).join('');
+        container.innerHTML = appData.lolFriendsRank.map(p => buildFullLolCard(p)).join('');
         return;
       }
 
@@ -1312,16 +1314,26 @@
         }
       });
 
-      activePlayers.sort((a, b) => b.yData.score - a.yData.score);
-
-      subtitle.textContent = `Classificação anual consolidada em ${yearLabel} (ordenado pelo maior Elo alcançado no ano)`;
-      counter.textContent = `${activePlayers.length} Ativos em ${yearLabel}`;
-      pillarsGrid.style.display = 'none';
+      const isDetailedYear = selectedLolYear === '2026';
+      if (isDetailedYear) {
+        activePlayers.sort((a, b) => b.player.score - a.player.score);
+        subtitle.textContent = 'Avaliação completa da Temporada 2026 (5 Pilares: Elo, Impacto, Conversão, Visão & Challenges)';
+        counter.textContent = `${activePlayers.length} Ativos em 2026 • Dados Completos`;
+        pillarsGrid.style.display = 'grid';
+      } else {
+        activePlayers.sort((a, b) => b.yData.score - a.yData.score);
+        subtitle.textContent = `Classificação anual consolidada em ${yearLabel} (ordenado pelo maior Elo alcançado no ano)`;
+        counter.textContent = `${activePlayers.length} Ativos em ${yearLabel}`;
+        pillarsGrid.style.display = 'none';
+      }
 
       const activeCards = activePlayers.map((entry, idx) => {
         const pos = idx + 1;
         const p = entry.player;
         const y = entry.yData;
+        if (isDetailedYear) {
+          return buildFullLolCard(p, pos);
+        }
         const borderHighlight = pos === 1
           ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
           : 'border-stone-200 bg-white';
