@@ -123,24 +123,27 @@
         </div>
       </div>
 
-      <nav class="flex items-center gap-1.5 overflow-x-auto pb-1 sm:pb-0 bg-stone-100/80 p-1.5 rounded-2xl border border-stone-200/90">
-        <button class="tab-btn active flex items-center gap-2" onclick="switchTab('conquistas', this)">
+      <nav class="flex flex-wrap items-center gap-1.5 bg-stone-100/80 p-1.5 rounded-2xl border border-stone-200/90">
+        <button class="tab-btn active flex items-center gap-1.5" onclick="switchTab('conquistas', this)">
           <span>🏆</span><span>Conquistas</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('jogos', this)">
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('jogos', this)">
           <span>🎮</span><span>Jogos</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('rank', this)">
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('rank', this)">
           <span>⚔️</span><span>Rank</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('exercicio', this)">
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('exercicio', this)">
           <span>🏋️</span><span>Exercício</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('conhecimento', this)">
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('conhecimento', this)">
           <span>🎓</span><span>Conhecimento</span>
         </button>
-        <button class="tab-btn flex items-center gap-2" onclick="switchTab('mapa', this)">
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('mapa', this)">
           <span>🗺️</span><span>Mapa</span>
+        </button>
+        <button class="tab-btn flex items-center gap-1.5" onclick="switchTab('circulo', this)">
+          <span>🌟</span><span>Círculo</span>
         </button>
       </nav>
     </div>
@@ -152,10 +155,10 @@
     <section id="tab-conquistas" class="tab-panel active space-y-6">
       <div id="life-stats-banner"></div>
 
-      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div id="life-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
+      <div class="bg-white border border-stone-200 rounded-2xl p-3.5 shadow-sm space-y-3">
+        <div id="life-filter-pills" class="flex flex-wrap items-center gap-2"></div>
 
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-stone-100">
           <select id="life-status-filter" onchange="renderLife()" class="gold-select">
             <option value="all">Status: Todos</option>
             <option value="unlocked">Status: Concluídos</option>
@@ -163,7 +166,7 @@
           </select>
 
           <select id="life-sort-select" onchange="renderLife()" class="gold-select">
-            <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+            <option value="rarity_asc">Ordenar: Mais Raros</option>
             <option value="date">Ordenar: Data</option>
           </select>
         </div>
@@ -176,10 +179,10 @@
     <section id="tab-jogos" class="tab-panel space-y-6">
       <div id="games-stats-banner"></div>
 
-      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div id="game-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
+      <div class="bg-white border border-stone-200 rounded-2xl p-3.5 shadow-sm space-y-3">
+        <div id="game-filter-pills" class="flex flex-wrap items-center gap-2"></div>
 
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-stone-100">
           <select id="game-status-filter" onchange="renderGames()" class="gold-select">
             <option value="all">Status: Todos</option>
             <option value="unlocked">Status: Concluídos</option>
@@ -187,7 +190,7 @@
           </select>
 
           <select id="game-sort-select" onchange="renderGames()" class="gold-select">
-            <option value="rarity_asc">Ordenar: Menor % de Jogadores</option>
+            <option value="rarity_asc">Ordenar: Mais Raros</option>
             <option value="recent">Ordenar: Mais Recentes</option>
           </select>
         </div>
@@ -216,33 +219,12 @@
         <div class="pt-3 border-t border-stone-100 space-y-2.5">
           <div class="flex flex-wrap items-center justify-between gap-2">
             <span class="text-xs font-bold uppercase tracking-wider text-amber-800">✦ Seletor de Período (Todos os Tempos ou Por Ano)</span>
-            <span class="text-[11px] text-stone-400">Anos com múltiplos splits (2023 e 2024) consolidados pelo pico anual</span>
+            <span class="text-[11px] text-stone-400">2026 avalia apenas S2026 • Todos os Tempos inclui histórico, maestria e Challenges</span>
           </div>
           <div id="lol-year-selector" class="flex flex-wrap items-center gap-1.5"></div>
         </div>
 
-        <div id="lol-pillars-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1">
-          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-amber-800 uppercase">1. Elo & Pico (30 pts)</span>
-            <p class="text-xs text-stone-600 mt-1">SoloQ, Flex, Top % BR e consistência multi-ano.</p>
-          </div>
-          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-amber-800 uppercase">2. Impacto (25 pts)</span>
-            <p class="text-xs text-stone-600 mt-1">Winrate real, KDA e Participação em Abates (KP%).</p>
-          </div>
-          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-amber-800 uppercase">3. Conversão (20 pts)</span>
-            <p class="text-xs text-stone-600 mt-1">Dano por Minuto (DPM), DPM/Ouro e Farm (CS/m).</p>
-          </div>
-          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3">
-            <span class="text-[11px] font-bold text-amber-800 uppercase">4. Macro/Visão (15 pts)</span>
-            <p class="text-xs text-stone-600 mt-1">Placar de Visão/min (VSPM) e pressão de rota.</p>
-          </div>
-          <div class="bg-stone-50/80 border border-stone-200/80 rounded-xl p-3 col-span-2 sm:col-span-1">
-            <span class="text-[11px] font-bold text-amber-800 uppercase">5. Pool & Feitos (10 pts)</span>
-            <p class="text-xs text-stone-600 mt-1">Versatilidade de campeões e pontos em Challenges.</p>
-          </div>
-        </div>
+        <div id="lol-pillars-grid" class="grid grid-cols-2 sm:grid-cols-5 gap-2.5 pt-1"></div>
       </div>
 
       <div id="lol-rank-container" class="space-y-4"></div>
@@ -259,7 +241,7 @@
             <span class="text-2xl">⏱️</span>
             <div>
               <h2 class="text-base font-bold text-stone-900">Recordes de Tempo & Resistência</h2>
-              <p class="text-xs text-stone-500">Corrida, Natação e Ciclismo com melhor tempo e raridade populacional.</p>
+              <p class="text-xs text-stone-500">Corrida, Natação e Ciclismo com melhor tempo e raridade na população mundial.</p>
             </div>
           </div>
 
@@ -289,8 +271,8 @@
 
       <!-- BLOCO 2: Desafios Físicos, Calistenia & Dança -->
       <div class="space-y-4 pt-4 border-t border-stone-200">
-        <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
-          <div id="body-filter-pills" class="flex items-center gap-2 overflow-x-auto"></div>
+        <div class="bg-white border border-stone-200 rounded-2xl p-3.5 shadow-sm flex flex-wrap items-center justify-between gap-3">
+          <div id="body-filter-pills" class="flex flex-wrap items-center gap-2"></div>
 
           <div class="flex flex-wrap items-center gap-2">
             <select id="body-skill-status" onchange="renderBodySkills()" class="gold-select text-xs">
@@ -299,7 +281,7 @@
               <option value="hunting">Status: Quero Conseguir</option>
             </select>
             <select id="body-skill-sort" onchange="renderBodySkills()" class="gold-select text-xs">
-              <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+              <option value="rarity_asc">Ordenar: Mais Raros</option>
               <option value="date">Ordenar: Data</option>
             </select>
           </div>
@@ -319,7 +301,7 @@
             </div>
           </div>
 
-          <div class="flex items-center gap-1.5 overflow-x-auto">
+          <div class="flex flex-wrap items-center gap-1.5">
             <button onclick="filterGym('Todos')" class="gym-pill gold-pill-btn gold-pill-active px-3 py-1.5 rounded-xl text-xs border">Todos</button>
             <button onclick="filterGym('Peito')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Peito</button>
             <button onclick="filterGym('Costas')" class="gym-pill gold-pill-btn gold-pill-inactive px-3 py-1.5 rounded-xl text-xs border">Costas</button>
@@ -337,10 +319,10 @@
     <section id="tab-conhecimento" class="tab-panel space-y-6">
       <div id="knowledge-stats-banner"></div>
 
-      <div class="bg-white border border-stone-200 rounded-2xl p-3 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div id="knowledge-filter-pills" class="flex items-center gap-2 overflow-x-auto pb-1 sm:pb-0"></div>
+      <div class="bg-white border border-stone-200 rounded-2xl p-3.5 shadow-sm space-y-3">
+        <div id="knowledge-filter-pills" class="flex flex-wrap items-center gap-2"></div>
 
-        <div class="flex flex-wrap items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2 pt-2 border-t border-stone-100">
           <select id="knowledge-status-filter" onchange="renderKnowledge()" class="gold-select">
             <option value="all">Status: Todos</option>
             <option value="unlocked">Status: Concluídos</option>
@@ -348,7 +330,7 @@
           </select>
 
           <select id="knowledge-sort-select" onchange="renderKnowledge()" class="gold-select">
-            <option value="rarity_asc">Ordenar: Mais Raros (Menor %)</option>
+            <option value="rarity_asc">Ordenar: Mais Raros</option>
             <option value="alpha">Ordenar: Nome (A–Z)</option>
           </select>
         </div>
@@ -381,52 +363,51 @@
               <div id="world-progress-bar" class="h-full gold-progress-fill transition-all duration-300"></div>
             </div>
             <p class="text-xs text-stone-500 mt-3 leading-relaxed">
-              Estados e países visitados destacados em <strong class="text-amber-700">Dourado</strong> no mapa interativo abaixo. Passe o mouse para detalhes ou clique em um estado visitado para filtrar a galeria.
+              Estados e países visitados destacados em <strong class="text-amber-700">Dourado</strong> e os demais em <strong class="text-stone-700">Creme com bordas nítidas</strong>. Clique em qualquer card abaixo para abrir o álbum de fotos daquele destino.
             </p>
           </div>
-          <div class="flex flex-wrap items-center gap-3 mt-4 pt-3 border-t border-stone-100 text-xs">
+          <div class="flex flex-wrap items-center gap-4 mt-4 pt-3 border-t border-stone-100 text-xs">
             <span class="inline-flex items-center gap-1.5 text-stone-700 font-medium">
-              <span class="w-3 h-3 rounded-sm bg-amber-500 border border-amber-600 inline-block"></span>Visitado
+              <span class="w-3.5 h-3.5 rounded-sm inline-block" style="background:#F59E0B;border:1px solid #92400E;"></span>Visitado
             </span>
-            <span class="inline-flex items-center gap-1.5 text-stone-500">
-              <span class="w-3 h-3 rounded-sm bg-stone-100 border border-stone-300 inline-block"></span>Ainda não visitado
+            <span class="inline-flex items-center gap-1.5 text-stone-600">
+              <span class="w-3.5 h-3.5 rounded-sm inline-block" style="background:#EAE1D0;border:1px solid #A89F91;"></span>Ainda não visitado
             </span>
           </div>
         </div>
       </div>
 
-      <!-- Mapas Interativos Estilo Eleições (Brasil por Estado + Mundo por País) -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
-        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <div>
-              <h3 class="text-sm font-bold text-stone-900">🇧🇷 Mapa Interativo do Brasil (por Estado)</h3>
-              <p class="text-[11px] text-stone-500">Clique ou passe o cursor sobre qualquer UF</p>
-            </div>
-            <button onclick="selectStateFromMap(null)" id="br-map-clear-btn" class="hidden px-2.5 py-1 rounded-lg text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100">
-              Limpar filtro
-            </button>
+      <!-- Mapa Interativo em Largura Total com Seletor Brasil / Mundo -->
+      <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <h3 id="active-map-title" class="text-base font-bold text-stone-900">🇧🇷 Mapa Interativo do Brasil (por Estado)</h3>
+            <p id="active-map-subtitle" class="text-xs text-stone-500">Passe o mouse sobre qualquer estado ou clique em um estado visitado para filtrar a galeria</p>
           </div>
-          <div id="brazil-echarts-map" class="w-full h-[360px] rounded-xl bg-stone-50/50 border border-stone-100"></div>
+
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="selectStateFromMap(null)" id="br-map-clear-btn" class="hidden px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300 hover:bg-amber-100">
+              ✕ Limpar filtro UF
+            </button>
+            <div class="flex items-center gap-1 bg-stone-100/90 p-1 rounded-xl border border-stone-200">
+              <button onclick="switchActiveMapView('brasil')" id="map-view-btn-brasil" class="gold-pill-btn gold-pill-active px-3.5 py-1.5 rounded-lg text-xs border">
+                🇧🇷 Brasil (27 UFs)
+              </button>
+              <button onclick="switchActiveMapView('mundo')" id="map-view-btn-mundo" class="gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-lg text-xs border border-transparent">
+                🌎 Mundo (195 Países)
+              </button>
+            </div>
+          </div>
         </div>
 
-        <div class="bg-white border border-stone-200 rounded-2xl p-5 shadow-sm">
-          <div class="flex items-center justify-between gap-2 mb-3">
-            <div>
-              <h3 class="text-sm font-bold text-stone-900">🌎 Mapa Interativo do Mundo (por País)</h3>
-              <p class="text-[11px] text-stone-500">Arraste ou dê zoom para explorar os países visitados</p>
-            </div>
-            <span class="px-2.5 py-1 rounded-lg text-[11px] font-semibold bg-amber-50 text-amber-800 border border-amber-200">
-              América do Sul
-            </span>
-          </div>
-          <div id="world-echarts-map" class="w-full h-[360px] rounded-xl bg-stone-50/50 border border-stone-100"></div>
-        </div>
+        <div id="brazil-echarts-map" class="w-full h-[460px] sm:h-[520px] rounded-2xl border border-amber-200/80" style="background-color: #F7F3EB;"></div>
+        <div id="world-echarts-map" class="hidden w-full h-[460px] sm:h-[520px] rounded-2xl border border-amber-200/80" style="background-color: #F7F3EB;"></div>
       </div>
 
       <div class="bg-white border border-stone-200 rounded-2xl p-4 shadow-sm flex flex-wrap items-center justify-between gap-3">
-        <div class="flex items-center gap-2">
+        <div class="flex flex-wrap items-center gap-2">
           <h3 class="text-sm font-bold text-stone-900">📸 Galeria de Lugares Visitados</h3>
+          <span class="text-xs text-stone-400">(clique no card para abrir o álbum de fotos)</span>
           <span id="map-active-uf-badge" class="hidden px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-50 text-amber-800 border border-amber-300"></span>
         </div>
         <div class="flex items-center gap-2">
@@ -439,7 +420,55 @@
       <div id="map-places-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5"></div>
     </section>
 
+    <!-- ================= ABA 7: CÍRCULO (PESSOAS & REFERÊNCIAS — ALL-TIME) ================= -->
+    <section id="tab-circulo" class="tab-panel space-y-6">
+      <div id="circle-header-banner"></div>
+      <div id="social-circle-container" class="space-y-4"></div>
+    </section>
+
   </main>
+
+  <!-- MODAL ÁLBUM DE FOTOS POR LOCAL (MAPA) -->
+  <div id="place-album-modal" class="fixed inset-0 z-50 hidden bg-stone-900/50 backdrop-blur-sm flex items-center justify-center p-4" onclick="if(event.target === this) closePlaceAlbum()">
+    <div class="bg-white border border-amber-200 rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden shadow-2xl">
+      <div class="px-6 py-4 bg-gradient-to-r from-amber-50/70 to-white border-b border-amber-200/70 flex flex-wrap items-center justify-between gap-3">
+        <div>
+          <div class="flex items-center gap-2">
+            <span id="album-place-code" class="px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-900 border border-amber-300"></span>
+            <h3 id="album-place-title" class="text-lg font-bold text-stone-900"></h3>
+          </div>
+          <p id="album-place-notes" class="text-xs text-stone-500 mt-1"></p>
+        </div>
+        <div class="flex items-center gap-2">
+          <label class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 cursor-pointer transition">
+            ➕ Testar foto do PC
+            <input type="file" id="album-photo-upload" accept="image/*" multiple class="hidden" onchange="handleAlbumPhotoPreview(event)" />
+          </label>
+          <button onclick="closePlaceAlbum()" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-white hover:bg-stone-100 text-stone-700 border border-stone-200 transition">
+            Fechar ✕
+          </button>
+        </div>
+      </div>
+
+      <div class="p-6 overflow-y-auto space-y-4">
+        <div id="album-photos-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4"></div>
+        <div class="bg-amber-50/50 border border-amber-200/70 rounded-xl p-3.5 text-xs text-stone-600 leading-relaxed">
+          <strong class="text-amber-900">💡 Como deixar suas fotos fixas no GitHub:</strong> suba as fotos em uma pasta <code class="bg-white px-1.5 py-0.5 rounded border border-amber-200">fotos/</code> no repositório <code class="bg-white px-1.5 py-0.5 rounded border border-amber-200">life-rpg</code> e adicione os links/caminhos no array <code class="bg-white px-1.5 py-0.5 rounded border border-amber-200">photos</code> deste destino dentro de <code class="bg-white px-1.5 py-0.5 rounded border border-amber-200">appData.mapPlaces</code>.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX DE FOTO AMPLIADA -->
+  <div id="photo-lightbox" class="fixed inset-0 z-[60] hidden bg-stone-950/80 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeLightbox()">
+    <div class="max-w-5xl w-full flex flex-col items-center gap-3" onclick="event.stopPropagation()">
+      <img id="lightbox-img" src="" alt="" class="max-h-[80vh] max-w-full rounded-2xl shadow-2xl border border-amber-200/40 object-contain bg-white" />
+      <div class="flex items-center gap-4 bg-white/95 px-4 py-2 rounded-full border border-amber-200 shadow-lg">
+        <span id="lightbox-caption" class="text-xs font-medium text-stone-800"></span>
+        <button onclick="closeLightbox()" class="text-xs font-bold text-amber-900 hover:underline">Fechar ✕</button>
+      </div>
+    </div>
+  </div>
 
   <!-- SCRIPTS -->
   <script>
@@ -452,8 +481,8 @@
 
       if (tabId === 'mapa') {
         setTimeout(() => {
-          if (brChartInstance) brChartInstance.resize();
-          if (worldChartInstance) worldChartInstance.resize();
+          if (activeMapView === 'brasil' && brChartInstance) brChartInstance.resize();
+          if (activeMapView === 'mundo' && worldChartInstance) worldChartInstance.resize();
         }, 60);
       }
     }
@@ -543,16 +572,17 @@
     }
 
     // Card Padrão Branco & Dourado
-    function buildStandardCard(item, categoryLabel, defaultSuffix = 'da população') {
+    function buildStandardCard(item, categoryLabel, defaultSuffix = 'da população mundial') {
       const suffix = item.rarityUnit || defaultSuffix;
       const imgClass = item.imgContain
-        ? 'w-full h-full object-contain p-2 bg-white'
+        ? 'w-full h-full object-contain p-2'
         : 'w-full h-full object-cover';
+      const headerBg = item.imgBg || (item.imgContain ? 'bg-white' : '');
       const cleanTitle = String(item.title || '').replace(/['"<>]/g, '');
       return `
         <div class="theme-card flex flex-col justify-between">
           <div>
-            <div class="card-img-header ${item.imgContain ? 'bg-white' : ''}">
+            <div class="card-img-header ${headerBg}">
               <img src="${item.img}" alt="${cleanTitle}" loading="lazy" class="${imgClass}"
                    onerror="this.onerror=null; this.src=fallbackSvgDataUri('${cleanTitle}');" />
               <div class="absolute top-3 left-3 z-10">
@@ -569,9 +599,9 @@
               <p class="text-sm text-stone-600 mt-1.5 leading-relaxed">${item.desc}</p>
             </div>
           </div>
-          <div class="px-5 pb-4 pt-3 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
-            <span>Raridade: <strong class="text-amber-900">${item.rarity}% ${suffix}</strong></span>
-            <span class="font-medium text-stone-500">${item.date || ''}</span>
+          <div class="px-4 pb-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2 text-[11px] text-stone-500">
+            <span class="leading-snug min-w-0">Raridade: <strong class="text-amber-900">${item.rarity}% ${suffix}</strong></span>
+            <span class="font-medium text-stone-500 shrink-0 whitespace-nowrap">${item.date || ''}</span>
           </div>
         </div>
       `;
@@ -670,18 +700,18 @@
         { id: 'Saber Jogar', name: 'Saber Jogar (Tabuleiro & Cartas)', icon: '♟️' }
       ],
       gameAchievements: [
-        { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, rarityUnit: 'dos jogadores', date: '2026', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://ddragon.leagueoflegends.com/cdn/img/champion/splash/Azir_0.jpg' },
+        { game: 'League of Legends', title: 'Challenger (Desafiante)', status: 'hunting', rarity: 0.02, rarityUnit: 'dos jogadores', date: '2026', desc: 'Alcançar o topo absoluto da fila ranqueada do servidor.', img: 'https://raw.communitydragon.org/latest/plugins/rcp-fe-lol-static-assets/global/default/images/ranked-emblem/emblem-challenger.png', imgContain: true, imgBg: 'bg-gradient-to-b from-amber-50/70 to-white' },
         { game: 'League of Legends', title: 'Arena God (Deus da Arena)', status: 'hunting', rarity: 0.1, rarityUnit: 'dos jogadores', date: '2026', desc: 'Vencer em 1º lugar no modo Arena com 60 campeões diferentes.', img: 'https://cmsassets.rgpub.io/sanity/images/dsfx7636/news_live/5568f896b459de6eca8e27e0b3bebe091d0f5efd-1751x985.jpg?accountingTag=LoL' },
         { game: 'League of Legends', title: 'Bots da Maldição do Veigar', status: 'unlocked', rarity: 9, rarityUnit: 'dos jogadores', date: '2024', desc: 'Vencer o Doom bots Maldição do Veigar.', img: 'https://wiki.leagueoflegends.com/en-us/images/thumb/Doom_Bots_2025_Promo.jpg/500px-Doom_Bots_2025_Promo.jpg?12f9b' },
         { game: 'League of Legends', title: 'Odisseia: Extração (Modo Mais Difícil)', status: 'unlocked', rarity: 2.9, rarityUnit: 'dos jogadores', date: '2018', desc: 'Completar o nível máximo de dificuldade do evento Odisseia.', img: 'https://static.wikia.nocookie.net/leagueoflegends/images/a/a1/Odyssey_2018_Promo_01.jpg/revision/latest?cb=20180913135244' },
         { game: 'Wild Rift', title: 'Monarca no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo da fila normal Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFcSX4F1G09X8VqkaWgFapfEWj4p5SLS2sG0fV-37lQTqxIqH_0FONpvkM&s=10' },
         { game: 'Wild Rift', title: 'Lenda no Wild Rift', status: 'unlocked', rarity: 2.0, rarityUnit: 'dos jogadores', date: '2025', desc: 'Rank máximo na fila lendária do Wild Rift.', img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT2sZGuw2qcyHOxeVjM5Jfj27EOJapmZFKJ7h3urtmQH3kg2ZE0Myd4QD0&s=10' },
 
-        { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, rarityUnit: 'da população', date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'hunting', rarity: 15.0, rarityUnit: 'da população', date: 'Meta', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, rarityUnit: 'da população', date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Truco', status: 'unlocked', rarity: 2.2, rarityUnit: 'da população', date: '2017', desc: 'Domínio das manilhas, sinais, blefes e contagem de tentos no Truco.', img: 'https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&q=80' },
-        { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, rarityUnit: 'da população', date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
+        { game: 'Saber Jogar', title: 'Saber Jogar Damas', status: 'unlocked', rarity: 28.0, rarityUnit: 'da população mundial', date: 'Concluído', desc: 'Domínio das regras e estratégias de captura no tabuleiro de Damas.', img: 'https://images.unsplash.com/photo-1611195974226-a6a9be9dd763?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Xadrez', status: 'hunting', rarity: 15.0, rarityUnit: 'da população mundial', date: 'Meta', desc: 'Conhecimento completo dos movimentos especiais, aberturas e xeque-mate.', img: 'https://images.unsplash.com/photo-1529699211952-734e80c4d42b?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Poker', status: 'hunting', rarity: 8.5, rarityUnit: 'da população mundial', date: 'Meta', desc: 'Dominar a hierarquia de mãos, apostas e leitura de mesa no Texas Hold\'em.', img: 'https://images.unsplash.com/photo-1511193311914-0346f16efe90?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Truco', status: 'unlocked', rarity: 2.2, rarityUnit: 'da população mundial', date: '2017', desc: 'Domínio das manilhas, sinais, blefes e contagem de tentos no Truco.', img: 'https://images.unsplash.com/photo-1541278107931-e006523892df?w=600&q=80' },
+        { game: 'Saber Jogar', title: 'Saber Jogar Gungi', status: 'hunting', rarity: 0.002, rarityUnit: 'da população mundial', date: 'Meta', desc: 'Aprender as regras táticas de empilhamento em 3 níveis do Gungi (Hunter x Hunter).', img: 'https://images.unsplash.com/photo-1528819622765-d6bcf132f793?w=600&q=80' }
       ],
 
       // --- ABA 3: RANKING LOL (TODOS OS TEMPOS + HISTÓRICO POR ANO) ---
@@ -712,6 +742,17 @@
           signature: 'Fizz (#1.572 Mundial • 424k), Orianna (381k), Jinx (64% WR)',
           summary: 'Líder em elo absoluto (Mestre 162 LP) e volume no High Elo. Tem farm de nível semi-profissional (8.4 CS/min de média geral em quase 600 jogos) e altíssima conversão de dano por ouro (908 DPM).',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Fizz.png',
+          s2026: {
+            score: 95.0, tier: 'S+',
+            elo: 'Mestre 132 LP (SoloQ) • Diamante 4 43 LP (Flex)',
+            peak: 'Mestre 162 LP na S2026 (Top 0.60% BR)',
+            winrate: '52% Geral (583 jogos na S2026)',
+            kda: '3.26:1 (44% KP)',
+            dpmGpm: '908 DPM • 8.4 CS/m (1.94 Dano/Ouro)',
+            visionPool: '0.80 VSPM • 68 campeões jogados na S2026',
+            signature: 'Fizz (67j, 57% WR), Ahri (50j, 54% WR), Jinx (44j, 64% WR), Orianna (37j, 54% WR)',
+            summary: 'Líder isolado da Temporada 2026: bateu Mestre 162 LP (Top 0.60% BR) mantendo 8.4 CS/min e 908 DPM em 583 partidas.'
+          },
           yearly: {
             '2026': { solo: 'Mestre 132 LP (Pico 162 LP)', flex: 'Diamante 4 43 LP', score: 7162, wr: '52% (583 jogos)', note: 'Top 0.60% BR na Solo/Duo com 8.4 CS/m e 908 DPM.' },
             '2025': { solo: 'Esmeralda 3 8 LP', flex: 'Esmeralda 2 81 LP', score: 5208, wr: 'Temporada regular', note: 'Manteve Esmeralda sólido em ambas as filas.' },
@@ -737,6 +778,17 @@
           signature: 'Rek\'Sai, Hecarim (64% WR), Thresh (63% WR), Zyra (100% WR), Lillia (100% WR)',
           summary: 'Maior eficiência cirúrgica do grupo: maior Winrate geral da temporada (60%), maior KDA (4.12), maior Participação em Abates (51%) e o maior Controle de Visão disparado (1.60 VSPM), mantendo Plat/Esmeralda/Diamante desde a S6.',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/RekSai.png',
+          s2026: {
+            score: 89.5, tier: 'S',
+            elo: 'Diamante 4 26 LP (SoloQ) • Esmeralda 1 66 LP (Flex)',
+            peak: 'Diamante 4 26 LP na S2026 (Top 4.32% BR)',
+            winrate: '60% Geral (54% SoloQ / 66% Flex • 96 jogos S2026)',
+            kda: '4.12:1 (51% KP — 1º do grupo na S2026)',
+            dpmGpm: '675 DPM • 5.5 CS/m (1.60 Dano/Ouro na JG/Supp)',
+            visionPool: '1.60 VSPM (1º do grupo) • 33 campeões na S2026',
+            signature: 'Rek\'Sai (12j), Hecarim (11j, 64% WR), Thresh (8j, 63% WR), Zyra (4j, 100% WR)',
+            summary: 'Maior eficiência cirúrgica da Temporada 2026: lidera o grupo em Winrate (60%), KDA (4.12), KP% (51%) e controle de visão (1.60 VSPM).'
+          },
           yearly: {
             '2026': { solo: 'Diamante 4 26 LP', flex: 'Esmeralda 1 66 LP', score: 6126, wr: '60% Geral (96 jogos)', note: '60% WR, 4.12 KDA e 1.60 VSPM — maior eficiência do grupo.' },
             '2025': { solo: 'Esmeralda 2 64 LP', flex: 'Platina 2 77 LP', score: 5364, wr: 'Temporada regular', note: 'Top 2 do grupo em 2025 no Esmeralda 2.' },
@@ -763,6 +815,17 @@
           signature: 'Ahri (70% WR em 46 jogos • 647k pts), Ambessa (71% WR), Riven (219k)',
           summary: 'Consistência histórica no Diamante, maior versatilidade de campeões do grupo (84 campeões jogados na S2026) e uma Ahri de 70% WR. Só fica atrás pelo alto número de mortes por jogo (7.7).',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Ahri.png',
+          s2026: {
+            score: 87.5, tier: 'A+',
+            elo: 'Diamante 4 93 LP (SoloQ) • Platina 3 89 LP (Flex)',
+            peak: 'Diamante 3 14 LP na S2026 (Top 3.52% BR)',
+            winrate: '56% Geral (246 jogos na S2026)',
+            kda: '1.85:1 (43% KP)',
+            dpmGpm: '791 DPM • 6.5 CS/m (1.90 Dano/Ouro)',
+            visionPool: '1.20 VSPM • 84 campeões na S2026 (maior pool)',
+            signature: 'Ahri (46j, 70% WR), Ambessa (7j, 71% WR), Riven (6j, 67% WR)',
+            summary: 'Segundo maior pico de elo em 2026 (Diamante 3 14 LP), maior pool de campeões da season (84) e uma Ahri de 70% WR. Fica logo atrás do 2º lugar pelo KDA baixo (7.7 mortes/jogo).'
+          },
           yearly: {
             '2026': { solo: 'Diamante 4 93 LP (Pico D3 14 LP)', flex: 'Platina 3 89 LP', score: 6214, wr: '56% (246 jogos)', note: 'Top 3.52% BR na SoloQ com 70% WR de Ahri.' },
             '2025': { solo: 'Platina 3 7 LP', flex: 'Ouro 2 94 LP', score: 4207, wr: 'Temporada regular', note: 'Ano mais tranquilo no Platina 3.' },
@@ -831,8 +894,19 @@
           signature: 'Diana (251j 55% WR • 306k), Jayce (60% WR • 645k), Fiddlesticks (#12.241 • 356k), Malphite (384k)',
           summary: 'Maior evolução da S2026 (saltou do Ouro histórico para Platina 1 na SoloQ e Esmeralda 4 81 LP na Flex). É o #1 do grupo em pontos de Challenges (16.580 pts), tem quase 5 milhões de maestria total e entrega 858 DPM.',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Diana.png',
+          s2026: {
+            score: 75.5, tier: 'B+',
+            elo: 'Platina 4 82 LP (SoloQ) • Esmeralda 4 81 LP (Flex)',
+            peak: 'Platina 1 1 LP (SoloQ) • Esmeralda 4 81 LP (Flex S2026)',
+            winrate: '51% Geral (55% Flex • 549 jogos S2026 • 70% últimos 20j)',
+            kda: '2.32:1 (41% KP • 22% Dano do Time)',
+            dpmGpm: '858 DPM (3º maior) • 5.7 CS/m (2.13 Dano/Ouro)',
+            visionPool: '1.00 VSPM • 42 campeões na S2026',
+            signature: 'Diana (251j, 55% WR), Gragas (109j, 50% WR), Malphite (40j, 53% WR), Jayce (25j, 60% WR)',
+            summary: 'Temporada forte em 2026 com 549 partidas, pico Esmeralda 4 81 LP na Flex e Platina 1 na SoloQ, além de 858 DPM e 55% WR em 251 jogos de Diana.'
+          },
           yearly: {
-            '2026': { solo: 'Platina 4 82 LP (Pico P1 1 LP)', flex: 'Esmeralda 4 81 LP', score: 4862, wr: '51% (549 jogos • 70% últimos 20j)', note: 'Pico Esmeralda 4 na Flex e Platina 1 na SoloQ; 16.580 pts Challenges.' },
+            '2026': { solo: 'Platina 4 82 LP (Pico P1 1 LP)', flex: 'Esmeralda 4 81 LP', score: 4862, wr: '51% (549 jogos • 70% últimos 20j)', note: 'Pico Esmeralda 4 na Flex e Platina 1 na SoloQ; 858 DPM em 549 jogos.' },
             '2025': { solo: 'Ouro 2 20 LP', flex: 'Platina 3 64 LP', score: 3960, wr: 'Temporada regular', note: 'Começou a subir forte na Flex (Platina 3).' },
             '2024': { solo: 'Ouro 4 8 LP (S2)', flex: 'Platina 3 0 LP (S1)', score: 3820, wr: 'S1 Prata 1 • S2 Ouro 4 • S3 Prata 4', note: 'Consolidado 2024: Pico Ouro 4 na SoloQ e Platina 3 na Flex.' },
             '2023': { solo: 'Ouro 4 30 LP (S1)', flex: 'Ouro 1 0 LP (S2)', score: 3130, wr: 'S1 Ouro 4 • S2 Prata 1', note: 'Alternou entre Prata 1 e Ouro.' },
@@ -856,6 +930,17 @@
           signature: 'Sett (63% WR em 82 jogos • 361k), Volibear (212k), Mordekaiser (63% WR)',
           summary: 'Grande grinder da temporada (512 partidas). Apesar do KDA/KP mais baixos pelo estilo de splitpush no Top, causa 823 DPM e tem quase 16 mil pontos de Desafios (Top Diff 0.2%).',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Sett.png',
+          s2026: {
+            score: 71.0, tier: 'B',
+            elo: 'Platina 3 68 LP (SoloQ) • Ouro 3 65 LP (Flex)',
+            peak: 'Esmeralda 4 19 LP na S2026 (Top 26.61% BR)',
+            winrate: '50% Geral (512 jogos na S2026)',
+            kda: '1.78:1 (39% KP — foco em Splitpush)',
+            dpmGpm: '823 DPM • 6.1 CS/m (1.98 Dano/Ouro)',
+            visionPool: '0.60 VSPM • 53 campeões na S2026',
+            signature: 'Sett (82j, 63% WR), Volibear (49% WR), Mordekaiser (63% WR)',
+            summary: 'Alto volume em 2026 (512 jogos), bateu Esmeralda 4 na SoloQ e brilha com 63% WR de Sett e Mordekaiser. Perde pontos na season pela visão baixa (0.60 VSPM) e KDA/KP menores.'
+          },
           yearly: {
             '2026': { solo: 'Platina 3 68 LP (Pico Esmeralda 4 19 LP)', flex: 'Ouro 3 65 LP', score: 5119, wr: '50% (512 jogos)', note: 'Maior grinder do grupo; bateu Esmeralda 4 na SoloQ em 2026.' },
             '2025': { solo: 'Platina 2 47 LP', flex: 'Prata 3 83 LP', score: 4347, wr: 'Temporada regular', note: 'Platina 2 na SoloQ.' },
@@ -875,6 +960,17 @@
           signature: 'Ambessa (57% WR), Jinx (80% WR), Xin Zhao (1.347 DPM), Naafiri (75% WR)',
           summary: 'Coringa capaz de jogar nas 4 rotas carregadoras entregando o maior DPM bruto do grupo (960 DPM) e 29 Pentakills registrados em desafios.',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Jinx.png',
+          s2026: {
+            score: 68.5, tier: 'B',
+            elo: 'Platina 3 38 LP (Flex) • Sem SoloQ em S2026',
+            peak: 'Platina 3 73 LP (Flex S2026)',
+            winrate: '53% Geral (81 jogos na S2026)',
+            kda: '2.98:1 (49% KP)',
+            dpmGpm: '960 DPM (1º bruto S2026) • 6.0 CS/m (2.17 Dano/Ouro)',
+            visionPool: '0.70 VSPM • 4 rotas jogadas na S2026 (ADC/Top/Mid/JG)',
+            signature: 'Ambessa (57% WR), Jinx (80% WR), Xin Zhao (60% WR), Naafiri (75% WR)',
+            summary: 'Maior dano por minuto da S2026 (960 DPM) com ótimo KDA (2.98) e flexibilidade em 4 rotas na Flex. Só não sobe mais no ranking anual por não ter jogado Solo/Duo em 2026.'
+          },
           yearly: {
             '2026': { solo: 'Sem classificação', flex: 'Platina 3 38 LP (Pico P3 73 LP)', score: 4018, wr: '53% (81 jogos)', note: 'Maior DPM do grupo na Flex (960 DPM).' },
             '2025': { solo: 'Sem classificação', flex: 'Ouro 4 84 LP', score: 2990, wr: 'Flex apenas', note: 'Jogou apenas Flex no Ouro 4.' },
@@ -899,6 +995,17 @@
           signature: 'Aphelios (182k), Miss Fortune (70% WR), Braum (78% WR), Jinx (83% WR)',
           summary: 'Bom controle de visão (1.10 VSPM) e ótimo desempenho de Braum/MF na Flex, mas perde consistência na SoloQ pelo alto número de mortes (7.8/jogo) jogando de Varus e Aphelios.',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Aphelios.png',
+          s2026: {
+            score: 61.5, tier: 'C+',
+            elo: 'Ouro 3 53 LP (SoloQ) • Platina 4 0 LP (Flex)',
+            peak: 'Ouro 2 36 LP (SoloQ) • Platina 4 11 LP (Flex S2026)',
+            winrate: '50% Geral (46% SoloQ / 55% Flex • 170 jogos S2026)',
+            kda: '2.05:1 (46% KP)',
+            dpmGpm: '658 DPM • 5.2 CS/m (1.65 Dano/Ouro)',
+            visionPool: '1.10 VSPM • 39 campeões na S2026',
+            signature: 'Varus (62j, 47% WR), Miss Fortune (70% WR), Braum (78% WR), Jinx (83% WR)',
+            summary: 'Bom controle de visão em 2026 (1.10 VSPM) e ótimos números de MF, Jinx e Braum na Flex (Platina 4), mas o 46% WR e a média alta de mortes na SoloQ seguram a nota.'
+          },
           yearly: {
             '2026': { solo: 'Ouro 3 53 LP (Pico O2 36 LP)', flex: 'Platina 4 0 LP (Pico P4 11 LP)', score: 3336, wr: '50% (170 jogos)', note: '55% WR na Flex (Platina 4) e 46% na SoloQ (Ouro 3).' },
             '2025': { solo: 'Sem classificação', flex: 'Prata 4 66 LP', score: 2030, wr: 'Flex apenas', note: 'Prata 4 na Flex.' },
@@ -960,6 +1067,17 @@
           signature: 'Thresh (180k), Kayn (94k), Pyke (92k), Caitlyn (89k)',
           summary: 'Mandou bem nos desafios de Arena (Arena Champion 2.1%) e de Thresh, mas no Summoner\'s Rift ranqueado possui o menor pico histórico (Ouro 3 na S9, Prata nas demais) e 20% WR atual.',
           avatar: 'https://ddragon.leagueoflegends.com/cdn/14.20.1/img/champion/Thresh.png',
+          s2026: {
+            score: 38.0, tier: 'D',
+            elo: 'Prata 2 60 LP (Flex) • Sem SoloQ em S2026',
+            peak: 'Prata 2 60 LP (Flex S2026)',
+            winrate: '20% Geral (1W 4L — 5 jogos na S2026)',
+            kda: '1.80:1 (37% KP)',
+            dpmGpm: '5.9 CS/m (amostra pequena de 5 jogos na S2026)',
+            visionPool: 'Amostra reduzida (5 jogos em S2026: Veigar, Kayn, Xayah, MF)',
+            signature: 'Veigar, Kayn, Xayah, Miss Fortune (5 partidas na S2026)',
+            summary: 'Jogou apenas 5 partidas ranqueadas de Flex até o momento em 2026 (1 vitória e 4 derrotas, Prata 2 60 LP), sem fila Solo/Duo registrada.'
+          },
           yearly: {
             '2026': { solo: 'Sem fila SoloQ', flex: 'Prata 2 60 LP', score: 2210, wr: '20% (5 jogos)', note: '1W 4L na Flex S2026.' },
             '2024': { solo: 'Prata 4 34 LP (S1)', flex: '—', score: 2134, wr: 'S1 Prata 4', note: 'Jogou apenas o S1 em 2024.' },
@@ -1040,16 +1158,130 @@
         { category: 'Certificações', title: 'Japonês: JLPT N1 (Fundação Japão)', status: 'hunting', rarity: 0.02, date: 'Meta N1', desc: 'Grau máximo N1 exigindo domínio de ~2.000 kanjis.', img: 'https://flagcdn.com/w640/jp.png', imgContain: false }
       ],
 
-      // --- ABA 6: MAPA (ESTADOS VISITADOS + PONTOS TURÍSTICOS) ---
+      // --- ABA 6: MAPA (ESTADOS VISITADOS + PONTOS TURÍSTICOS + ÁLBUNS DE FOTOS) ---
       mapPlaces: [
-        { type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base', notes: 'Brasília — Catedral Metropolitana e Esplanada dos Ministérios.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Catedral_Metropolitana_de_Brasilia.jpg?width=800' },
-        { type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado', notes: 'Planaltina e Chapada dos Veadeiros.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Chapada_dos_Veadeiros_18.jpg?width=800' },
-        { type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem', notes: 'Cristo Redentor, Pão de Açúcar e Região dos Lagos.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' },
-        { type: 'brasil', code: 'BA', name: 'Bahia', date: 'Viagem', notes: 'Salvador — Elevador Lacerda, Pelourinho e litoral baiano.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elevador_Lacerda_-_Salvador_-_Bahia.jpg?width=800' },
-        { type: 'brasil', code: 'CE', name: 'Ceará', date: 'Viagem', notes: 'Fortaleza — Praia de Iracema e Beira-Mar.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beira_Mar_-_Praia_de_Iracema_-_Fortaleza.jpg?width=800' },
-        { type: 'brasil', code: 'PE', name: 'Pernambuco', date: 'Viagem', notes: 'Recife — Marco Zero e Recife Antigo.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marco_Zero_Recife.jpg?width=800' },
-        { type: 'brasil', code: 'RN', name: 'Rio Grande do Norte', date: 'Viagem', notes: 'Natal — Morro do Careca e Praia de Ponta Negra.', img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Careca_-_Natal.jpg?width=800' },
-        { type: 'mundo', code: 'BR', worldName: 'Brazil', name: 'Brasil', date: 'País Natal', notes: 'Cristo Redentor e exploração nacional.', img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80' }
+        {
+          type: 'brasil', code: 'DF', name: 'Distrito Federal', date: 'Base',
+          notes: 'Brasília — Catedral Metropolitana e Esplanada dos Ministérios.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Catedral_Metropolitana_de_Brasilia.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Catedral_Metropolitana_de_Brasilia.jpg?width=800', caption: 'Catedral Metropolitana de Brasília (capa padrão — substitua ou adicione suas fotos!)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'GO', name: 'Goiás', date: 'Visitado',
+          notes: 'Planaltina e Chapada dos Veadeiros.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Chapada_dos_Veadeiros_18.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Chapada_dos_Veadeiros_18.jpg?width=800', caption: 'Chapada dos Veadeiros — Goiás (capa padrão — adicione suas melhores fotos aqui)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'RJ', name: 'Rio de Janeiro', date: 'Viagem',
+          notes: 'Cristo Redentor, Pão de Açúcar e Região dos Lagos.',
+          img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80',
+          photos: [
+            { url: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1000&q=85', caption: 'Rio de Janeiro — Vista panorâmica (capa padrão)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'BA', name: 'Bahia', date: 'Viagem',
+          notes: 'Salvador — Elevador Lacerda, Pelourinho e litoral baiano.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elevador_Lacerda_-_Salvador_-_Bahia.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Elevador_Lacerda_-_Salvador_-_Bahia.jpg?width=800', caption: 'Elevador Lacerda — Salvador/BA (capa padrão)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'CE', name: 'Ceará', date: 'Viagem',
+          notes: 'Fortaleza — Praia de Iracema e Beira-Mar.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beira_Mar_-_Praia_de_Iracema_-_Fortaleza.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Beira_Mar_-_Praia_de_Iracema_-_Fortaleza.jpg?width=800', caption: 'Praia de Iracema — Fortaleza/CE (capa padrão)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'PE', name: 'Pernambuco', date: 'Viagem',
+          notes: 'Recife — Marco Zero e Recife Antigo.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marco_Zero_Recife.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Marco_Zero_Recife.jpg?width=800', caption: 'Marco Zero — Recife/PE (capa padrão)' }
+          ]
+        },
+        {
+          type: 'brasil', code: 'RN', name: 'Rio Grande do Norte', date: 'Viagem',
+          notes: 'Natal — Morro do Careca e Praia de Ponta Negra.',
+          img: 'https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Careca_-_Natal.jpg?width=800',
+          photos: [
+            { url: 'https://commons.wikimedia.org/wiki/Special:FilePath/Morro_do_Careca_-_Natal.jpg?width=800', caption: 'Morro do Careca — Natal/RN (capa padrão)' }
+          ]
+        },
+        {
+          type: 'mundo', code: 'BR', worldName: 'Brazil', name: 'Brasil', date: 'País Natal',
+          notes: 'Cristo Redentor e exploração nacional.',
+          img: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=600&q=80',
+          photos: [
+            { url: 'https://images.unsplash.com/photo-1483729558449-99ef09a8c325?w=1000&q=85', caption: 'Brasil — País Natal (capa padrão)' }
+          ]
+        }
+      ],
+
+      // --- ABA 7: CÍRCULO DE REFERÊNCIAS (ALL-TIME — BASEADO NO DIÁRIO & REGRAS) ---
+      // Regras detalhadas salvas em Regras_Circulo_Social.txt
+      // Pilares (total base = 100): contrib (22), skills (20), intellect (18), wealth (15), aesthetics (13), family (12)
+      // Modificador de Trajetória ("Fator Virada / Cavalo Azarão"): -10 a +10 (nota final travada entre 0 e 100)
+      socialCircle: [
+        {
+          name: 'Pedro (Você)',
+          relation: 'Autor do Arquivo • Referência Base',
+          role: 'Farmacêutico (UnB) • Residente em Saúde • Criador & Estratégia',
+          tier: 'A-',
+          score: 70.5,
+          isSelf: true,
+          isTemplate: false,
+          dataLevel: 'Completo',
+          underdogBonus: 2.0,
+          underdogLabel: '+2.0 • Construção Própria',
+          avatar: '',
+          initials: 'PE',
+          pillars: { contrib: 13.5, skills: 12.0, intellect: 14.5, wealth: 9.0, aesthetics: 9.0, family: 10.5 },
+          highlights: ['Farmácia UnB', 'Residência em Saúde', 'Power BI SINASC', 'Casamento 2026', '5k/10k & Pistol Squat'],
+          summary: 'Perfil calibrado inicialmente com os marcos já registrados neste site: graduação em Farmácia (UnB), Residência em Saúde (previsão 2028), criação do painel público Power BI de Planaltina/GO e deste site, casamento oficial (08/11/2026), corrida 5k/10k, Pistol Squat e manutenção prática. Conforme você enviar os relatos do seu diário, ajustamos sua nota e adicionamos cada pessoa do seu convívio.'
+        },
+        {
+          name: '[Modelo] Perfil Impacto & Virada',
+          relation: 'Exemplo de Card — Substituir via Diário',
+          role: 'Inovação / Ciência / Liderança • Alta Trajetória de Superação',
+          tier: 'S',
+          score: 88.0,
+          isSelf: false,
+          isTemplate: true,
+          dataLevel: 'Médio',
+          underdogBonus: 7.0,
+          underdogLabel: '+7.0 • Cavalo Azarão',
+          avatar: '',
+          initials: 'M1',
+          pillars: { contrib: 19.0, skills: 12.5, intellect: 16.5, wealth: 12.5, aesthetics: 10.0, family: 10.5 },
+          highlights: ['Projeto de Alto Impacto', 'Salto Social', 'Multiesfera'],
+          summary: 'Card-modelo demonstrando como alguém com forte contribuição à sociedade, intelecto criativo e história real de virada ("Cavalo Azarão") aparece no índice. Assim que você me mandar os perfis reais do seu diário, removo estes modelos e publico seu círculo real.'
+        },
+        {
+          name: '[Modelo] Perfil Prático, Ofícios & Caráter',
+          relation: 'Exemplo de Card — Substituir via Diário',
+          role: 'Autonomia Prática / Emergência / Corpo & Família Sólida',
+          tier: 'A',
+          score: 81.5,
+          isSelf: false,
+          isTemplate: true,
+          dataLevel: 'Parcial',
+          underdogBonus: 3.5,
+          underdogLabel: '+3.5 • Honrou a Base',
+          avatar: '',
+          initials: 'M2',
+          pillars: { contrib: 14.0, skills: 18.5, intellect: 12.0, wealth: 11.5, aesthetics: 10.5, family: 11.5 },
+          highlights: ['Sobrevivência & Ofícios', 'Ação sob Pressão', 'Família Estruturada'],
+          summary: 'Card-modelo mostrando como o sistema valoriza alto domínio prático (sobrevivencialismo, saúde de emergência, consertos manuais, culinária autoral e preparo físico) aliado a caráter e família — habilidades que nenhuma IA substitui.'
+        }
       ]
     };
 
@@ -1143,7 +1375,7 @@
         return parseSortDate(a.date) - parseSortDate(b.date);
       });
 
-      document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
+      document.getElementById('life-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população mundial')).join('');
     }
 
     // ================= 2. RENDERIZAR ABA JOGOS =================
@@ -1285,6 +1517,91 @@
       `;
     }
 
+    function renderLolPillars(mode) {
+      const pillarsGrid = document.getElementById('lol-pillars-grid');
+      const pillars = mode === '2026'
+        ? [
+            { title: '1. Elo & Pico S2026 (35 pts)', desc: 'SoloQ & Flex exclusivos de 2026' },
+            { title: '2. Impacto S2026 (25 pts)', desc: 'Winrate, KDA & KP% da season' },
+            { title: '3. Conversão S2026 (20 pts)', desc: 'DPM, Dano/Ouro & CS/m em 2026' },
+            { title: '4. Visão & Macro S2026 (12 pts)', desc: 'VSPM & presença nas partidas' },
+            { title: '5. Pool na S2026 (8 pts)', desc: 'Campeões & WR jogados em 2026' }
+          ]
+        : [
+            { title: '1. Elo & Histórico (35 pts)', desc: 'SoloQ, Flex & Picos S6–S2026' },
+            { title: '2. Impacto Geral (25 pts)', desc: 'Winrate, KDA & KP%' },
+            { title: '3. Conversão (15 pts)', desc: 'DPM, Dano/Ouro & CS/m' },
+            { title: '4. Visão & Macro (15 pts)', desc: 'VSPM, Objetivos & Pressão' },
+            { title: '5. Challenges & Maestria (10 pts)', desc: 'Desafios Acumulados & Carreira' }
+          ];
+      pillarsGrid.innerHTML = pillars.map(pl => `
+        <div class="bg-amber-50/50 rounded-xl p-3 border border-amber-200/70">
+          <strong class="block text-amber-900">${pl.title}</strong>
+          <span class="text-stone-600">${pl.desc}</span>
+        </div>
+      `).join('');
+    }
+
+    function buildS2026FullCard(p, pos) {
+      const s = p.s2026;
+      const borderHighlight = pos === 1
+        ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+        : pos <= 3
+          ? 'border-amber-200/70 bg-white'
+          : 'border-stone-200 bg-white';
+      return `
+        <div class="border ${borderHighlight} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-100">
+            <div class="flex items-center gap-4">
+              ${getRankMedalBadge(pos)}
+              <img src="${p.avatar}" class="w-14 h-14 rounded-2xl object-cover border border-amber-200 bg-stone-100" alt="${p.name}" />
+              <div>
+                <div class="flex flex-wrap items-center gap-2">
+                  <h3 class="text-lg font-bold text-stone-900">${p.name}</h3>
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-stone-100 text-stone-700 border border-stone-200">${p.riotId}</span>
+                  <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Tier ${s.tier}</span>
+                  <span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Exclusivo S2026</span>
+                </div>
+                <p class="text-xs text-stone-500 mt-1"><strong>Função em S2026:</strong> ${p.role} • <strong>Destaques S2026:</strong> ${s.signature}</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-3 self-start lg:self-center">
+              <div class="text-right bg-amber-50/60 border border-amber-200/70 px-4 py-2 rounded-xl">
+                <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-800">Nota S2026</span>
+                <span class="text-2xl font-bold text-stone-900">${s.score.toFixed(1)} <span class="text-xs font-normal text-stone-400">/ 100</span></span>
+              </div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-4 text-xs">
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Elo & Pico (S2026)</span>
+              <div class="font-bold text-stone-900 mt-1">${s.elo}</div>
+              <div class="text-stone-500 mt-0.5">Pico: ${s.peak}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Winrate, KDA & KP% (S2026)</span>
+              <div class="font-bold text-stone-900 mt-1">${s.winrate}</div>
+              <div class="text-stone-500 mt-0.5">KDA: ${s.kda}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Conversão DPM & CS/m (S2026)</span>
+              <div class="font-bold text-stone-900 mt-1">${s.dpmGpm}</div>
+            </div>
+            <div class="bg-stone-50/70 rounded-xl p-3 border border-stone-200/70">
+              <span class="text-[11px] font-semibold text-amber-800 uppercase">Visão & Pool (S2026)</span>
+              <div class="font-bold text-stone-900 mt-1">${s.visionPool}</div>
+            </div>
+          </div>
+
+          <p class="text-xs text-stone-600 mt-3 pt-3 border-t border-stone-100 leading-relaxed">
+            <strong>Análise Exclusiva S2026:</strong> ${s.summary}
+          </p>
+        </div>
+      `;
+    }
+
     function renderLolRank() {
       const container = document.getElementById('lol-rank-container');
       const subtitle = document.getElementById('lol-rank-subtitle');
@@ -1292,8 +1609,9 @@
       const pillarsGrid = document.getElementById('lol-pillars-grid');
 
       if (selectedLolYear === 'all') {
-        subtitle.textContent = 'Avaliação multifacetada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico Completo';
+        subtitle.textContent = 'Avaliação histórica acumulada (0 a 100 pts) combinando OP.GG + LeagueOfGraphs + Histórico Completo, Maestria & Challenges';
         counter.textContent = '12 Jogadores Analisados • Todos os Tempos';
+        renderLolPillars('all');
         pillarsGrid.style.display = 'grid';
         container.innerHTML = appData.lolFriendsRank.map(p => buildFullLolCard(p)).join('');
         return;
@@ -1304,21 +1622,30 @@
       const yearLabel = yearObj ? yearObj.label : selectedLolYear;
       const activePlayers = [];
       const inactivePlayers = [];
+      const isDetailedYear = selectedLolYear === '2026';
 
       appData.lolFriendsRank.forEach(p => {
-        const yData = p.yearly && p.yearly[selectedLolYear];
-        if (yData) {
-          activePlayers.push({ player: p, yData });
+        if (isDetailedYear) {
+          if (p.s2026) {
+            activePlayers.push({ player: p, yData: p.yearly && p.yearly['2026'] });
+          } else {
+            inactivePlayers.push(p);
+          }
         } else {
-          inactivePlayers.push(p);
+          const yData = p.yearly && p.yearly[selectedLolYear];
+          if (yData) {
+            activePlayers.push({ player: p, yData });
+          } else {
+            inactivePlayers.push(p);
+          }
         }
       });
 
-      const isDetailedYear = selectedLolYear === '2026';
       if (isDetailedYear) {
-        activePlayers.sort((a, b) => b.player.score - a.player.score);
-        subtitle.textContent = 'Avaliação completa da Temporada 2026 (5 Pilares: Elo, Impacto, Conversão, Visão & Challenges)';
-        counter.textContent = `${activePlayers.length} Ativos em 2026 • Dados Completos`;
+        activePlayers.sort((a, b) => b.player.s2026.score - a.player.s2026.score);
+        subtitle.textContent = 'Avaliação exclusiva da Temporada 2026 (somente números de 2026 — sem histórico anterior, maestria acumulada ou Challenges)';
+        counter.textContent = `${activePlayers.length} Ativos em 2026 • Somente Dados S2026`;
+        renderLolPillars('2026');
         pillarsGrid.style.display = 'grid';
       } else {
         activePlayers.sort((a, b) => b.yData.score - a.yData.score);
@@ -1332,7 +1659,7 @@
         const p = entry.player;
         const y = entry.yData;
         if (isDetailedYear) {
-          return buildFullLolCard(p, pos);
+          return buildS2026FullCard(p, pos);
         }
         const borderHighlight = pos === 1
           ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
@@ -1430,9 +1757,9 @@
           <div class="p-4 pt-2.5">
             <span class="text-[11px] font-medium uppercase tracking-wider text-stone-400">Melhor Tempo (Recorde)</span>
             <div class="text-2xl font-bold text-stone-900 mt-0.5">${item.bestTime}</div>
-            <div class="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between text-xs text-stone-500">
+            <div class="mt-3 pt-2.5 border-t border-stone-100 flex items-center justify-between gap-2 text-[11px] text-stone-500">
               <span>Raridade:</span>
-              <strong class="text-amber-900">${item.rarity}% da pop.</strong>
+              <strong class="text-amber-900 whitespace-nowrap">${item.rarity}% da pop. mundial</strong>
             </div>
           </div>
         </div>
@@ -1467,7 +1794,7 @@
         if (sortBy === 'rarity_asc') return a.rarity - b.rarity;
         return parseSortDate(a.date) - parseSortDate(b.date);
       });
-      document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
+      document.getElementById('body-skills-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população mundial')).join('');
     }
 
     let currentGymGroup = 'Todos';
@@ -1546,18 +1873,49 @@
         return a.rarity - b.rarity;
       });
 
-      document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população')).join('');
+      document.getElementById('knowledge-grid').innerHTML = list.map(i => buildStandardCard(i, i.category, 'da população mundial')).join('');
     }
 
-    // ================= 6. RENDERIZAR ABA MAPA (ELEIÇÕES BRASIL & MUNDO) =================
+    // ================= 6. RENDERIZAR ABA MAPA (SELETOR BRASIL / MUNDO + ÁLBUNS) =================
     const ALL_BRAZIL_UFS = [
       'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG',
       'PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'
     ];
+    let activeMapView = 'brasil';
     let mapGalleryFilter = 'todos';
     let selectedMapUf = null;
     let brChartInstance = null;
     let worldChartInstance = null;
+    let currentAlbumPlace = null;
+
+    function switchActiveMapView(view) {
+      activeMapView = view;
+      const brEl = document.getElementById('brazil-echarts-map');
+      const worldEl = document.getElementById('world-echarts-map');
+      const titleEl = document.getElementById('active-map-title');
+      const subtitleEl = document.getElementById('active-map-subtitle');
+
+      ['brasil', 'mundo'].forEach(v => {
+        const btn = document.getElementById('map-view-btn-' + v);
+        btn.className = (v === view)
+          ? 'gold-pill-btn gold-pill-active px-3.5 py-1.5 rounded-lg text-xs border'
+          : 'gold-pill-btn gold-pill-inactive px-3.5 py-1.5 rounded-lg text-xs border border-transparent';
+      });
+
+      if (view === 'brasil') {
+        brEl.classList.remove('hidden');
+        worldEl.classList.add('hidden');
+        titleEl.textContent = '🇧🇷 Mapa Interativo do Brasil (por Estado)';
+        subtitleEl.textContent = 'Passe o mouse sobre qualquer estado ou clique em um estado visitado para filtrar a galeria';
+        setTimeout(() => { if (brChartInstance) brChartInstance.resize(); }, 50);
+      } else {
+        brEl.classList.add('hidden');
+        worldEl.classList.remove('hidden');
+        titleEl.textContent = '🌎 Mapa Interativo do Mundo (por País)';
+        subtitleEl.textContent = 'Arraste ou dê zoom para explorar os países visitados ao redor do globo';
+        setTimeout(() => { if (worldChartInstance) worldChartInstance.resize(); }, 50);
+      }
+    }
 
     function setMapGalleryFilter(filter) {
       mapGalleryFilter = filter;
@@ -1623,25 +1981,116 @@
         filtered = filtered.filter(p => p.type === 'brasil' && p.code === selectedMapUf);
       }
 
-      document.getElementById('map-places-grid').innerHTML = filtered.map(place => `
-        <div class="theme-card">
-          <div class="card-img-header" style="height: 156px;">
-            <img src="${place.img}" alt="${place.name}" loading="lazy" class="w-full h-full object-cover"
-                 onerror="this.onerror=null; this.src=fallbackSvgDataUri('${place.name.replace(/'/g, '')}');" />
-            <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-stone-900 border border-amber-200 shadow-sm">
-              ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
-            </span>
-            <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50/95 text-amber-900 border border-amber-300 shadow-sm">
-              ${place.date}
-            </span>
+      document.getElementById('map-places-grid').innerHTML = filtered.map(place => {
+        const photoCount = (place.photos && place.photos.length) ? place.photos.length : 1;
+        return `
+          <div onclick="openPlaceAlbum('${place.type}', '${place.code}')" class="theme-card cursor-pointer group flex flex-col justify-between">
+            <div>
+              <div class="card-img-header" style="height: 156px;">
+                <img src="${place.img}" alt="${place.name}" loading="lazy" class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+                     onerror="this.onerror=null; this.src=fallbackSvgDataUri('${place.name.replace(/'/g, '')}');" />
+                <span class="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-full text-xs font-bold bg-white/95 text-stone-900 border border-amber-200 shadow-sm">
+                  ${place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 País'}
+                </span>
+                <span class="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50/95 text-amber-900 border border-amber-300 shadow-sm">
+                  ${place.date}
+                </span>
+              </div>
+              <div class="p-4 pt-3">
+                <h4 class="text-base font-bold text-stone-900 group-hover:text-amber-800 transition">${place.name}</h4>
+                <p class="text-xs text-stone-500 mt-1 leading-relaxed">${place.notes}</p>
+              </div>
+            </div>
+            <div class="px-4 pb-3.5 pt-2.5 border-t border-stone-100 flex items-center justify-between text-[11px] font-semibold text-amber-800">
+              <span>📷 Álbum (${photoCount} ${photoCount === 1 ? 'foto' : 'fotos'})</span>
+              <span class="group-hover:translate-x-0.5 transition">Abrir fotos →</span>
+            </div>
           </div>
-          <div class="p-4 pt-3">
-            <h4 class="text-base font-bold text-stone-900">${place.name}</h4>
-            <p class="text-xs text-stone-500 mt-1 leading-relaxed">${place.notes}</p>
+        `;
+      }).join('');
+    }
+
+    function openPlaceAlbum(type, code) {
+      const place = appData.mapPlaces.find(p => p.type === type && p.code === code);
+      if (!place) return;
+      if (!place.photos || !place.photos.length) {
+        place.photos = [{ url: place.img, caption: place.notes }];
+      }
+      currentAlbumPlace = place;
+
+      document.getElementById('album-place-code').textContent = place.type === 'brasil' ? '🇧🇷 ' + place.code : '🌎 ' + place.code;
+      document.getElementById('album-place-title').textContent = place.name;
+      document.getElementById('album-place-notes').textContent = place.notes;
+      renderPlaceAlbumPhotos();
+
+      document.getElementById('place-album-modal').classList.remove('hidden');
+      document.body.style.overflow = 'hidden';
+    }
+
+    function closePlaceAlbum() {
+      document.getElementById('place-album-modal').classList.add('hidden');
+      document.body.style.overflow = '';
+    }
+
+    function renderPlaceAlbumPhotos() {
+      if (!currentAlbumPlace) return;
+      const grid = document.getElementById('album-photos-grid');
+      const photos = currentAlbumPlace.photos || [];
+      grid.innerHTML = photos.map((ph, idx) => `
+        <div onclick="openLightboxByIndex(${idx})" class="group cursor-pointer bg-stone-50 border border-stone-200 hover:border-amber-300 rounded-2xl overflow-hidden transition shadow-sm hover:shadow-md">
+          <div class="h-48 bg-stone-100 overflow-hidden">
+            <img src="${ph.url}" alt="${String(ph.caption || currentAlbumPlace.name).replace(/"/g, '')}" class="w-full h-full object-cover transition duration-300 group-hover:scale-105"
+                 onerror="this.onerror=null; this.src=fallbackSvgDataUri('${currentAlbumPlace.name.replace(/'/g, '')}');" />
+          </div>
+          <div class="p-3 bg-white flex items-center justify-between gap-2">
+            <span class="text-xs text-stone-700 leading-snug line-clamp-2">${ph.caption || currentAlbumPlace.name}</span>
+            <span class="text-[11px] font-bold text-amber-800 shrink-0">🔍</span>
           </div>
         </div>
       `).join('');
     }
+
+    function handleAlbumPhotoPreview(event) {
+      if (!currentAlbumPlace) return;
+      const files = Array.from(event.target.files || []);
+      if (!files.length) return;
+
+      files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          currentAlbumPlace.photos.push({
+            url: e.target.result,
+            caption: file.name.replace(/\.[^/.]+$/, '') + ' (prévia local)'
+          });
+          renderPlaceAlbumPhotos();
+          renderMapSection();
+        };
+        reader.readAsDataURL(file);
+      });
+      event.target.value = '';
+    }
+
+    function openLightboxByIndex(idx) {
+      if (!currentAlbumPlace || !currentAlbumPlace.photos[idx]) return;
+      const ph = currentAlbumPlace.photos[idx];
+      document.getElementById('lightbox-img').src = ph.url;
+      document.getElementById('lightbox-caption').textContent = ph.caption || currentAlbumPlace.name;
+      document.getElementById('photo-lightbox').classList.remove('hidden');
+    }
+
+    function closeLightbox() {
+      document.getElementById('photo-lightbox').classList.add('hidden');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (!document.getElementById('photo-lightbox').classList.contains('hidden')) {
+          closeLightbox();
+        } else if (!document.getElementById('place-album-modal').classList.contains('hidden')) {
+          closePlaceAlbum();
+        }
+      }
+    });
 
     async function initInteractiveMaps() {
       const brDom = document.getElementById('brazil-echarts-map');
@@ -1683,8 +2132,8 @@
               value: visited ? 1 : 0,
               visitedInfo: visited || null,
               itemStyle: visited
-                ? { areaColor: '#F59E0B', borderColor: '#B45309', borderWidth: 1.2 }
-                : { areaColor: '#F5F5F4', borderColor: '#D6D3D1', borderWidth: 0.9 }
+                ? { areaColor: '#F59E0B', borderColor: '#92400E', borderWidth: 1.5 }
+                : { areaColor: '#EAE1D0', borderColor: '#A89F91', borderWidth: 1.15 }
             };
           });
 
@@ -1692,7 +2141,7 @@
             tooltip: {
               trigger: 'item',
               backgroundColor: '#FFFFFF',
-              borderColor: '#F59E0B',
+              borderColor: '#D97706',
               borderWidth: 1,
               textStyle: { color: '#1C1917', fontSize: 12 },
               formatter: (params) => {
@@ -1700,7 +2149,8 @@
                 if (d.visitedInfo) {
                   return `<div style="font-weight:700;color:#92400E;">🇧🇷 ${d.name} (${d.sigla})</div>
                           <div style="color:#047857;font-weight:600;margin-top:2px;">✓ Estado Visitado</div>
-                          <div style="color:#57534E;font-size:11px;margin-top:2px;">${d.visitedInfo.notes}</div>`;
+                          <div style="color:#57534E;font-size:11px;margin-top:2px;">${d.visitedInfo.notes}</div>
+                          <div style="color:#B45309;font-size:10px;margin-top:4px;">Clique para filtrar • Abra o card para ver o álbum</div>`;
                 }
                 return `<div style="font-weight:600;color:#44403C;">${params.name} ${d.sigla ? '(' + d.sigla + ')' : ''}</div>
                         <div style="color:#78716C;font-size:11px;margin-top:2px;">🎯 Ainda não visitado</div>`;
@@ -1712,9 +2162,10 @@
               map: 'brazil',
               roam: false,
               selectedMode: false,
+              zoom: 1.12,
               emphasis: {
                 label: { show: true, color: '#78350F', fontWeight: 'bold', fontSize: 11 },
-                itemStyle: { areaColor: '#FDE68A', borderColor: '#D97706', borderWidth: 1.5 }
+                itemStyle: { areaColor: '#FCD34D', borderColor: '#B45309', borderWidth: 1.6 }
               },
               data: brSeriesData
             }]
@@ -1759,21 +2210,22 @@
             name: countryKey,
             value: 1,
             visitedInfo: visitedCountries[countryKey],
-            itemStyle: { areaColor: '#F59E0B', borderColor: '#B45309', borderWidth: 1 }
+            itemStyle: { areaColor: '#F59E0B', borderColor: '#92400E', borderWidth: 1.3 }
           }));
 
           worldChartInstance.setOption({
             tooltip: {
               trigger: 'item',
               backgroundColor: '#FFFFFF',
-              borderColor: '#F59E0B',
+              borderColor: '#D97706',
               borderWidth: 1,
               textStyle: { color: '#1C1917', fontSize: 12 },
               formatter: (params) => {
                 const info = params.data && params.data.visitedInfo;
                 if (info) {
                   return `<div style="font-weight:700;color:#92400E;">🌎 ${info.name}</div>
-                          <div style="color:#047857;font-weight:600;margin-top:2px;">✓ País Visitado (${info.date})</div>`;
+                          <div style="color:#047857;font-weight:600;margin-top:2px;">✓ País Visitado (${info.date})</div>
+                          <div style="color:#B45309;font-size:10px;margin-top:4px;">Clique para abrir o álbum de fotos</div>`;
                 }
                 return `<div style="font-weight:600;color:#44403C;">${params.name}</div>
                         <div style="color:#78716C;font-size:11px;margin-top:2px;">🎯 Ainda não visitado</div>`;
@@ -1785,17 +2237,25 @@
               map: 'world',
               roam: true,
               selectedMode: false,
+              zoom: 1.15,
               itemStyle: {
-                areaColor: '#F5F5F4',
-                borderColor: '#D6D3D1',
-                borderWidth: 0.6
+                areaColor: '#EAE1D0',
+                borderColor: '#A89F91',
+                borderWidth: 0.9
               },
               emphasis: {
                 label: { show: false },
-                itemStyle: { areaColor: '#FDE68A', borderColor: '#D97706' }
+                itemStyle: { areaColor: '#FCD34D', borderColor: '#B45309', borderWidth: 1.4 }
               },
               data: worldSeriesData
             }]
+          });
+
+          worldChartInstance.on('click', (params) => {
+            const info = params.data && params.data.visitedInfo;
+            if (info) {
+              openPlaceAlbum(info.type, info.code);
+            }
           });
         } else {
           worldDom.innerHTML = '<div class="h-full flex items-center justify-center text-xs text-stone-500 p-4">Mapa mundial requer conexão com a internet para carregar o GeoJSON.</div>';
@@ -1805,8 +2265,8 @@
       }
 
       window.addEventListener('resize', () => {
-        if (brChartInstance) brChartInstance.resize();
-        if (worldChartInstance) worldChartInstance.resize();
+        if (activeMapView === 'brasil' && brChartInstance) brChartInstance.resize();
+        if (activeMapView === 'mundo' && worldChartInstance) worldChartInstance.resize();
       });
     }
 
@@ -1822,15 +2282,236 @@
       ];
       const rects = tileMap.map(([uf, x, y]) => {
         const v = visitedBrMap[uf];
-        const fill = v ? '#F59E0B' : '#F5F5F4';
-        const stroke = v ? '#B45309' : '#D6D3D1';
-        const txt = v ? '#FFFFFF' : '#78716C';
+        const fill = v ? '#F59E0B' : '#EAE1D0';
+        const stroke = v ? '#92400E' : '#A89F91';
+        const txt = v ? '#FFFFFF' : '#57534E';
         const px = 28 + x * 46;
         const py = 12 + y * 36;
         const click = v ? `onclick="selectStateFromMap('${uf}')" style="cursor:pointer"` : '';
-        return `<g ${click}><rect x="${px}" y="${py}" width="40" height="30" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="1.2"/><text x="${px+20}" y="${py+19}" text-anchor="middle" font-size="11" font-weight="700" fill="${txt}">${uf}</text></g>`;
+        return `<g ${click}><rect x="${px}" y="${py}" width="40" height="30" rx="6" fill="${fill}" stroke="${stroke}" stroke-width="1.3"/><text x="${px+20}" y="${py+19}" text-anchor="middle" font-size="11" font-weight="700" fill="${txt}">${uf}</text></g>`;
       }).join('');
       container.innerHTML = `<svg viewBox="0 0 380 345" class="w-full h-full">${rects}</svg>`;
+    }
+
+    // ================= 7. RENDERIZAR ABA CÍRCULO (ÍNDICE DE IMPACTO & VIDA — ALL-TIME) =================
+    const CIRCLE_PILLARS = [
+      { key: 'contrib',    label: 'Impacto & Alcance',    icon: '🌍', max: 22 },
+      { key: 'skills',     label: 'Prática & Corpo',      icon: '🛠️', max: 20 },
+      { key: 'intellect',  label: 'Intelecto & Obra',     icon: '🧠', max: 18 },
+      { key: 'wealth',     label: 'Patrimônio & Uso',     icon: '🏛️', max: 15 },
+      { key: 'aesthetics', label: 'Estética & Presença',  icon: '✨', max: 13 },
+      { key: 'family',     label: 'Família & Caráter',    icon: '🏡', max: 12 }
+    ];
+
+    function toggleCircleRules() {
+      const panel = document.getElementById('circle-rules-panel');
+      const btn = document.getElementById('circle-rules-toggle-btn');
+      if (!panel) return;
+      const willShow = panel.classList.contains('hidden');
+      panel.classList.toggle('hidden');
+      if (btn) {
+        btn.textContent = willShow ? '📖 Ocultar Regras & Pesos' : '📖 Ver Regras & Pesos (6 Pilares + Fator Virada)';
+      }
+    }
+
+    function buildCircleAvatar(p) {
+      if (p.avatar) {
+        return `<img src="${p.avatar}" alt="${p.name}" class="w-16 h-16 rounded-2xl object-cover border border-amber-200 bg-amber-50 shrink-0 shadow-sm" />`;
+      }
+      const badgeBg = p.isTemplate
+        ? 'from-stone-100 to-stone-50 border-stone-300 text-stone-500'
+        : 'from-amber-100 to-amber-50 border-amber-300 text-amber-900';
+      return `<div class="w-16 h-16 rounded-2xl bg-gradient-to-br ${badgeBg} border flex items-center justify-center font-extrabold text-lg shrink-0 shadow-sm">${p.initials || p.name.slice(0, 2).toUpperCase()}</div>`;
+    }
+
+    function countStrongPillars(p) {
+      return CIRCLE_PILLARS.filter(pl => ((p.pillars && p.pillars[pl.key]) || 0) / pl.max >= 0.72).length;
+    }
+
+    function renderSocialCircle() {
+      const headerEl = document.getElementById('circle-header-banner');
+      const containerEl = document.getElementById('social-circle-container');
+      if (!headerEl || !containerEl) return;
+
+      const sorted = [...appData.socialCircle].sort((a, b) => {
+        if (b.score !== a.score) return b.score - a.score;
+        return countStrongPillars(b) - countStrongPillars(a);
+      });
+
+      const realList = sorted.filter(p => !p.isTemplate);
+      const calcPool = realList.length >= 2 ? realList : sorted;
+      const top5 = calcPool.slice(0, 5);
+      const avgTop5 = top5.length > 0 ? (top5.reduce((acc, p) => acc + p.score, 0) / top5.length) : 0;
+      const avgText = avgTop5.toFixed(1);
+
+      const radius = 30;
+      const circumference = 2 * Math.PI * radius;
+      const dashOffset = circumference * (1 - Math.min(100, avgTop5) / 100);
+      const usingTemplates = realList.length < 2;
+
+      headerEl.innerHTML = `
+        <div class="bg-white border border-amber-200/80 rounded-2xl p-6 shadow-sm space-y-5">
+          <div class="flex flex-wrap items-center justify-between gap-6">
+            <div class="max-w-2xl space-y-1.5">
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold uppercase tracking-wider bg-amber-50 text-amber-800 border border-amber-200">
+                  ✦ Índice Pessoal • All-Time (Diário)
+                </span>
+                <span class="px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-stone-50 text-stone-600 border border-stone-200">
+                  ${realList.length} ${realList.length === 1 ? 'Perfil Real' : 'Perfis Reais'} ${usingTemplates ? '• +2 Modelos' : ''}
+                </span>
+              </div>
+              <h2 class="text-xl font-bold text-stone-900">🌟 Círculo de Referências — Índice de Impacto &amp; Vida</h2>
+              <p class="text-sm text-stone-500 leading-relaxed">
+                Inspirado na ideia de que <strong class="text-stone-700">“você é a média das 5 pessoas com quem mais convive”</strong>: registro contínuo de todo o histórico do diário para celebrar pessoas incríveis do seu convívio e alimentar uma rivalidade saudável de evolução.
+              </p>
+            </div>
+
+            <div class="flex items-center gap-4 bg-gradient-to-br from-amber-50/70 to-white border border-amber-200/80 rounded-2xl px-5 py-3.5">
+              <div class="relative w-[72px] h-[72px] shrink-0 flex items-center justify-center">
+                <svg class="w-[72px] h-[72px] -rotate-90" viewBox="0 0 72 72">
+                  <defs>
+                    <linearGradient id="circleAvgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                      <stop offset="0%" stop-color="#D97706" />
+                      <stop offset="100%" stop-color="#FBBF24" />
+                    </linearGradient>
+                  </defs>
+                  <circle cx="36" cy="36" r="${radius}" fill="#FFFDF7" stroke="#FEF3C7" stroke-width="6" />
+                  <circle cx="36" cy="36" r="${radius}" fill="none" stroke="url(#circleAvgGrad)" stroke-width="6"
+                          stroke-linecap="round"
+                          stroke-dasharray="${circumference.toFixed(2)}"
+                          stroke-dashoffset="${dashOffset.toFixed(2)}" />
+                </svg>
+                <span class="absolute text-sm font-extrabold text-amber-900">${avgText}</span>
+              </div>
+              <div>
+                <span class="block text-[11px] font-bold uppercase tracking-wider text-amber-800">Média do Top 5</span>
+                <div class="text-xs font-semibold text-stone-800 mt-0.5">${usingTemplates ? 'Prévia com modelos' : `Base: Top ${top5.length} do círculo`}</div>
+                <div class="text-[11px] text-stone-500 mt-0.5">Recalculada a cada relato</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3 border-t border-stone-100 flex flex-wrap items-center justify-between gap-3">
+            <button id="circle-rules-toggle-btn" onclick="toggleCircleRules()" class="gold-pill-btn gold-pill-inactive px-3.5 py-2 rounded-xl border text-xs font-semibold">
+              📖 Ver Regras &amp; Pesos (6 Pilares + Fator Virada)
+            </button>
+            <span class="text-xs text-stone-400">Manual completo salvo na pasta do site: <strong class="text-stone-600">Regras_Circulo_Social.txt</strong></span>
+          </div>
+
+          <div id="circle-rules-panel" class="hidden pt-2 space-y-3">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 text-xs">
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">1. 🌍 Impacto, Caridade &amp; Alcance (22 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Salto p/ humanidade (ciência, saúde, infra, IA), voluntariado real, reputação e "Teste do E Se Não Existisse?".</span>
+              </div>
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">2. 🛠️ Prática, Sobrevivência &amp; Corpo (20 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Sobrevivencialismo real, saúde de emergência, consertos manuais/eletrônica, culinária autoral e marcos físicos.</span>
+              </div>
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">3. 🧠 Intelecto, Criação &amp; Mundo (18 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Formação/estratégia, obras autorais (sites, livros, jogos, arte), viagens raras e autonomia de vida.</span>
+              </div>
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">4. 🏛️ Patrimônio &amp; Uso Ativo (15 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Independência financeira, conquistas materiais e uso ativo dos recursos para criar e impulsionar projetos.</span>
+              </div>
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">5. ✨ Estética, Estilo &amp; Presença (13 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Harmonia estética natural, cuidado pessoal, estilo/moda e boa apresentação no mundo real.</span>
+              </div>
+              <div class="bg-amber-50/40 rounded-xl p-3.5 border border-amber-200/70">
+                <strong class="block text-amber-900">6. 🏡 Família, Legado &amp; Caráter (12 pts)</strong>
+                <span class="text-stone-600 mt-1 block">Família sólida, filhos bem criados (qualidade &gt; quantidade), lealdade, resiliência emocional (traição grave deduz forte).</span>
+              </div>
+            </div>
+            <div class="bg-stone-50 border border-stone-200/80 rounded-xl p-3.5 text-xs text-stone-600 flex flex-wrap gap-x-6 gap-y-1.5">
+              <span><strong class="text-amber-900">🐎 Fator Virada / Azarão:</strong> -10 a +10 pts sobre a base (teto 100).</span>
+              <span><strong class="text-amber-900">🧭 Multiesfera (Forbes):</strong> desempate favorece quem brilha em 3+ pilares.</span>
+              <span><strong class="text-amber-900">📓 Controle de Viés:</strong> selo de Registro (Completo / Médio / Parcial).</span>
+            </div>
+          </div>
+        </div>
+      `;
+
+      containerEl.innerHTML = sorted.map((p, idx) => {
+        const pos = idx + 1;
+        const borderClass = p.isTemplate
+          ? 'border-dashed border-stone-300 bg-stone-50/50'
+          : pos === 1
+            ? 'border-amber-300 bg-gradient-to-br from-white to-amber-50/40'
+            : 'border-stone-200 bg-white';
+
+        const dataColor = p.dataLevel === 'Completo'
+          ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+          : p.dataLevel === 'Médio'
+            ? 'bg-amber-50 text-amber-800 border-amber-200'
+            : 'bg-stone-100 text-stone-600 border-stone-200';
+
+        const underdogColor = p.underdogBonus > 0
+          ? 'bg-amber-50 text-amber-900 border-amber-300'
+          : p.underdogBonus < 0
+            ? 'bg-rose-50 text-rose-700 border-rose-200'
+            : 'bg-stone-100 text-stone-600 border-stone-200';
+
+        const pillarBarsHtml = CIRCLE_PILLARS.map(pl => {
+          const val = (p.pillars && typeof p.pillars[pl.key] === 'number') ? p.pillars[pl.key] : 0;
+          const pct = Math.min(100, Math.max(0, (val / pl.max) * 100)).toFixed(0);
+          return `
+            <div class="bg-stone-50/80 rounded-xl p-2.5 border border-stone-200/70">
+              <div class="flex items-center justify-between gap-1 text-[11px]">
+                <span class="font-semibold text-stone-700 truncate">${pl.icon} ${pl.label}</span>
+                <strong class="text-amber-900 shrink-0">${val}/${pl.max}</strong>
+              </div>
+              <div class="w-full h-1.5 bg-amber-100/80 rounded-full overflow-hidden mt-1.5">
+                <div class="h-full gold-progress-fill rounded-full" style="width: ${pct}%"></div>
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        const highlightsHtml = (p.highlights || []).map(tag =>
+          `<span class="px-2 py-0.5 rounded-full text-[11px] font-medium bg-white text-stone-600 border border-stone-200">${tag}</span>`
+        ).join('');
+
+        return `
+          <div class="border ${borderClass} rounded-2xl p-5 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-stone-100">
+              <div class="flex items-start sm:items-center gap-4">
+                ${getRankMedalBadge(pos)}
+                ${buildCircleAvatar(p)}
+                <div class="space-y-1">
+                  <div class="flex flex-wrap items-center gap-2">
+                    <h3 class="text-lg font-bold text-stone-900">${p.name}</h3>
+                    <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">Tier ${p.tier}</span>
+                    <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${underdogColor}">🐎 ${p.underdogLabel}</span>
+                    <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full border ${dataColor}">📓 Registro: ${p.dataLevel}</span>
+                    ${p.isTemplate ? '<span class="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-stone-200/70 text-stone-600">📌 Modelo</span>' : ''}
+                  </div>
+                  <p class="text-xs text-stone-600"><strong>${p.relation}</strong> • ${p.role}</p>
+                  <div class="flex flex-wrap gap-1.5 pt-0.5">${highlightsHtml}</div>
+                </div>
+              </div>
+
+              <div class="flex items-center gap-3 self-start lg:self-center">
+                <div class="text-right bg-amber-50/60 border border-amber-200/80 px-4 py-2 rounded-xl">
+                  <span class="block text-[10px] font-bold uppercase tracking-wider text-amber-800">Índice de Vida</span>
+                  <span class="text-2xl font-bold text-stone-900">${p.score.toFixed(1)} <span class="text-xs font-normal text-stone-400">/ 100</span></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-2.5 pt-4">
+              ${pillarBarsHtml}
+            </div>
+
+            <p class="text-xs text-stone-600 mt-3.5 pt-3 border-t border-stone-100 leading-relaxed">
+              <strong class="text-stone-800">Resumo &amp; Justificativa (Diário):</strong> ${p.summary}
+            </p>
+          </div>
+        `;
+      }).join('');
     }
 
     // Inicialização Geral
@@ -1851,6 +2532,7 @@
     renderKnowledge();
     renderMapSection();
     initInteractiveMaps();
+    renderSocialCircle();
   </script>
 </body>
 </html>
